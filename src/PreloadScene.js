@@ -19,7 +19,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('game-over', 'assets/game-over.png');
     this.load.image('cloud', 'assets/cloud.png');
 
-    this.load.image('pote-idle', 'assets/pote_idle.png');
+    this.load.image('pote-idle', 'assets/pote_idle2.png');
 
     this.load.spritesheet('star', 'assets/stars.png', {
       frameWidth: 9, frameHeight: 9
@@ -44,7 +44,7 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 77
     })
     
-    this.load.spritesheet('pote', 'assets/pote_run.png', {
+    this.load.spritesheet('pote', 'assets/pote_run2.png', {
       frameWidth: 88,
       frameHeight: 94
     })
