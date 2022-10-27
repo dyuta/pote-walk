@@ -16,7 +16,7 @@ class PlayScene extends Phaser.Scene {
 
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, height, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
-    this.dino = this.physics.add.sprite(0, height, 'dino-idle')
+    this.dino = this.physics.add.sprite(0, height, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
       .setGravityY(5000);
@@ -46,7 +46,7 @@ class PlayScene extends Phaser.Scene {
         callbackScope: this,
         callback: () => {
           this.dino.setVelocityX(80);
-          this.dino.play('dino-run',1);
+          this.dino.play('pote-run',1);
 
           if (this.ground.width < width ) {
             this.ground.width += 17 *2;
@@ -66,8 +66,8 @@ class PlayScene extends Phaser.Scene {
 
   initAnims() {
     this.anims.create({
-      key: 'dino-run',
-      frames: this.anims.generateFrameNumbers('dino', {start: 2, end: 3}),
+      key: 'pote-run',
+      frames: this.anims.generateFrameNumbers('pote', {start: 1, end: 2}),
       frameRate: 10,
       repeat: -1
     })
