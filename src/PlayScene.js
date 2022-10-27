@@ -134,10 +134,10 @@ class PlayScene extends Phaser.Scene {
 
     if (this.dino.body.deltaAbsY() >0 ) {
       this.dino.anims.stop();
-      this.dino.setTexture('dino');
+      this.dino.setTexture('pote');
 
     } else {
-      this.dino.play('dino-run',true);
+      this.dino.play('pote-run',true);
     }
 
   }
