@@ -14,24 +14,56 @@ class PlayScene extends Phaser.Scene {
     this.jumpVelocity = -1600;
     const {height, width} = this.game.config;
 
+    this.bgLayer = this.add.layer();
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, height, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
-    this.dino = this.physics.add.sprite(0, height, 'pote-idle')
+    this.objLayer = this.add.layer();
+    this.pote = this.physics.add.sprite(0, height, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
       .setGravityY(5000);
+    this.pote.hitPose = false;
     
     this.obstacles = this.physics.add.group();
+    
     this.initAnims();
+    this.initColliders();
+    
     this.initStartTrigger();
     this.handleInputs();
+
+  }
+
+  initColliders(){
+    // obstacle overlap
+    this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
+      // run once on collision
+      if(!obstacle.hitFlg){
+        console.log("hit");
+        obstacle.hitFlg = true;  
+        // set hurt status
+        if(!this.pote.hitPose){
+          this.pote.hitPose = true;
+          console.log("hit-pose");
+          
+          this.timerOneShot = this.time.delayedCall(
+            300, ()=>{this.pote.hitPose = false}, this
+          );
+        }
+      }
+
+      // remove hurt status after certain frames
+
+      // obstacle.disableBody(false,false);
+    }, null, this)
+    // item
 
   }
 
   initStartTrigger(){
     const {height, width} = this.game.config;
 
-    this.physics.add.overlap(this.startTrigger, this.dino, () =>{
+    this.physics.add.overlap(this.startTrigger, this.pote, () =>{
 
       if (this.startTrigger.y === 10) {
         this.startTrigger.body.reset(0, height);
@@ -45,15 +77,15 @@ class PlayScene extends Phaser.Scene {
         loop: true,
         callbackScope: this,
         callback: () => {
-          this.dino.setVelocityX(80);
-          this.dino.play('pote-run',1);
+          this.pote.setVelocityX(80);
+          this.pote.play('pote-run',1);
 
           if (this.ground.width < width ) {
             this.ground.width += 17 *2;
           } else {
             this.ground.width = width;
             this.isGamerunning = true;
-            this.dino.setVelocityX(0);
+            this.pote.setVelocityX(0);
             startEvent.remove();
           }
 
@@ -83,8 +115,8 @@ class PlayScene extends Phaser.Scene {
 
   handleInputs() {
     this.input.on("pointerdown", () => {
-      if (!this.dino.body.onFloor()){ return; }
-      this.dino.setVelocityY(this.jumpVelocity);
+      if (!this.pote.body.onFloor()){ return; }
+      this.pote.setVelocityY(this.jumpVelocity);
 
     }, this)
   }
@@ -114,6 +146,9 @@ class PlayScene extends Phaser.Scene {
     obstacle
     .setOrigin(0, 1)
     .setImmovable();
+    obstacle.hitFlg=false;
+    
+    this.objLayer.add(obstacle);
   }
 
   update(time, delta) {
@@ -132,12 +167,15 @@ class PlayScene extends Phaser.Scene {
       this.respawnTime = 0;
     }
 
-    if (this.dino.body.deltaAbsY() >0 ) {
-      this.dino.anims.stop();
-      this.dino.setTexture('pote');
+    // player potato effect
+    if (this.pote.hitPose){
+      this.pote.setTexture("pote-hurt");
+    } else if (this.pote.body.deltaAbsY() >0 ) {
+      this.pote.anims.stop();
+      this.pote.setTexture('pote');
 
     } else {
-      this.dino.play('pote-run',true);
+      this.pote.play('pote-run',true);
     }
 
   }

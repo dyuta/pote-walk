@@ -20,6 +20,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('cloud', 'assets/cloud.png');
 
     this.load.image('pote-idle', 'assets/pote_idle2.png');
+    this.load.image('pote-hurt', 'assets/pote_hurt.png');
 
     this.load.spritesheet('star', 'assets/stars.png', {
       frameWidth: 9, frameHeight: 9
