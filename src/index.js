@@ -7,7 +7,7 @@ import PreloadScene from './PreloadScene';
 const config = {
   type: Phaser.AUTO,
   width: 900,
-  height: 340,
+  height: 680,
   /*scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -23,10 +23,8 @@ const config = {
   pixelArt: true,
   transparent: true,
   physics: {
-    default: 'arcade',
-    arcade: {
-      debug: true
-    }
+    default: 'arcade'
+    ,arcade: {debug: true}
   },
   scene: [PreloadScene, PlayScene]
 };

@@ -11,17 +11,19 @@ class PlayScene extends Phaser.Scene {
     this.gameSpeed = 9;
     this.respawnTime = 0;
     this.groundInitwidth = 100;
-    this.jumpVelocity = -1600;
+    this.jumpVelocity = -1250;
     const {height, width} = this.game.config;
+    const groundHeight = height*0.5;
 
     this.bgLayer = this.add.layer();
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
-    this.ground = this.add.tileSprite(0, height, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
+    this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(200,20).setOrigin(0, 1).setImmovable();
+    this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
     this.objLayer = this.add.layer();
-    this.pote = this.physics.add.sprite(0, height, 'pote-idle')
+    this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
-      .setGravityY(5000);
+      .setGravityY(3000);
     this.pote.hitPose = false;
     
     this.obstacles = this.physics.add.group();
@@ -35,6 +37,8 @@ class PlayScene extends Phaser.Scene {
   }
 
   initColliders(){
+    // ground
+    this.physics.add.collider(this.pote, this.poteGround);
     // obstacle overlap
     this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
       // run once on collision
@@ -62,11 +66,12 @@ class PlayScene extends Phaser.Scene {
 
   initStartTrigger(){
     const {height, width} = this.game.config;
+    const groundHeight = height*0.5;
 
     this.physics.add.overlap(this.startTrigger, this.pote, () =>{
 
       if (this.startTrigger.y === 10) {
-        this.startTrigger.body.reset(0, height);
+        this.startTrigger.body.reset(0, groundHeight);
         return;
       }
       
@@ -123,6 +128,7 @@ class PlayScene extends Phaser.Scene {
 
   placeObstacle(){
     const {width, height} = this.game.config;
+    const groundHeight = height*0.5;
     const obstacleNum = Math.floor(Math.random() * 7) + 1;
     //const obstacleNum = 7;
     const obstacleDistance = Phaser.Math.Between(500, 750);
@@ -134,12 +140,12 @@ class PlayScene extends Phaser.Scene {
       console.log('bird');
       const enemyHeight = [22, 50];
       obstacle = this.obstacles
-      .create(width + obstacleDistance, height - enemyHeight[Math.floor(Math.random() * 2)],'enemy-bird');
+      .create(width + obstacleDistance, groundHeight - enemyHeight[Math.floor(Math.random() * 2)],'enemy-bird');
       obstacle.play('enemy-bird-fly', 1);
       obstacle.body.height = obstacle.body.height / 1.5;
     } else {
       obstacle = this.obstacles
-      .create(width + obstacleDistance, height, `obstacle-${obstacleNum}`);
+      .create(width + obstacleDistance, groundHeight, `obstacle-${obstacleNum}`);
       obstacle.body.offset.y = +5;
     }
 
@@ -166,6 +172,13 @@ class PlayScene extends Phaser.Scene {
       this.placeObstacle();
       this.respawnTime = 0;
     }
+
+    // remove obstacles
+    this.obstacles.getChildren().forEach(obstacle => {
+      if (obstacle.getBounds().right < 0) {
+        this.obstacles.killAndHide(obstacle);
+      }
+    })
 
     // player potato effect
     if (this.pote.hitPose){
