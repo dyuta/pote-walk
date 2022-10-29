@@ -8,13 +8,13 @@ class PlayScene extends Phaser.Scene {
   }
   init(data){
     this.model = data.model;
+    
   }
 
   create() {
     this.consts = new Constants();
     this.isGamerunning = false;
     
-    console.log(this.consts.name);
     this.gameSpeed = 10;
     this.obsRespawnTime = 0;
     this.storeRespawnTime = 0;
@@ -26,7 +26,7 @@ class PlayScene extends Phaser.Scene {
 
     //this.bgLayer = this.add.layer();
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
-    this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(200,20).setOrigin(0, 1).setImmovable();
+    this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
     this.objLayer = this.add.layer();
     this.bookStoreLayer = this.add.layer();
