@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 import PlayScene from './PlayScene';
 import PreloadScene from './PreloadScene';
+import ResultScene from './ResultScene';
 
 const config = {
   type: Phaser.AUTO,
@@ -25,7 +26,7 @@ const config = {
     default: 'arcade'
     ,arcade: {debug: true}
   },
-  scene: [PreloadScene, PlayScene]
+  scene: [PreloadScene, PlayScene, ResultScene]
 };
 new Phaser.Game(config);
 

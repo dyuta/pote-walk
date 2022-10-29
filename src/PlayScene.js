@@ -56,6 +56,8 @@ class PlayScene extends Phaser.Scene {
     this.physics.add.collider(this.pote, this.poteGround);
     // bookstore overlap
     this.physics.add.overlap(this.pote, this.bookStores, (p, bookstore) => {
+      // for Debug
+      this.goClearScene();
       // execute once on collision
       if(!bookstore.hitFlg){
         console.log("enter store");
@@ -67,6 +69,14 @@ class PlayScene extends Phaser.Scene {
         // this.storeVisit[`store${bookstore.bookStoreNum}`] = true;
         console.log(this.model.storeVisit["store1"]);
       }
+    }, null, this);
+
+    // home overlap
+    this.physics.add.overlap(this.pote, this.poteHomeGrp,() =>{
+      //
+      this.timerOneShot = this.time.delayedCall(
+        300, ()=>{this.goClearScene()}, this
+      );
     }, null, this);
 
     // obstacle overlap
@@ -229,6 +239,10 @@ class PlayScene extends Phaser.Scene {
     this.poteHomeLayer.add(this.poteHome);
   }
 
+  goClearScene(){
+    this.scene.start('ResultScene',{model: this.model});
+  }
+
   update(time, delta) {
     if (!this.isGamerunning) { return; }
     const obsRespawnInterval = this.consts.obsRespawnInterval;
@@ -282,7 +296,7 @@ class PlayScene extends Phaser.Scene {
     // player potato effect
     if (this.pote.hitPose){
       this.pote.setTexture("pote-hurt");
-    } else if (!this.pote.body.onFloor() >0 ) {
+    } else if (!this.pote.body.onFloor()) {
       this.pote.anims.stop();
       this.pote.setTexture('pote');
 
