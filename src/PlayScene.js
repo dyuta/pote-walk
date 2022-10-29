@@ -57,7 +57,7 @@ class PlayScene extends Phaser.Scene {
     // bookstore overlap
     this.physics.add.overlap(this.pote, this.bookStores, (p, bookstore) => {
       // for Debug
-      this.goClearScene();
+      //this.goClearScene();
       // execute once on collision
       if(!bookstore.hitFlg){
         console.log("enter store");
