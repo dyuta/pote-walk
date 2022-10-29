@@ -1,25 +1,35 @@
 import Phaser from 'phaser';
+import Constants from './constants';
 
 class PlayScene extends Phaser.Scene {
 
   constructor() {
     super('PlayScene');
   }
+  init(data){
+    this.model = data.model;
+  }
 
   create() {
+    this.consts = new Constants();
     this.isGamerunning = false;
-    this.gameSpeed = 9;
-    this.respawnTime = 0;
+    
+    console.log(this.consts.name);
+    this.gameSpeed = 10;
+    this.obsRespawnTime = 0;
+    this.storeRespawnTime = 0;
     this.groundInitwidth = 100;
     this.jumpVelocity = -1250;
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
+    
 
-    this.bgLayer = this.add.layer();
+    //this.bgLayer = this.add.layer();
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(200,20).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
     this.objLayer = this.add.layer();
+    this.bookStoreLayer = this.add.layer();
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
@@ -27,6 +37,7 @@ class PlayScene extends Phaser.Scene {
     this.pote.hitPose = false;
     
     this.obstacles = this.physics.add.group();
+    this.bookStores = this.physics.add.group();
     
     this.initAnims();
     this.initColliders();
@@ -39,9 +50,24 @@ class PlayScene extends Phaser.Scene {
   initColliders(){
     // ground
     this.physics.add.collider(this.pote, this.poteGround);
+    // bookstore overlap
+    this.physics.add.overlap(this.pote, this.bookStores, (p, bookstore) => {
+      // execute once on collision
+      if(!bookstore.hitFlg){
+        console.log("enter store");
+        bookstore.hitFlg = true;
+
+        // set store visit status
+        // #ToDo move to model
+        this.model.storeVisit[`store${bookstore.bookStoreNum}`] = true;
+        // this.storeVisit[`store${bookstore.bookStoreNum}`] = true;
+        console.log(this.model.storeVisit["store1"]);
+      }
+    }, null, this);
+
     // obstacle overlap
     this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
-      // run once on collision
+      // execute once on collision
       if(!obstacle.hitFlg){
         console.log("hit");
         obstacle.hitFlg = true;  
@@ -56,9 +82,6 @@ class PlayScene extends Phaser.Scene {
         }
       }
 
-      // remove hurt status after certain frames
-
-      // obstacle.disableBody(false,false);
     }, null, this)
     // item
 
@@ -157,20 +180,58 @@ class PlayScene extends Phaser.Scene {
     this.objLayer.add(obstacle);
   }
 
+  placeBookstore(bookStoreNum){
+    const {width, height} = this.game.config;
+    const groundHeight = height*0.5;
+
+    //const obstacleNum = 7;
+    const bookStoreDistance = 400;
+
+    let bookStore;
+    console.log(bookStoreNum);
+
+    if(bookStoreNum == 1) {
+      console.log('bookStore01');
+      bookStore = this.bookStores
+      .create(width + bookStoreDistance, groundHeight,'bookstore01');
+    } else {
+
+    }
+
+    bookStore
+    .setOrigin(0, 1)
+    .setImmovable();
+    bookStore.hitFlg=false;
+    bookStore.bookStoreNum=bookStoreNum;
+    
+    this.bookStoreLayer.add(bookStore);
+  }
+
   update(time, delta) {
     if (!this.isGamerunning) { return; }
+    const obsRespawnInterval = this.consts.obsRespawnInterval;
+    const storeRespawnInterval = this.consts.storeRespawnInterval;
 
-    // background scroll
+    // ground scroll
     this.ground.tilePositionX += this.gameSpeed;
     // obstacle scroll
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
+    // bookstore scroll
+    Phaser.Actions.IncX(this.bookStores.getChildren(), -this.gameSpeed*0.3);
 
-    this.respawnTime += delta * this.gameSpeed * 0.08;
+    this.obsRespawnTime += delta * this.gameSpeed * 0.08;
+    this.storeRespawnTime += delta * this.gameSpeed * 0.08;
 
     // place obstacle every 1.5seconds
-    if (this.respawnTime >= 1500){
+    if (this.obsRespawnTime >= obsRespawnInterval){
       this.placeObstacle();
-      this.respawnTime = 0;
+      this.obsRespawnTime = 0;
+    }
+
+    // place bookstore
+    if (this.storeRespawnTime >= storeRespawnInterval){
+      this.placeBookstore(1);
+      this.storeRespawnTime = 0;
     }
 
     // remove obstacles
@@ -183,7 +244,7 @@ class PlayScene extends Phaser.Scene {
     // player potato effect
     if (this.pote.hitPose){
       this.pote.setTexture("pote-hurt");
-    } else if (this.pote.body.deltaAbsY() >0 ) {
+    } else if (!this.pote.body.onFloor() >0 ) {
       this.pote.anims.stop();
       this.pote.setTexture('pote');
 

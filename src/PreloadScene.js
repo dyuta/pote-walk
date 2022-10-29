@@ -1,5 +1,6 @@
 
 import Phaser from 'phaser';
+import Model from './model';
 
 class PreloadScene extends Phaser.Scene {
 
@@ -21,6 +22,8 @@ class PreloadScene extends Phaser.Scene {
 
     this.load.image('pote-idle', 'assets/pote_idle2.png');
     this.load.image('pote-hurt', 'assets/pote_hurt.png');
+
+    this.load.image('bookstore01', 'assets/bookstore_01temp.png');
 
     this.load.spritesheet('star', 'assets/stars.png', {
       frameWidth: 9, frameHeight: 9
@@ -59,7 +62,8 @@ class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('PlayScene');
+    this.model = new Model();
+    this.scene.start('PlayScene',{model: this.model});
   }
 }
 
