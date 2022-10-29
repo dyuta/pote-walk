@@ -8,7 +8,7 @@ class PlayScene extends Phaser.Scene {
   }
   init(data){
     this.model = data.model;
-    
+
   }
 
   create() {
@@ -23,13 +23,16 @@ class PlayScene extends Phaser.Scene {
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
     
+    this.setStoreCnt = 0;
 
     //this.bgLayer = this.add.layer();
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
+    
     this.objLayer = this.add.layer();
     this.bookStoreLayer = this.add.layer();
+    this.poteHomeLayer = this.add.layer();
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
@@ -38,6 +41,7 @@ class PlayScene extends Phaser.Scene {
     
     this.obstacles = this.physics.add.group();
     this.bookStores = this.physics.add.group();
+    this.poteHomeGrp = this.physics.add.group();
     
     this.initAnims();
     this.initColliders();
@@ -207,6 +211,24 @@ class PlayScene extends Phaser.Scene {
     this.bookStoreLayer.add(bookStore);
   }
 
+  placePoteHome(){
+    const {width, height} = this.game.config;
+    const groundHeight = height*0.5;
+
+    //const obstacleNum = 7;
+    const Distance = 500;
+
+
+    console.log('potehome');
+    this.poteHome = this.poteHomeGrp
+      .create(width + Distance, groundHeight + 20,'potehome')
+      .setOrigin(0, 1).setImmovable();
+    
+      this.poteHome.hitFlg=false;
+    
+    this.poteHomeLayer.add(this.poteHome);
+  }
+
   update(time, delta) {
     if (!this.isGamerunning) { return; }
     const obsRespawnInterval = this.consts.obsRespawnInterval;
@@ -218,9 +240,12 @@ class PlayScene extends Phaser.Scene {
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
     // bookstore scroll
     Phaser.Actions.IncX(this.bookStores.getChildren(), -this.gameSpeed*0.3);
+    // bookstore scroll
+    Phaser.Actions.IncX(this.poteHomeGrp.getChildren(), -this.gameSpeed*0.3);
 
     this.obsRespawnTime += delta * this.gameSpeed * 0.08;
     this.storeRespawnTime += delta * this.gameSpeed * 0.08;
+    this.homeTime += delta * this.gameSpeed * 0.08;
 
     // place obstacle every 1.5seconds
     if (this.obsRespawnTime >= obsRespawnInterval){
@@ -228,16 +253,29 @@ class PlayScene extends Phaser.Scene {
       this.obsRespawnTime = 0;
     }
 
-    // place bookstore
+    // place bookstore or home
     if (this.storeRespawnTime >= storeRespawnInterval){
-      this.placeBookstore(1);
-      this.storeRespawnTime = 0;
+      if(this.setStoreCnt < this.consts.numberOfStores){
+        this.placeBookstore(1);
+        this.storeRespawnTime = 0;
+        this.setStoreCnt += 1;
+      } else {
+        // place home
+        this.placePoteHome();
+        this.storeRespawnTime = 0;
+      }
     }
 
     // remove obstacles
     this.obstacles.getChildren().forEach(obstacle => {
       if (obstacle.getBounds().right < 0) {
         this.obstacles.killAndHide(obstacle);
+      }
+    })
+    // remove bookstore
+    this.bookStores.getChildren().forEach(bookStore => {
+      if (bookStore.getBounds().right < 0) {
+        this.bookStores.killAndHide(bookStore);
       }
     })
 

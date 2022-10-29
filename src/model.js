@@ -1,6 +1,5 @@
 class Model{
     constructor(){
-        this.numberOfStores=6;
         this.storeVisit = {
             store1:false,
             store2:false,

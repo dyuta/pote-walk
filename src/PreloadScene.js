@@ -24,6 +24,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('pote-hurt', 'assets/pote_hurt.png');
 
     this.load.image('bookstore01', 'assets/bookstore_01temp.png');
+    this.load.image('potehome', 'assets/home_tmp.png');
 
     this.load.spritesheet('star', 'assets/stars.png', {
       frameWidth: 9, frameHeight: 9

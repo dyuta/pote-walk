@@ -3,6 +3,7 @@ class Constants{
     constructor(){
         this.name = "constObj";
         this.appURL = 'https://dyuta.github.io/pote-walk/';
+        this.numberOfStores=2;
 
         this.volumeBGM=0.1;
         this.volumeSound=0.2;
