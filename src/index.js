@@ -24,7 +24,7 @@ const config = {
   transparent: true,
   physics: {
     default: 'arcade'
-    ,arcade: {debug: true}
+    //,arcade: {debug: true}
   },
   scene: [PreloadScene, PlayScene, ResultScene]
 };

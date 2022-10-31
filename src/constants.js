@@ -15,7 +15,9 @@ class Constants{
         this.VOLUME_ON="VOLUME_ON";
         this.GO_POTATO="GO_POTATO";
         this.obsRespawnInterval = 1500;
+        this.coinRespawnInterval = 1500;
         this.storeRespawnInterval = 10500;
+        this.coinCntInterval =128;
 
         this.fontoConf = {};
         this.fontoConf.resultTitle = {

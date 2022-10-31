@@ -15,20 +15,22 @@ class PlayScene extends Phaser.Scene {
     this.consts = new Constants();
     this.isGamerunning = false;
     
-        this.gameSpeed = 10;
+    this.gameSpeed = 10;
     this.obsRespawnTime = 0;
+    this.coinRespawnTime = 0;
     this.storeRespawnTime = 0;
     this.groundInitwidth = 100;
     this.jumpVelocity = -1250;
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
 
-    this.counterStr = "coins: 00    books:00";
+    this.counterStr = "coins:0    books:0";
     this.coinCnt=0;
-    this.coinSpent=0;
+    //this.coinSpent=0;
     this.bookCnt=0;
+    //this.coinCntTimer=0;
     
-    this.setStoreCnt = 0;
+    this.storePlacedCnt = 0;
 
     //this.bgLayer = this.add.layer();
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
@@ -37,6 +39,7 @@ class PlayScene extends Phaser.Scene {
     
     this.objLayer = this.add.layer();
     this.bookStoreLayer = this.add.layer();
+    this.coinLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
     this.counterText = this.add.text(width - 300, 20, this.counterStr, this.consts.fontoConf.counter);
     
@@ -76,6 +79,12 @@ class PlayScene extends Phaser.Scene {
         this.model.storeVisit[`store${bookstore.bookStoreNum}`] = true;
         // this.storeVisit[`store${bookstore.bookStoreNum}`] = true;
         console.log(this.model.storeVisit["store1"]);
+
+        //buying books
+        //this.coinSpent=this.coinCnt;
+        this.bookCnt = this.coinCnt;
+        this.coinCnt = 0;
+        
       }
     }, null, this);
 
@@ -92,7 +101,11 @@ class PlayScene extends Phaser.Scene {
       // execute once on collision
       if(!obstacle.hitFlg){
         console.log("hit");
-        obstacle.hitFlg = true;  
+        obstacle.hitFlg = true;
+        if(this.coinCnt >0){
+          this.coinCnt -=1; 
+        }
+        
         // set hurt status
         if(!this.pote.hitPose){
           this.pote.hitPose = true;
@@ -103,9 +116,18 @@ class PlayScene extends Phaser.Scene {
           );
         }
       }
-
     }, null, this)
-    // item
+    
+    // coin overlap
+    this.physics.add.overlap(this.pote, this.coins, (p, coin) => {
+      // execute once on collision
+      if(!coin.hitFlg){
+        console.log("getcoin");
+        coin.hitFlg = true;  
+        // set hurt status
+        this.coinCnt += 1;
+      }
+    }, null, this)
 
   }
 
@@ -161,6 +183,13 @@ class PlayScene extends Phaser.Scene {
       repeat: -1
     })
 
+    this.anims.create({
+      key: 'coin-rotate',
+      frames: this.anims.generateFrameNumbers('coin', {start: 0, end: 5}),
+      frameRate: 6,
+      repeat: -1
+    })
+
   }
 
   handleInputs() {
@@ -176,7 +205,7 @@ class PlayScene extends Phaser.Scene {
     const groundHeight = height*0.5;
     const obstacleNum = Math.floor(Math.random() * 7) + 1;
     //const obstacleNum = 7;
-    const obstacleDistance = Phaser.Math.Between(500, 750);
+    const obstacleDistance = Phaser.Math.Between(400, 700);
 
     let obstacle;
     console.log(obstacleNum);
@@ -200,6 +229,45 @@ class PlayScene extends Phaser.Scene {
     obstacle.hitFlg=false;
     
     this.objLayer.add(obstacle);
+  }
+
+  placeCoin(){
+    const {width, height} = this.game.config;
+    const groundHeight = height*0.5;
+    let coinDistance = Phaser.Math.Between(850, 950);
+    let coinHeight = 22;
+    const distancePre = [Phaser.Math.Between(100, 350), Phaser.Math.Between(850, 950)]; 
+    const coinHeightPre = [22, 70, 100];
+
+    // hight randomizer Lv>2
+    if(this.storePlacedCnt > 1){
+      coinHeight = coinHeightPre[Math.floor(Math.random() * 3)];
+    }    
+    
+    // distance randomizer Lv>3
+    if(this.storePlacedCnt > 2){
+      // coin appears avoiding obstacle
+      coinDistance = distancePre[Math.floor(Math.random() * 2)];
+    }
+
+    let coin;
+    
+    console.log('coin');
+    
+    coin = this.coins
+    .create(width + coinDistance, groundHeight - coinHeight,'coin');
+    coin.play('coin-rotate', 0);
+    coin.scale = coin.scale*2;
+    //coin.body.height = coin.body.height / 3;
+    //coin.body.width = coin.body.width / 2;
+
+
+    coin
+    .setOrigin(0, 1)
+    .setImmovable();
+    coin.hitFlg=false;
+    
+    this.coinLayer.add(coin);
   }
 
   placeBookstore(bookStoreNum){
@@ -255,17 +323,40 @@ class PlayScene extends Phaser.Scene {
     if (!this.isGamerunning) { return; }
     const obsRespawnInterval = this.consts.obsRespawnInterval;
     const storeRespawnInterval = this.consts.storeRespawnInterval;
+    const coinRespawnInterval = this.consts.coinRespawnInterval;
+
+    // coin and books count
+    /*
+    if(this.coinSpent == 0 ){
+      this.coinCntTimer = 0;
+    } else {
+      this.coinCntTimer +=delta;
+      if(this.coinCntTimer > this.consts.coinCntInterval){
+        console.log("coinSpent calc" +this.coinSpent);
+        
+        this.coinSpent-=1;
+        this.coinCnt-=1;
+        this.bookCnt+=1;
+        this.coinCntTimer = 0;
+      }
+    }
+    */
+
+    this.counterText.setText(`coins:${this.coinCnt}    books:${this.bookCnt}`);
 
     // ground scroll
     this.ground.tilePositionX += this.gameSpeed;
     // obstacle scroll
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
+    // coin scroll
+    Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
     // bookstore scroll
     Phaser.Actions.IncX(this.bookStores.getChildren(), -this.gameSpeed*0.3);
-    // bookstore scroll
+    // poteHome scroll
     Phaser.Actions.IncX(this.poteHomeGrp.getChildren(), -this.gameSpeed*0.3);
 
     this.obsRespawnTime += delta * this.gameSpeed * 0.08;
+    this.coinRespawnTime += delta * this.gameSpeed * 0.08;
     this.storeRespawnTime += delta * this.gameSpeed * 0.08;
     this.homeTime += delta * this.gameSpeed * 0.08;
 
@@ -275,12 +366,19 @@ class PlayScene extends Phaser.Scene {
       this.obsRespawnTime = 0;
     }
 
+    // place coin every XXseconds
+    if (this.storePlacedCnt < this.consts.numberOfStores 
+      && this.coinRespawnTime >= coinRespawnInterval){
+      this.placeCoin();
+      this.coinRespawnTime = 0;
+    }
+
     // place bookstore or home
     if (this.storeRespawnTime >= storeRespawnInterval){
-      if(this.setStoreCnt < this.consts.numberOfStores){
+      if(this.storePlacedCnt < this.consts.numberOfStores){
         this.placeBookstore(1);
         this.storeRespawnTime = 0;
-        this.setStoreCnt += 1;
+        this.storePlacedCnt += 1;
       } else {
         // place home
         this.placePoteHome();
@@ -292,6 +390,12 @@ class PlayScene extends Phaser.Scene {
     this.obstacles.getChildren().forEach(obstacle => {
       if (obstacle.getBounds().right < 0) {
         this.obstacles.killAndHide(obstacle);
+      }
+    })
+    // remove coins
+    this.coins.getChildren().forEach(coin => {
+      if (coin.getBounds().right < 0) {
+        this.coins.killAndHide(coin);
       }
     })
     // remove bookstore

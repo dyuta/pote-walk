@@ -38,10 +38,11 @@ class ResultScene extends Phaser.Scene {
     this.pote.hitPose = false;
 
     // restart button
-    this.gameClearScreen = this.add.container(width / 2, height / 2 - 50).setAlpha(0)
+    this.gameClearScreen = this.add.container(width / 2, height / 5).setAlpha(0)
     //this.gameClearText = this.add.image(0, 0, 'game-over');
     this.GameClearStr ="Clear!";
-    this.gameClearText = this.add.text(0, 0, this.GameClearStr, this.consts.fontoConf.resultTitle);
+    this.gameClearText = this.add.text(0, 0, this.GameClearStr, this.consts.fontoConf.resultTitle)
+      .setOrigin(0.5,0.5);
     this.restart = this.add.image(0, 80, 'restart').setInteractive();
     this.gameClearScreen.add([
       this.gameClearText,  this.restart

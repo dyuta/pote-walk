@@ -55,6 +55,11 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 94
     })
 
+    this.load.spritesheet('coin', 'assets/coin01_gold01_spriteSheet.png', {
+      frameWidth: 32,
+      frameHeight: 32
+    })
+
     this.load.image('obstacle-1', 'assets/cactuses_small_1.png')
     this.load.image('obstacle-2', 'assets/cactuses_small_2.png')
     this.load.image('obstacle-3', 'assets/cactuses_small_3.png')
