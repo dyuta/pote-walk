@@ -11,6 +11,7 @@ class Model{
 
         this.result = {
             coin:0,
+            coinGen:0,
             miss:0,
             book:0,
             visited:0

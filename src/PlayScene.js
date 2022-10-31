@@ -15,6 +15,9 @@ class PlayScene extends Phaser.Scene {
     this.consts = new Constants();
     this.isGamerunning = false;
     
+    //debug text
+    this.debugText = this.add.text(10, 10, 'for debug', this.consts.fontoConf.counter);
+
     this.gameSpeed = 10;
     this.obsRespawnTime = 0;
     this.coinRespawnTime = 0;
@@ -69,21 +72,20 @@ class PlayScene extends Phaser.Scene {
     this.physics.add.overlap(this.pote, this.bookStores, (p, bookstore) => {
       // for Debug
       //this.goClearScene();
+
       // execute once on collision
       if(!bookstore.hitFlg){
         console.log("enter store");
         bookstore.hitFlg = true;
 
         // set store visit status
-        // #ToDo move to model
         this.model.storeVisit[`store${bookstore.bookStoreNum}`] = true;
-        // this.storeVisit[`store${bookstore.bookStoreNum}`] = true;
-        console.log(this.model.storeVisit["store1"]);
+        this.model.result.visited ++;
 
         //buying books
-        //this.coinSpent=this.coinCnt;
-        this.bookCnt = this.coinCnt;
+        this.bookCnt += this.coinCnt;
         this.coinCnt = 0;
+        this.model.result.book = this.bookCnt;
         
       }
     }, null, this);
@@ -94,8 +96,10 @@ class PlayScene extends Phaser.Scene {
       if(!obstacle.hitFlg){
         console.log("hit");
         obstacle.hitFlg = true;
+        this.model.result.miss ++;
+        //console.log("miss "+this.model.result.miss);
         if(this.coinCnt >0){
-          this.coinCnt -=1; 
+          this.coinCnt --; 
         }
         
         // set hurt status
@@ -116,8 +120,10 @@ class PlayScene extends Phaser.Scene {
       if(!coin.hitFlg){
         console.log("getcoin");
         coin.hitFlg = true;  
-        // set hurt status
-        this.coinCnt += 1;
+        
+        // count coin
+        this.coinCnt ++;
+        this.model.result.coin ++;
         this.coins.killAndHide(coin);
       }
     }, null, this)
@@ -263,11 +269,11 @@ class PlayScene extends Phaser.Scene {
     //coin.body.height = coin.body.height / 3;
     //coin.body.width = coin.body.width / 2;
 
-
     coin
     .setOrigin(0, 1)
     .setImmovable();
     coin.hitFlg=false;
+    this.model.result.coinGen++;
     
     this.coinLayer.add(coin);
   }
@@ -323,6 +329,7 @@ class PlayScene extends Phaser.Scene {
 
   update(time, delta) {
     if (!this.isGamerunning) { return; }
+    this.debugText.setText('sec: ' + Math.floor(time/1000));
     const obsRespawnInterval = this.consts.obsRespawnInterval;
     const storeRespawnInterval = this.consts.storeRespawnInterval;
     const coinRespawnInterval = this.consts.coinRespawnInterval;
@@ -380,7 +387,7 @@ class PlayScene extends Phaser.Scene {
       if(this.storePlacedCnt < this.consts.numberOfStores){
         this.placeBookstore(1);
         this.storeRespawnTime = 0;
-        this.storePlacedCnt += 1;
+        this.storePlacedCnt ++;
       } else {
         // place home
         this.placePoteHome();
