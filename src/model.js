@@ -1,5 +1,6 @@
 class Model{
     constructor(){
+        this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.storeVisit = {
             store1:false,
             store2:false,
@@ -7,12 +8,12 @@ class Model{
             store4:false,
             store5:false,
             store6:false};
-        this.hsv = Phaser.Display.Color.HSVColorWheel();
 
         this.result = {
             coin:0,
             miss:0,
-            score:0
+            book:0,
+            visited:0
             };
 
         this._isSceneChangeReserved = false;

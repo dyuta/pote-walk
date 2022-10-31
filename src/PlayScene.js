@@ -88,14 +88,6 @@ class PlayScene extends Phaser.Scene {
       }
     }, null, this);
 
-    // home overlap
-    this.physics.add.overlap(this.pote, this.poteHomeGrp,() =>{
-      //
-      this.timerOneShot = this.time.delayedCall(
-        300, ()=>{this.goClearScene()}, this
-      );
-    }, null, this);
-
     // obstacle overlap
     this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
       // execute once on collision
@@ -126,8 +118,18 @@ class PlayScene extends Phaser.Scene {
         coin.hitFlg = true;  
         // set hurt status
         this.coinCnt += 1;
+        this.coins.killAndHide(coin);
       }
     }, null, this)
+
+    // home overlap
+    this.physics.add.overlap(this.pote, this.poteHomeGrp,() =>{
+      //
+      this.timerOneShot = this.time.delayedCall(
+        300, ()=>{this.goClearScene()}, this
+      );
+    }, null, this);
+
 
   }
 
