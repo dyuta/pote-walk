@@ -16,6 +16,8 @@ class ResultScene extends Phaser.Scene {
     this.consts = new Constants();
     this.isGamerunning = false;
     this.PassedTime=0;
+
+    //debug text
     this.debugText = this.add.text(10, 10, 'for debug', { fill: '#00ffff' });
 
     this.groundInitwidth = 100;
@@ -37,7 +39,9 @@ class ResultScene extends Phaser.Scene {
 
     // restart button
     this.gameClearScreen = this.add.container(width / 2, height / 2 - 50).setAlpha(0)
-    this.gameClearText = this.add.image(0, 0, 'game-over');
+    //this.gameClearText = this.add.image(0, 0, 'game-over');
+    this.GameClearStr ="Clear!";
+    this.gameClearText = this.add.text(0, 0, this.GameClearStr, this.consts.fontoConf.resultTitle);
     this.restart = this.add.image(0, 80, 'restart').setInteractive();
     this.gameClearScreen.add([
       this.gameClearText,  this.restart
@@ -93,6 +97,10 @@ class ResultScene extends Phaser.Scene {
   }
 
   handleInputs() {
+    this.restart.on('pointerdown', () => {
+      this.restartGame();
+    }, this)
+
     this.input.on("pointerdown", () => {
       if (!this.pote.body.onFloor()){ return; }
       this.pote.setVelocityY(this.jumpVelocity);
@@ -114,7 +122,7 @@ class ResultScene extends Phaser.Scene {
       this.gameClearScreen.setAlpha(1);
     }
 
-    if(this.PassedTime > 3000){
+    if(this.PassedTime > 10000){
       this.restartGame();
     }
 

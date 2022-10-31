@@ -1,6 +1,7 @@
 
 import Phaser from 'phaser';
 import Model from './model';
+import WebFontFile from './files/WebFontFile'
 
 class PreloadScene extends Phaser.Scene {
 
@@ -60,6 +61,13 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('obstacle-4', 'assets/cactuses_big_1.png')
     this.load.image('obstacle-5', 'assets/cactuses_big_2.png')
     this.load.image('obstacle-6', 'assets/cactuses_big_3.png')
+
+    // font loader
+    this.load.addFile(new WebFontFile(this.load, 
+      ['Concert One','Roboto','Zen Maru Gothic','Mulish'
+      //,'Open Sans','Comfortaa','Staatliches','Press Start 2P','Maven Pro'
+      ]
+      ))
   }
 
   create() {

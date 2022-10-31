@@ -16,6 +16,15 @@ class Constants{
         this.GO_POTATO="GO_POTATO";
         this.obsRespawnInterval = 1500;
         this.storeRespawnInterval = 10500;
+
+        this.fontoConf = {};
+        this.fontoConf.resultTitle = {
+			fontFamily: '"Concert One"', fontSize: '40px', fill: "#EFA92A"
+        };
+        this.fontoConf.counter = {
+			fontFamily: '"Roboto"', fontSize: '28px', fill: "#878176"
+        };
+
     }
 }
 

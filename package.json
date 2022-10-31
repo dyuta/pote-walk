@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "phaser": "^3.55.2",
+    "webfontloader": "^1.6.28",
     "webpack-merge": "^5.8.0"
   }
 }

@@ -15,13 +15,18 @@ class PlayScene extends Phaser.Scene {
     this.consts = new Constants();
     this.isGamerunning = false;
     
-    this.gameSpeed = 10;
+        this.gameSpeed = 10;
     this.obsRespawnTime = 0;
     this.storeRespawnTime = 0;
     this.groundInitwidth = 100;
     this.jumpVelocity = -1250;
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
+
+    this.counterStr = "coins: 00    books:00";
+    this.coinCnt=0;
+    this.coinSpent=0;
+    this.bookCnt=0;
     
     this.setStoreCnt = 0;
 
@@ -33,6 +38,8 @@ class PlayScene extends Phaser.Scene {
     this.objLayer = this.add.layer();
     this.bookStoreLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
+    this.counterText = this.add.text(width - 300, 20, this.counterStr, this.consts.fontoConf.counter);
+    
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
@@ -40,6 +47,7 @@ class PlayScene extends Phaser.Scene {
     this.pote.hitPose = false;
     
     this.obstacles = this.physics.add.group();
+    this.coins = this.physics.add.group();
     this.bookStores = this.physics.add.group();
     this.poteHomeGrp = this.physics.add.group();
     
