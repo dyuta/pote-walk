@@ -17,7 +17,13 @@ class PlayScene extends Phaser.Scene {
     this.isGamerunning = false;
     
     //debug text
-    this.debugText = this.add.text(10, 10, 'for debug', this.consts.fontoConf.counter);
+    this.debugText = this.add.text(10, 400, 'for debug', this.consts.fontoConf.counter);
+
+    // Store Name
+    this.destinationTxt = this.add.text(
+      20, 10, `行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`,
+      this.consts.fontoConf.storeinfo01
+    );
 
     this.gameSpeed = this.consts.gameSpeedNormal;
     this.obsRespawnTime = 0;
@@ -45,7 +51,7 @@ class PlayScene extends Phaser.Scene {
     this.objLayer = this.add.layer();
     this.coinLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
-    this.counterText = this.add.text(width - 300, 20, this.counterStr, this.consts.fontoConf.counter);
+    this.counterText = this.add.text(width - 300, 10, this.counterStr, this.consts.fontoConf.counter);
     
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
@@ -83,6 +89,13 @@ class PlayScene extends Phaser.Scene {
         // set store visit status
         this.model.storeVisit[`store${bookstore.bookStoreNum}`] = true;
         this.model.result.visited ++;
+
+        //update destination
+        if(this.model.result.visited < this.consts.numberOfStores){
+          this.destinationTxt.setText(`行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`);
+        } else {
+          this.destinationTxt.setText(`行先: おうち`);
+        }
 
         //buying books
         this.bookCnt += this.coinCnt;

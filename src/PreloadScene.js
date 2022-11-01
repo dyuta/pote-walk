@@ -75,8 +75,8 @@ class PreloadScene extends Phaser.Scene {
 
     // font loader
     this.load.addFile(new WebFontFile(this.load, 
-      ['Concert One','Roboto','Zen Maru Gothic','Mulish'
-      //,'Open Sans','Comfortaa','Staatliches','Press Start 2P','Maven Pro'
+      ['Concert One','Roboto','Zen Maru Gothic','Noto Sans JP','Sawarabi Gothic'
+      //,'Mulish','Open Sans','Comfortaa','Staatliches','Press Start 2P','Maven Pro'
       ]
       ))
   }

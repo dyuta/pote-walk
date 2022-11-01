@@ -5,6 +5,15 @@ class Constants{
         this.appURL = 'https://dyuta.github.io/pote-walk/';
         this.numberOfStores=6;
 
+        this.bookstoreList = [
+            {name:"NENOi",line:"東京メトロ",station:"早稲田"},
+            {name:"双子のライオン堂",line:"東京メトロ",station:"赤坂"},
+            {name:"マルジナリア書店",line:"京王 JR",station:"分倍河原"},
+            {name:"書肆 海と夕焼",line:"JR",station:"谷保"},
+            {name:"BREWBOOKS",line:"JR",station:"西荻窪"},
+            {name:"山陽堂書店",line:"東京メトロ",station:"表参道"}
+        ]
+
         this.volumeBGM=0.1;
         this.volumeSound=0.2;
         
@@ -43,9 +52,22 @@ class Constants{
         this.worldScroll = 0.6;
 
         this.fontoConf = {};
+        //'Zen Maru Gothic','Noto Sans JP','Sawarabi Gothic'
         this.fontoConf.counter = {
 			fontFamily: '"Roboto"', fontSize: '28px', fill: "#878176"
         };
+
+        this.fontoConf.storeinfo01 = {
+			fontFamily: '"Zen Maru Gothic"', fontSize: '32px', fill: "#878176"
+            //,fontWeight:"bold"
+        };
+        this.fontoConf.storeinfo02 = {
+			fontFamily: '"Noto Sans JP"', fontSize: '28px', fill: "#878176"
+        };
+        this.fontoConf.storeinfo03 = {
+			fontFamily: '"Sawarabi Gothic"', fontSize: '28px', fill: "#878176"
+        };
+        
         this.fontoConf.resultTitle = {
 			fontFamily: '"Concert One"', fontSize: '40px', fill: "#EFA92A"
         };
