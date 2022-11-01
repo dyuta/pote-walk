@@ -295,14 +295,12 @@ class PlayScene extends Phaser.Scene {
     let bookStore;
     console.log(bookStoreNum);
 
-    if(bookStoreNum == 1) {
-      console.log('bookStore01');
-      bookStore = this.bookStores
-      .create(width + bookStoreDistance, groundHeight,'bookstore01');
-    } else {
+    const bookstoreName = `bookstore0${bookStoreNum}`
 
-    }
-
+    console.log(bookstoreName);
+    bookStore = this.bookStores
+    .create(width + bookStoreDistance, groundHeight,bookstoreName);
+    
     bookStore
     .setOrigin(0, 1)
     .setImmovable();
@@ -392,7 +390,8 @@ class PlayScene extends Phaser.Scene {
     // place bookstore or home
     if (this.storeRespawnTime >= storeRespawnInterval){
       if(this.storePlacedCnt < this.consts.numberOfStores){
-        this.placeBookstore(1);
+
+        this.placeBookstore(this.storePlacedCnt+1);
         this.storeRespawnTime = 0;
         this.storePlacedCnt ++;
       } else {
