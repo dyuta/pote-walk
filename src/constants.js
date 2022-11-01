@@ -14,10 +14,28 @@ class Constants{
         this.VOLUME_OFF="VOLUME_OFF";
         this.VOLUME_ON="VOLUME_ON";
         this.GO_POTATO="GO_POTATO";
-        this.obsRespawnInterval = 1300;
-        this.coinRespawnInterval = 2600;
-        this.storeRespawnInterval = 7800;
+
+        this.colors = {
+            bg:"E7E6E3"
+        };
+
+        this.obsRespawnInterval = 1000;
+        this.coinRespawnInterval = 2000;
+        this.storeRespawnInterval = 5000;
         this.coinCntInterval =128;
+
+        this.distances={
+            obstacleFrom:400,
+            obstacleTo:700,
+            coinFromFirst:100,
+            coinToFirst:350,
+            coinFromSec:850,
+            coinToSec:950,
+            bookstore:400,
+            potehome:500
+        };
+
+        this.worldScroll = 0.6;
 
         this.fontoConf = {};
         this.fontoConf.counter = {

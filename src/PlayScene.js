@@ -13,6 +13,7 @@ class PlayScene extends Phaser.Scene {
 
   create() {
     this.consts = new Constants();
+    this.cameras.main.setBackgroundColor(this.consts.colors.bg);
     this.isGamerunning = false;
     
     //debug text
@@ -40,8 +41,8 @@ class PlayScene extends Phaser.Scene {
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
     
-    this.objLayer = this.add.layer();
     this.bookStoreLayer = this.add.layer();
+    this.objLayer = this.add.layer();
     this.coinLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
     this.counterText = this.add.text(width - 300, 20, this.counterStr, this.consts.fontoConf.counter);
@@ -213,7 +214,8 @@ class PlayScene extends Phaser.Scene {
     const groundHeight = height*0.5;
     const obstacleNum = Math.floor(Math.random() * 7) + 1;
     //const obstacleNum = 7;
-    const obstacleDistance = Phaser.Math.Between(400, 700);
+    const obstacleDistance =
+      Phaser.Math.Between(this.consts.distances.obstacleFrom, this.consts.distances.obstacleTo);
 
     let obstacle;
     console.log(obstacleNum);
@@ -283,7 +285,7 @@ class PlayScene extends Phaser.Scene {
     const groundHeight = height*0.5;
 
     //const obstacleNum = 7;
-    const bookStoreDistance = 400;
+    const bookStoreDistance = 200;
 
     let bookStore;
     console.log(bookStoreNum);
@@ -310,7 +312,7 @@ class PlayScene extends Phaser.Scene {
     const groundHeight = height*0.5;
 
     //const obstacleNum = 7;
-    const Distance = 500;
+    const Distance = 200;
 
 
     console.log('potehome');
@@ -354,15 +356,15 @@ class PlayScene extends Phaser.Scene {
     this.counterText.setText(`coins:${this.coinCnt}    books:${this.bookCnt}`);
 
     // ground scroll
-    this.ground.tilePositionX += this.gameSpeed;
+    this.ground.tilePositionX += this.gameSpeed*this.consts.worldScroll;
     // obstacle scroll
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
     // coin scroll
     Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
     // bookstore scroll
-    Phaser.Actions.IncX(this.bookStores.getChildren(), -this.gameSpeed*0.3);
+    Phaser.Actions.IncX(this.bookStores.getChildren(), -this.gameSpeed*this.consts.worldScroll);
     // poteHome scroll
-    Phaser.Actions.IncX(this.poteHomeGrp.getChildren(), -this.gameSpeed*0.3);
+    Phaser.Actions.IncX(this.poteHomeGrp.getChildren(), -this.gameSpeed*this.consts.worldScroll);
 
     this.obsRespawnTime += delta * this.gameSpeed * 0.08;
     this.coinRespawnTime += delta * this.gameSpeed * 0.08;
