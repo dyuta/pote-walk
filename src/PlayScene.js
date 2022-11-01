@@ -19,12 +19,12 @@ class PlayScene extends Phaser.Scene {
     //debug text
     this.debugText = this.add.text(10, 10, 'for debug', this.consts.fontoConf.counter);
 
-    this.gameSpeed = 10;
+    this.gameSpeed = this.consts.gameSpeedNormal;
     this.obsRespawnTime = 0;
     this.coinRespawnTime = 0;
     this.storeRespawnTime = 0;
     this.groundInitwidth = 100;
-    this.jumpVelocity = -1250;
+    
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
 
@@ -69,6 +69,7 @@ class PlayScene extends Phaser.Scene {
   initColliders(){
     // ground
     this.physics.add.collider(this.pote, this.poteGround);
+
     // bookstore overlap
     this.physics.add.overlap(this.pote, this.bookStores, (p, bookstore) => {
       // for Debug
@@ -87,6 +88,10 @@ class PlayScene extends Phaser.Scene {
         this.bookCnt += this.coinCnt;
         this.coinCnt = 0;
         this.model.result.book = this.bookCnt;
+
+        if(this.model.result.visited == 3){
+          this.gameSpeed = this.consts.gameSpeedFast;
+        }
         
       }
     }, null, this);
@@ -204,7 +209,7 @@ class PlayScene extends Phaser.Scene {
   handleInputs() {
     this.input.on("pointerdown", () => {
       if (!this.pote.body.onFloor()){ return; }
-      this.pote.setVelocityY(this.jumpVelocity);
+      this.pote.setVelocityY(this.consts.jumpVelocity);
 
     }, this)
   }

@@ -19,9 +19,14 @@ class Constants{
             bg:"E7E6E3"
         };
 
-        this.obsRespawnInterval = 1000;
-        this.coinRespawnInterval = 2000;
-        this.storeRespawnInterval = 5000;
+        this.jumpVelocity = -1250;
+
+        this.gameSpeedNormal = 10;
+        this.gameSpeedFast = 12;
+
+        this.obsRespawnInterval = 1100;
+        this.coinRespawnInterval = 2200;
+        this.storeRespawnInterval = 5500;
         this.coinCntInterval =128;
 
         this.distances={
