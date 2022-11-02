@@ -31,7 +31,7 @@ class Constants{
         this.jumpVelocity = -1250;
 
         this.gameSpeedNormal = 9;
-        this.gameSpeedFast = 10;// samespeed
+        this.gameSpeedFast = 9;// samespeed
 
         this.obsRespawnInterval = 1100;
         this.coinRespawnInterval = 2200;
