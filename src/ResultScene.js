@@ -15,6 +15,7 @@ class ResultScene extends Phaser.Scene {
   create() {
     this.consts = new Constants();
     this.isGamerunning = false;
+    this.cameras.main.setBackgroundColor(this.consts.colors.bg);
     this.PassedTime=0;
 
     //debug text
@@ -25,20 +26,33 @@ class ResultScene extends Phaser.Scene {
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
 
+    this.bgHome = this.add.image(280-220,28,"homeInside").setOrigin(0,0);
+    const bookNum = Math.min(18,this.model.result.book);
+    this.bookTower = this.add.image(560-220,124,`endingBook${bookNum}`).setOrigin(0,0).setAlpha(0);
+    
+    //this.add.image(630-220,124,"endingBookMask").setOrigin(0,0);
+
+
     //this.bgLayer = this.add.layer();
-    this.startTrigger = this.physics.add.sprite(width * 1/3, groundHeight).setOrigin(0, 1).setImmovable();
-    this.startTrigger.setBodySize(80,20);
-    this.poteGround = this.physics.add.image(width * 1/3, groundHeight+26).setSize(width,20).setOrigin(0, 1).setImmovable();
+    this.startTrigger = this.physics.add.sprite(width * 1/10, groundHeight)
+    .setBodySize(260,20).setOrigin(0, 1).setImmovable();
+
+    this.resultTrigger = this.physics.add.sprite(width * 1/10 + 200, groundHeight)
+    .setBodySize(20,20).setOrigin(0, 1).setImmovable();
+    this.resultTrigger.hitflag = false;
+
+    //this.startTrigger.setBodySize(200,20);
+    this.poteGround = this.physics.add.image(width * 1/2, groundHeight+26).setSize(width,20).setOrigin(0, 1).setImmovable();
     // this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
     
-    this.pote = this.physics.add.sprite(width * 1/3, groundHeight, 'pote-idle')
+    this.pote = this.physics.add.sprite(width * 1/10, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
       .setGravityY(3000);
     this.pote.hitPose = false;
 
     // restart button
-    this.gameClearScreen = this.add.container(width * 2 / 4, height / 8).setAlpha(0)
+    this.gameClearScreen = this.add.container(width * 1/2 + 72, 144).setAlpha(0)
     //this.gameClearText = this.add.image(0, 0, 'game-over');
     
     if(this.model.result.miss == 0 &&
@@ -69,6 +83,19 @@ class ResultScene extends Phaser.Scene {
   initColliders(){
     // ground
     this.physics.add.collider(this.pote, this.poteGround);
+
+    // result trigger
+    this.physics.add.overlap(this.resultTrigger, this.pote, (rslt, p) =>{
+      if(rslt.hitflag == true){return;}
+      console.log('show result');
+      rslt.hitflag = true;
+      // show books
+      this.bookTower.setAlpha(1);
+
+      // show results
+      this.gameClearScreen.setAlpha(1);
+    }
+    , null, this);
   }
 
   initStartTrigger(){
@@ -79,20 +106,7 @@ class ResultScene extends Phaser.Scene {
       console.log('overlap');
       this.pote.x +=1;
       this.pote.play('pote-run',1);     
-      //this.startTrigger.disableBody(true, true);
-      
-      /*const startEvent = this.time.addEvent({
-        delay: 1000/60,
-        loop: true,
-        callbackScope: this,
-        callback: () => {
-          //this.pote.setVelocityX(80);
-          Phaser.Actions.IncX(this.pote,4);
-          this.pote.play('pote-run',1);
-        }
-      
 
-      })*/
     }
     , null, this);
   }
@@ -131,9 +145,9 @@ class ResultScene extends Phaser.Scene {
     const {height, width} = this.game.config;
     this.PassedTime += delta;
     this.debugText.setText('PassedTime: ' + this.PassedTime);
-    if(this.pote.x > width * 1/3 + 30){
+    /*if(this.pote.x > width * 1/10 + 80){
       this.gameClearScreen.setAlpha(1);
-    }
+    }*/
 
     /*if(this.PassedTime > 10000){
       this.restartGame();

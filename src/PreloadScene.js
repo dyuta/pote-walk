@@ -32,6 +32,27 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('bookstore06', 'assets/shop_6_Sanyodo.png');
 
     this.load.image('potehome', 'assets/home_tmp.png');
+    this.load.image('homeInside', 'assets/HomeInside.png');
+    this.load.image('endingBook', 'assets/endingBook.png');
+    this.load.image('endingBook0', 'assets/endingBook0.png');
+    this.load.image('endingBook1', 'assets/endingBook1.png');
+    this.load.image('endingBook2', 'assets/endingBook2.png');
+    this.load.image('endingBook3', 'assets/endingBook3.png');
+    this.load.image('endingBook4', 'assets/endingBook4.png');
+    this.load.image('endingBook5', 'assets/endingBook5.png');
+    this.load.image('endingBook6', 'assets/endingBook6.png');
+    this.load.image('endingBook7', 'assets/endingBook7.png');
+    this.load.image('endingBook8', 'assets/endingBook8.png');
+    this.load.image('endingBook9', 'assets/endingBook9.png');
+    this.load.image('endingBook10', 'assets/endingBook10.png');
+    this.load.image('endingBook11', 'assets/endingBook11.png');
+    this.load.image('endingBook12', 'assets/endingBook12.png');
+    this.load.image('endingBook13', 'assets/endingBook13.png');
+    this.load.image('endingBook14', 'assets/endingBook14.png');
+    this.load.image('endingBook15', 'assets/endingBook15.png');
+    this.load.image('endingBook16', 'assets/endingBook16.png');
+    this.load.image('endingBook17', 'assets/endingBook17.png');
+    this.load.image('endingBook18', 'assets/endingBook18.png');
 
     this.load.spritesheet('star', 'assets/stars.png', {
       frameWidth: 9, frameHeight: 9
@@ -84,6 +105,9 @@ class PreloadScene extends Phaser.Scene {
   create() {
     this.model = new Model();
     this.scene.start('PlayScene',{model: this.model});
+
+    // for debug
+    //this.scene.start('ResultScene',{model: this.model});
   }
 }
 
