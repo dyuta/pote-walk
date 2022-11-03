@@ -95,7 +95,7 @@ class PlayScene extends Phaser.Scene {
         if(this.model.result.visited < this.consts.numberOfStores){
           this.destinationTxt.setText(`行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`);
         } else {
-          this.destinationTxt.setText(`行先: おうち`);
+          this.destinationTxt.setText(`行先: 自宅`);
         }
 
         //buying books

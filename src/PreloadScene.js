@@ -106,11 +106,12 @@ class PreloadScene extends Phaser.Scene {
     this.model = new Model();
     //this.scene.start('PlayScene',{model: this.model});
 
-    // for debug
-    this.model.result.book =8;
+    // for result Scene debug
+    /*this.model.result.book =8;
     this.model.result.coin =10;
     this.model.result.coinGen =11;
     this.scene.start('ResultScene',{model: this.model});
+    */
   }
 }
 
