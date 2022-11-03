@@ -104,7 +104,7 @@ class PreloadScene extends Phaser.Scene {
 
   create() {
     this.model = new Model();
-    //this.scene.start('PlayScene',{model: this.model});
+    this.scene.start('PlayScene',{model: this.model});
 
     // for result Scene debug
     /*this.model.result.book =8;
