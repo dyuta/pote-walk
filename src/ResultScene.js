@@ -52,7 +52,7 @@ class ResultScene extends Phaser.Scene {
     this.pote.hitPose = false;
 
     // restart button
-    this.gameClearScreen = this.add.container(width * 1/2 - 0, 138).setAlpha(0)
+    this.gameClearScreen = this.add.container(width * 1/2 - 0, 130).setAlpha(0)
     //this.gameClearText = this.add.image(0, 0, 'game-over');
     
     if(this.model.result.miss == 0 &&

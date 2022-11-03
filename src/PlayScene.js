@@ -59,7 +59,7 @@ class PlayScene extends Phaser.Scene {
     this.environment = this.add.group();
       this.environment.addMultiple([
         this.add.image(width * 0.5, 170, 'cloud'),
-        this.add.image(width * 0.75, 80, 'cloud'),
+        this.add.image(width * 0.70, 80, 'cloud'),
         this.add.image((width * 0.9), 100, 'cloud')
       ]);
     
