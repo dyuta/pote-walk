@@ -13,18 +13,18 @@ class PlayScene extends Phaser.Scene {
 
   create() {
     this.consts = new Constants();
-    this.cameras.main.setBackgroundColor(this.consts.colors.bg);
+    
     this.isGamerunning = false;
     
     //debug text
-    this.debugText = this.add.text(10, 400, 'for debug', this.consts.fontoConf.counter);
-    this.debugText2 = this.add.text(10, 430, 'for debug', this.consts.fontoConf.counter);
+    //this.debugText = this.add.text(10, 400, 'for debug', this.consts.fontoConf.counter);
+    //this.debugText2 = this.add.text(10, 430, 'for debug', this.consts.fontoConf.counter);
 
     // Store Name
     this.destinationTxt = this.add.text(
       20, 10, `行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`,
       this.consts.fontoConf.storeinfo01
-    );
+    ).setAlpha(0);
 
     this.gameSpeed = this.consts.gameSpeedNormal;
     this.obsRespawnTime = 0;
@@ -48,12 +48,28 @@ class PlayScene extends Phaser.Scene {
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
     
+    this.envLayer = this.add.layer();
     this.bookStoreLayer = this.add.layer();
     this.objLayer = this.add.layer();
     this.coinLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
-    this.counterText = this.add.text(width - 300, 10, this.counterStr, this.consts.fontoConf.counter);
+    this.counterText = this.add.text(width - 300, 10, this.counterStr, this.consts.fontoConf.counter)
+      .setAlpha(0);
     
+    this.environment = this.add.group();
+      this.environment.addMultiple([
+        this.add.image(width * 0.5, 170, 'cloud'),
+        this.add.image(width * 0.75, 80, 'cloud'),
+        this.add.image((width * 0.9), 100, 'cloud')
+      ]);
+    
+    this.environment.setAlpha(0);
+    this.envLayer.add(this.environment.getChildren());
+
+    // nope
+    this.stayingCloud = this.add.image(width * 0.8, 140, 'cloud').setAlpha(0);
+    this.envLayer.add(this.stayingCloud);
+
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
@@ -186,6 +202,12 @@ class PlayScene extends Phaser.Scene {
             this.ground.width = width;
             this.isGamerunning = true;
             this.pote.setVelocityX(0);
+            this.environment.setAlpha(1);
+            // nope
+            //this.stayingCloud.setAlpha(1);
+            this.destinationTxt.setAlpha(1);
+            this.counterText.setAlpha(1);
+            this.cameras.main.setBackgroundColor(this.consts.colors.bg);
             startEvent.remove();
           }
 
@@ -348,8 +370,9 @@ class PlayScene extends Phaser.Scene {
 
   update(time, delta) {
     if (!this.isGamerunning) { return; }
-    this.debugText.setText('sec: ' + Math.floor(time/1000));
-    this.debugText2.setText('spd: ' + this.gameSpeed);
+    // for debug
+    //this.debugText.setText('sec: ' + Math.floor(time/1000));
+    //this.debugText2.setText('spd: ' + this.gameSpeed);
 
     const obsRespawnInterval = this.consts.obsRespawnInterval;
     const storeRespawnInterval = this.consts.storeRespawnInterval;
@@ -374,15 +397,12 @@ class PlayScene extends Phaser.Scene {
 
     this.counterText.setText(`coins:${this.coinCnt}    books:${this.bookCnt}`);
 
-    // ground scroll
+    // scroll
     this.ground.tilePositionX += this.gameSpeed*this.consts.worldScroll;
-    // obstacle scroll
+    Phaser.Actions.IncX(this.environment.getChildren(), - 0.5);
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
-    // coin scroll
     Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
-    // bookstore scroll
     Phaser.Actions.IncX(this.bookStores.getChildren(), -this.gameSpeed*this.consts.worldScroll);
-    // poteHome scroll
     Phaser.Actions.IncX(this.poteHomeGrp.getChildren(), -this.gameSpeed*this.consts.worldScroll);
 
     this.obsRespawnTime += delta * this.gameSpeed * 0.08;
@@ -433,6 +453,13 @@ class PlayScene extends Phaser.Scene {
     this.bookStores.getChildren().forEach(bookStore => {
       if (bookStore.getBounds().right < 0) {
         this.bookStores.killAndHide(bookStore);
+      }
+    })
+
+    // recycle clouds
+    this.environment.getChildren().forEach(env => {
+      if (env.getBounds().right < 0) {
+        env.x = this.game.config.width + 30;
       }
     })
 
