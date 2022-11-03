@@ -32,7 +32,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('bookstore06', 'assets/shop_6_Sanyodo.png');
 
     this.load.image('potehome', 'assets/home_tmp.png');
-    this.load.image('homeInside', 'assets/HomeInside.png');
+    this.load.image('homeInside', 'assets/HomeInside2.png');
     this.load.image('endingBook', 'assets/endingBook.png');
     this.load.image('endingBook0', 'assets/endingBook0.png');
     this.load.image('endingBook1', 'assets/endingBook1.png');
@@ -104,10 +104,13 @@ class PreloadScene extends Phaser.Scene {
 
   create() {
     this.model = new Model();
-    this.scene.start('PlayScene',{model: this.model});
+    //this.scene.start('PlayScene',{model: this.model});
 
     // for debug
-    //this.scene.start('ResultScene',{model: this.model});
+    this.model.result.book =8;
+    this.model.result.coin =10;
+    this.model.result.coinGen =11;
+    this.scene.start('ResultScene',{model: this.model});
   }
 }
 

@@ -18,6 +18,7 @@ class PlayScene extends Phaser.Scene {
     
     //debug text
     this.debugText = this.add.text(10, 400, 'for debug', this.consts.fontoConf.counter);
+    this.debugText2 = this.add.text(10, 430, 'for debug', this.consts.fontoConf.counter);
 
     // Store Name
     this.destinationTxt = this.add.text(
@@ -348,6 +349,8 @@ class PlayScene extends Phaser.Scene {
   update(time, delta) {
     if (!this.isGamerunning) { return; }
     this.debugText.setText('sec: ' + Math.floor(time/1000));
+    this.debugText2.setText('spd: ' + this.gameSpeed);
+
     const obsRespawnInterval = this.consts.obsRespawnInterval;
     const storeRespawnInterval = this.consts.storeRespawnInterval;
     const coinRespawnInterval = this.consts.coinRespawnInterval;

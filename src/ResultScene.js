@@ -52,7 +52,7 @@ class ResultScene extends Phaser.Scene {
     this.pote.hitPose = false;
 
     // restart button
-    this.gameClearScreen = this.add.container(width * 1/2 + 72, 144).setAlpha(0)
+    this.gameClearScreen = this.add.container(width * 1/2 - 0, 138).setAlpha(0)
     //this.gameClearText = this.add.image(0, 0, 'game-over');
     
     if(this.model.result.miss == 0 &&
@@ -66,12 +66,14 @@ class ResultScene extends Phaser.Scene {
 
     this.gameClearText = this.add.text(0, 0, this.GameClearStr, this.consts.fontoConf.resultTitle)
       .setOrigin(0,0.5);
-    this.GameResultText = this.add.text(0, 70, this.GameResultStr, this.consts.fontoConf.resultDetail)
+    this.gameClearText.setStroke('#ffffff', 8);
+    this.gameResultText = this.add.text(0, 74, this.GameResultStr, this.consts.fontoConf.resultDetail)
       .setOrigin(0,0.5);
-    this.restart = this.add.image(10, 160, 'restart').setInteractive()
+    this.gameResultText.setStroke('#ffffff', 5);
+    this.restart = this.add.image(20, 160, 'restart').setInteractive()
       .setOrigin(0,0.5);
     this.gameClearScreen.add([
-      this.gameClearText, this.GameResultText,  this.restart
+      this.gameClearText, this.gameResultText,  this.restart
     ])
     
     this.initColliders();

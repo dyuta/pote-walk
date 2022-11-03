@@ -68,11 +68,13 @@ class Constants{
 			fontFamily: '"Sawarabi Gothic"', fontSize: '28px', fill: "#878176"
         };
         
+        // const Resultcolor = "#9F6F3F";
+        const Resultcolor = "#EFA92A";
         this.fontoConf.resultTitle = {
-			fontFamily: '"Concert One"', fontSize: '40px', fill: "#EFA92A"
+			fontFamily: '"Concert One"', fontSize: '40px', fill: Resultcolor
         };
         this.fontoConf.resultDetail = {
-			fontFamily: '"Concert One"', fontSize: '32px', fill: "#EFA92A"
+			fontFamily: '"Concert One"', fontSize: '32px', fill: Resultcolor
         };
 
     }
