@@ -232,6 +232,13 @@ class PlayScene extends Phaser.Scene {
       frameRate: 6,
       repeat: -1
     })
+    
+    this.anims.create({
+      key: 'bicyclelow-ride',
+      frames: this.anims.generateFrameNumbers('obstacleOrg-1', {start: 0, end: 1}),
+      frameRate: 6,
+      repeat: -1
+    })
 
     this.anims.create({
       key: 'coin-rotate',
@@ -268,6 +275,12 @@ class PlayScene extends Phaser.Scene {
       .create(width + obstacleDistance, groundHeight - enemyHeight[Math.floor(Math.random() * 2)],'enemy-bird');
       obstacle.play('enemy-bird-fly', 1);
       obstacle.body.height = obstacle.body.height / 1.5;
+    }else if(obstacleNum == 1){
+      console.log('org1');
+      obstacle = this.obstacles
+      .create(width + obstacleDistance, groundHeight,'obstacleOrg-${obstacleNum}');
+      obstacle.play('bicyclelow-ride', 1);
+      //obstacle.body.height = obstacle.body.height / 1.5;      
     } else {
       obstacle = this.obstacles
       .create(width + obstacleDistance, groundHeight, `obstacle-${obstacleNum}`);

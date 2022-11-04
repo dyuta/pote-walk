@@ -87,6 +87,13 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 32
     })
 
+    // Obstacle Original
+    this.load.spritesheet('obstacleOrg-1', 'assets/Bicycle_low_spr_large.png', {
+      frameWidth: 96,
+      frameHeight: 108
+    })
+
+
     this.load.image('obstacle-1', 'assets/cactuses_small_1.png')
     this.load.image('obstacle-2', 'assets/cactuses_small_2.png')
     this.load.image('obstacle-3', 'assets/cactuses_small_3.png')
