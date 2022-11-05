@@ -1,7 +1,9 @@
 
 import Phaser from 'phaser';
 import Model from './model';
+import Constants from './constants';
 import WebFontFile from './files/WebFontFile'
+import MediaManager from './util/mediaManager';
 
 class PreloadScene extends Phaser.Scene {
 
@@ -10,9 +12,18 @@ class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
+    this.consts = new Constants();
+
     this.load.audio('jump', 'assets/jump.m4a');
     this.load.audio('hit', 'assets/hit.m4a');
     this.load.audio('reach', 'assets/reach.m4a');
+
+    this.load.audio('mainbgm', 'assets/PW_01_Play_2022-11-05.mp3');
+    this.load.audio('bookSound', 'assets/PW_02_Book_2022-11-05.mp3');
+    this.load.audio('jumpSound', 'assets/PW_03_Jump_2022-11-05.mp3');
+    this.load.audio('damageSound', 'assets/PW_04_Damage_2022-11-05.mp3');
+    this.load.audio('coinSound', 'assets/PW_05_Coin_2022-11-05.mp3');
+    this.load.audio('clearbgm', 'assets/PM_06_Clear_2022-05-08.mp3');
 
     this.load.image('ground', 'assets/ground.png');
     this.load.image('dino-idle', 'assets/dino-idle.png');
@@ -111,6 +122,7 @@ class PreloadScene extends Phaser.Scene {
 
   create() {
     this.model = new Model();
+    this.model.mediaManager = new MediaManager({scene:this});
     this.scene.start('PlayScene',{model: this.model});
 
     // for result Scene debug

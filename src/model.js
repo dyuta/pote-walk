@@ -18,6 +18,7 @@ class Model{
             };
 
         this._isSceneChangeReserved = false;
+        this.mediaManager = {} ;
         /*
         this.soundConfig ={
             musicOn : true,

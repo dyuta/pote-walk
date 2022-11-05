@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Constants from './constants';
+import MediaManager from './util/mediaManager';
 
 class PlayScene extends Phaser.Scene {
 
@@ -116,8 +117,20 @@ class PlayScene extends Phaser.Scene {
 
         //buying books
         this.bookCnt += this.coinCnt;
+        this.bookBoughtNow = this.coinCnt;
         this.coinCnt = 0;
         this.model.result.book = this.bookCnt;
+
+        this.model.mediaManager.playSound('bookSound');
+        for (let i =0; i < this.bookBoughtNow; i++) {
+          this.timerOneShot = this.time.delayedCall(
+            300, ()=>{
+              //this.model.mediaManager.playSound('bookSound')
+              console.log("book count");
+            }, this
+          );
+          
+        }
 
         if(this.model.result.visited == 3){
           this.gameSpeed = this.consts.gameSpeedFast;
@@ -139,6 +152,8 @@ class PlayScene extends Phaser.Scene {
         }
         
         // set hurt status
+        this.model.mediaManager.playSound('damageSound');
+
         if(!this.pote.hitPose){
           this.pote.hitPose = true;
           console.log("hit-pose");
@@ -155,7 +170,8 @@ class PlayScene extends Phaser.Scene {
       // execute once on collision
       if(!coin.hitFlg){
         console.log("getcoin");
-        coin.hitFlg = true;  
+        coin.hitFlg = true;
+        this.model.mediaManager.playSound('coinSound');
         
         // count coin
         this.coinCnt ++;
@@ -167,6 +183,7 @@ class PlayScene extends Phaser.Scene {
     // home overlap
     this.physics.add.overlap(this.pote, this.poteHomeGrp,() =>{
       //
+      this.model.mediaManager.stopBGM();
       this.timerOneShot = this.time.delayedCall(
         300, ()=>{this.goClearScene()}, this
       );
@@ -183,6 +200,7 @@ class PlayScene extends Phaser.Scene {
 
       if (this.startTrigger.y === 10) {
         this.startTrigger.body.reset(0, groundHeight);
+        this.model.mediaManager.setBGM('mainbgm');
         return;
       }
       
@@ -253,6 +271,7 @@ class PlayScene extends Phaser.Scene {
     this.input.on("pointerdown", () => {
       if (!this.pote.body.onFloor()){ return; }
       this.pote.setVelocityY(this.consts.jumpVelocity);
+      this.model.mediaManager.playSound('jumpSound');
 
     }, this)
   }

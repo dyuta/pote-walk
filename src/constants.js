@@ -14,7 +14,7 @@ class Constants{
             {name:"山陽堂書店",line:"東京メトロ",station:"表参道"}
         ]
 
-        this.volumeBGM=0.1;
+        this.volumeBGM=0.0;
         this.volumeSound=0.2;
         
         this.START_GAME="START_GAME";

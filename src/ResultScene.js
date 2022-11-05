@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Constants from './constants';
 import Model from './model';
+import MediaManager from './util/mediaManager';
 
 class ResultScene extends Phaser.Scene {
 
@@ -17,6 +18,8 @@ class ResultScene extends Phaser.Scene {
     this.isGamerunning = false;
     this.cameras.main.setBackgroundColor(this.consts.colors.bg);
     this.PassedTime=0;
+    
+    this.model.mediaManager.setBGM('clearbgm');
 
     //debug text
     this.debugText = this.add.text(10, 10, 'for debug', { fill: '#00ffff' });
@@ -138,8 +141,11 @@ class ResultScene extends Phaser.Scene {
   }
 
   restartGame(){
+    this.model.mediaManager.stopBGM();
     // set default value
     this.model = new Model();
+    // ToDo move mediaManager from model
+    this.model.mediaManager = new MediaManager({scene:this});
     this.scene.start('PlayScene',{model: this.model});
   }
 
