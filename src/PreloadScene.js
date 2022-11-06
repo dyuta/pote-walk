@@ -26,10 +26,10 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('clearbgm', 'assets/PM_07_ED_2022-05-08.mp3');
 
     this.load.image('ground', 'assets/ground.png');
-    this.load.image('dino-idle', 'assets/dino-idle.png');
-    this.load.image('dino-hurt', 'assets/dino-hurt.png');
+    //this.load.image('dino-idle', 'assets/dino-idle.png');
+    //this.load.image('dino-hurt', 'assets/dino-hurt.png');
     this.load.image('restart', 'assets/restart.png');
-    this.load.image('game-over', 'assets/game-over.png');
+    //this.load.image('game-over', 'assets/game-over.png');
     this.load.image('cloud', 'assets/cloud.png');
 
     this.load.image('pote-idle', 'assets/pote_idle2.png');
@@ -73,6 +73,7 @@ class PreloadScene extends Phaser.Scene {
       frameWidth: 20, frameHeight: 40
     });
 
+    /*
     this.load.spritesheet('dino', 'assets/dino-run.png', {
       frameWidth: 88,
       frameHeight: 94
@@ -82,6 +83,7 @@ class PreloadScene extends Phaser.Scene {
       frameWidth: 118,
       frameHeight: 94
     })
+    */
 
     this.load.spritesheet('enemy-bird', 'assets/enemy-bird.png', {
       frameWidth: 92,
