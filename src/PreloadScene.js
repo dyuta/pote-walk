@@ -14,11 +14,13 @@ class PreloadScene extends Phaser.Scene {
   preload() {
     this.consts = new Constants();
 
+    this.showLoadProgressBar();
+
     this.load.audio('jump', 'assets/jump.m4a');
     this.load.audio('hit', 'assets/hit.m4a');
     this.load.audio('reach', 'assets/reach.m4a');
 
-    this.load.audio('mainbgm', 'assets/PW_01_Play_2022-11-05.mp3');
+    this.load.audio('mainbgm', 'assets/PW_01_Play_2022-11-06.mp3');
     this.load.audio('bookSound', 'assets/PW_02_Book_2022-11-05.mp3');
     this.load.audio('jumpSound', 'assets/PW_03_Jump_2022-11-05.mp3');
     this.load.audio('damageSound', 'assets/PW_04_Damage_2022-11-05.mp3');
@@ -124,6 +126,49 @@ class PreloadScene extends Phaser.Scene {
       //,'Mulish','Open Sans','Comfortaa','Staatliches','Press Start 2P','Maven Pro'
       ]
       ))
+  }
+
+  showLoadProgressBar(){
+    let progressBar = this.add.graphics();
+    let width = this.game.config.width;
+    let height = this.game.config.height;
+    let progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(240, 270, 320, 50);
+
+    let loadingText = this.make.text({
+        x: width / 2,
+        y: height / 4 + 30,
+        text: 'Loading...',
+        style: this.consts.fontoConf.counter
+      });
+    loadingText.setOrigin(0.5, 0.5);
+
+    let loadingfileText = this.make.text({
+        x: width / 2,
+        y: height / 4 + 50,
+        text: 'files',
+        style: this.consts.fontoConf.counter
+      });
+    loadingfileText.setOrigin(0.5, 0.5);
+        
+    this.load.on('progress', function (value) {
+      //console.log(value);
+        progressBar.clear();
+        progressBar.fillStyle(0xffffff, 1);
+        progressBar.fillRect(250, 280, 300 * value, 30);
+      });
+                    
+    this.load.on('fileprogress', function (file) {
+        console.log(file.src);
+        loadingfileText.setText(file.src);
+      });
+    this.load.on('complete', function () {
+        console.log('complete');
+        progressBar.destroy();
+        progressBox.destroy();
+        loadingText.destroy();
+      });
   }
 
   create() {

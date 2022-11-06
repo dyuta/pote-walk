@@ -60,7 +60,7 @@ class PlayScene extends Phaser.Scene {
       this.add.sprite(counterPositionX, 28, 'coinBookIcon',0).setScale(2),
       this.add.sprite(counterPositionX+140, 28, 'coinBookIcon',1).setScale(2)
     ]);
-    //this.counterIcons.setOrigin(0,0);
+    this.counterIcons.setAlpha(0);
 
     //this.counterText = this.add.text(width - 300, 10, this.counterStr, this.consts.fontoConf.counter)
     //  .setAlpha(0);
@@ -133,7 +133,7 @@ class PlayScene extends Phaser.Scene {
         this.coinCnt = 0;
         this.model.result.book = this.bookCnt;
 
-        this.model.mediaManager.playSound('bookSound');
+        this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*10);
         for (let i =0; i < this.bookBoughtNow; i++) {
           this.timerOneShot = this.time.delayedCall(
             300, ()=>{
@@ -236,6 +236,7 @@ class PlayScene extends Phaser.Scene {
             // nope
             //this.stayingCloud.setAlpha(1);
             this.destinationTxt.setAlpha(1);
+            this.counterIcons.setAlpha(1);
             this.coinCounterText.setAlpha(1);
             this.bookCounterText.setAlpha(1);
             this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);

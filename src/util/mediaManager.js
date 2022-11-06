@@ -13,12 +13,12 @@ class MediaManager{
         this.backGroundMusic={};
         this.sound={};
     }
-    playSound(key){
+    playSound(key,soundvolume=this.volumeSound){
         //let volumeTmp=this.volumeSound;
         /*if(mt.model.soundConfig.sfxOn==false){
             volumeTmp=0;
         }*/
-        this.sound = this.scene.sound.add(key,{volume:this.volumeSound});
+        this.sound = this.scene.sound.add(key,{volume:soundvolume});
         this.sound.play();
     }
     setBGM(key,bgmvolume = this.volumeBGM){
