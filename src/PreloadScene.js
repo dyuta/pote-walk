@@ -65,6 +65,10 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('endingBook17', 'assets/endingBook17.png');
     this.load.image('endingBook18', 'assets/endingBook18.png');
 
+    this.load.spritesheet('coinBookIcon', 'assets/Coin_Book_icon.png', {
+      frameWidth: 32, frameHeight: 32
+    });
+
     this.load.spritesheet('star', 'assets/stars.png', {
       frameWidth: 9, frameHeight: 9
     });

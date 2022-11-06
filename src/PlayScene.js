@@ -54,11 +54,23 @@ class PlayScene extends Phaser.Scene {
     this.objLayer = this.add.layer();
     this.coinLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
-    this.counterText = this.add.text(width - 300, 10, this.counterStr, this.consts.fontoConf.counter)
+    this.counterIcons = this.add.group();
+    const counterPositionX = width - 300;
+    this.counterIcons.addMultiple([
+      this.add.sprite(counterPositionX, 28, 'coinBookIcon',0).setScale(2),
+      this.add.sprite(counterPositionX+140, 28, 'coinBookIcon',1).setScale(2)
+    ]);
+    //this.counterIcons.setOrigin(0,0);
+
+    //this.counterText = this.add.text(width - 300, 10, this.counterStr, this.consts.fontoConf.counter)
+    //  .setAlpha(0);
+    this.coinCounterText = this.add.text(counterPositionX+20, 11, "0", this.consts.fontoConf.counter)
       .setAlpha(0);
-    
+    this.bookCounterText = this.add.text(counterPositionX+160, 11, "0", this.consts.fontoConf.counter)
+      .setAlpha(0);
+
     this.environment = this.add.group();
-      this.environment.addMultiple([
+    this.environment.addMultiple([
         this.add.image(width * 0.5, 170, 'cloud'),
         this.add.image(width * 0.70, 80, 'cloud'),
         this.add.image((width * 0.9), 100, 'cloud')
@@ -224,7 +236,8 @@ class PlayScene extends Phaser.Scene {
             // nope
             //this.stayingCloud.setAlpha(1);
             this.destinationTxt.setAlpha(1);
-            this.counterText.setAlpha(1);
+            this.coinCounterText.setAlpha(1);
+            this.bookCounterText.setAlpha(1);
             this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
             startEvent.remove();
           }
@@ -427,7 +440,8 @@ class PlayScene extends Phaser.Scene {
     }
     */
 
-    this.counterText.setText(`coins:${this.coinCnt}    books:${this.bookCnt}`);
+    this.coinCounterText.setText(`: ${this.coinCnt}`);
+    this.bookCounterText.setText(`: ${this.bookCnt}`);
 
     // scroll
     this.ground.tilePositionX += this.gameSpeed*this.consts.worldScroll;
