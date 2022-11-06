@@ -21,14 +21,14 @@ class MediaManager{
         this.sound = this.scene.sound.add(key,{volume:this.volumeSound});
         this.sound.play();
     }
-    setBGM(key){
+    setBGM(key,bgmvolume = this.volumeBGM){
         this.stopBGM();
         this.stopPlaingSound();
         /*let volumeTmp=mt.model.soundConfig.volumeBGM;
         if(mt.model.soundConfig.musicOn==false){
             volumeTmp=0;
         }*/
-        this.backGroundMusic = this.scene.sound.add(key,{volume:this.volumeSound,loop:true});
+        this.backGroundMusic = this.scene.sound.add(key,{volume:bgmvolume,loop:true});
         this.backGroundMusic.play();
     }
     stopBGM(){

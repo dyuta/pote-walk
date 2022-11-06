@@ -19,7 +19,7 @@ class ResultScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(this.consts.colors.bg);
     this.PassedTime=0;
     
-    this.model.mediaManager.setBGM('clearbgm');
+    this.model.mediaManager.setBGM('clearbgm',0.07);
 
     //debug text
     this.debugText = this.add.text(10, 10, 'for debug', { fill: '#00ffff' });
