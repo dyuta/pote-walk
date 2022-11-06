@@ -225,7 +225,7 @@ class PlayScene extends Phaser.Scene {
             //this.stayingCloud.setAlpha(1);
             this.destinationTxt.setAlpha(1);
             this.counterText.setAlpha(1);
-            this.cameras.main.setBackgroundColor(this.consts.colors.bg);
+            this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
             startEvent.remove();
           }
 

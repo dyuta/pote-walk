@@ -16,7 +16,7 @@ class ResultScene extends Phaser.Scene {
   create() {
     this.consts = new Constants();
     this.isGamerunning = false;
-    this.cameras.main.setBackgroundColor(this.consts.colors.bg);
+    this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
     this.PassedTime=0;
     
     this.model.mediaManager.setBGM('clearbgm',0.07);

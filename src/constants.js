@@ -25,7 +25,8 @@ class Constants{
         this.GO_POTATO="GO_POTATO";
 
         this.colors = {
-            bg:"E7E6E3"
+            background:"E7E6E3",
+            backgroundAsh:"FCFCFC"
         };
 
         this.jumpVelocity = -1250;
