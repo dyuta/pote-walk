@@ -23,7 +23,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('jumpSound', 'assets/PW_03_Jump_2022-11-05.mp3');
     this.load.audio('damageSound', 'assets/PW_04_Damage_2022-11-05.mp3');
     this.load.audio('coinSound', 'assets/PW_05_Coin_2022-11-05.mp3');
-    this.load.audio('clearbgm', 'assets/PM_06_Clear_2022-05-08.mp3');
+    this.load.audio('clearbgm', 'assets/PM_07_ED_2022-05-08.mp3');
 
     this.load.image('ground', 'assets/ground.png');
     this.load.image('dino-idle', 'assets/dino-idle.png');
