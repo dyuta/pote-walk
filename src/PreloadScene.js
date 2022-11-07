@@ -91,9 +91,9 @@ class PreloadScene extends Phaser.Scene {
     })
     */
 
-    this.load.spritesheet('enemy-bird', 'assets/enemy-bird.png', {
-      frameWidth: 92,
-      frameHeight: 77
+    this.load.spritesheet('enemy-bird', 'assets/bird_pigeon.png', {
+      frameWidth: 96,
+      frameHeight: 72
     })
     
     this.load.spritesheet('pote', 'assets/pote_run2.png', {
@@ -112,13 +112,21 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 108
     })
 
+    this.load.image('obstacle-1', 'assets/cactuses_small_1.png')
+    this.load.image('obstacle-2', 'assets/Plant_2_small_small.png')
+    this.load.image('obstacle-3', 'assets/Plant_3_small_tall.png')
+    this.load.image('obstacle-4', 'assets/Plant_4_middle_small.png')
+    this.load.image('obstacle-5', 'assets/Plant_5_middle_tall2.png')
+    this.load.image('obstacle-6', 'assets/Plant_6_wide_tall.png')
 
+    /*
     this.load.image('obstacle-1', 'assets/cactuses_small_1.png')
     this.load.image('obstacle-2', 'assets/cactuses_small_2.png')
     this.load.image('obstacle-3', 'assets/cactuses_small_3.png')
     this.load.image('obstacle-4', 'assets/cactuses_big_1.png')
     this.load.image('obstacle-5', 'assets/cactuses_big_2.png')
     this.load.image('obstacle-6', 'assets/cactuses_big_3.png')
+    */
 
     // font loader
     this.load.addFile(new WebFontFile(this.load, 
