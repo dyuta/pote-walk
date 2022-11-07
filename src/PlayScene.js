@@ -69,6 +69,18 @@ class PlayScene extends Phaser.Scene {
     this.bookCounterText = this.add.text(counterPositionX+160, 11, "0", this.consts.fontoConf.counter)
       .setAlpha(0);
 
+    const storeicon_span = 120;
+    this.bookStoreIcons = this.add.group();
+    this.bookStoreIcons.addMultiple([
+      this.add.image(80                   , groundHeight + 80, 'bookstoreicon01'),
+      this.add.image(80 +storeicon_span *1, groundHeight + 80, 'bookstoreicon02'),
+      this.add.image(80 +storeicon_span *2, groundHeight + 80, 'bookstoreicon03'),
+      this.add.image(80 +storeicon_span *3, groundHeight + 80, 'bookstoreicon04'),
+      this.add.image(80 +storeicon_span *4, groundHeight + 80, 'bookstoreicon05'),
+      this.add.image(80 +storeicon_span *5, groundHeight + 80, 'bookstoreicon06')
+    ]);
+    this.bookStoreIcons.setAlpha(0);
+
     this.environment = this.add.group();
     this.environment.addMultiple([
         this.add.image(width * 0.5, 170, 'cloud'),
@@ -115,6 +127,9 @@ class PlayScene extends Phaser.Scene {
       if(!bookstore.hitFlg){
         console.log("enter store");
         bookstore.hitFlg = true;
+
+        // set icon visible
+        this.bookStoreIcons.getChildren()[this.model.result.visited].setAlpha(1);
 
         // set store visit status
         this.model.storeVisit[`store${bookstore.bookStoreNum}`] = true;
