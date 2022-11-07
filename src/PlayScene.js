@@ -319,7 +319,7 @@ class PlayScene extends Phaser.Scene {
 
     if(obstacleNum > 6) {
       console.log('bird');
-      const enemyHeight = [22, 50];
+      const enemyHeight = [40, 120];
       obstacle = this.obstacles
       .create(width + obstacleDistance, groundHeight - enemyHeight[Math.floor(Math.random() * 2)],'enemy-bird');
       obstacle.play('enemy-bird-fly', 1);
