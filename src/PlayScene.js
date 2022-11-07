@@ -88,6 +88,8 @@ class PlayScene extends Phaser.Scene {
       .setCollideWorldBounds(true)
       .setGravityY(3000);
     this.pote.hitPose = false;
+
+    this.bookParticle = this.add.particles('coinBookIcon');
     
     this.obstacles = this.physics.add.group();
     this.coins = this.physics.add.group();
@@ -95,6 +97,7 @@ class PlayScene extends Phaser.Scene {
     this.poteHomeGrp = this.physics.add.group();
     
     this.initAnims();
+    this.initBookParticle();
     this.initColliders();
     
     this.initStartTrigger();
@@ -134,8 +137,8 @@ class PlayScene extends Phaser.Scene {
         for (let i =0; i < this.bookBoughtNow; i++) {
           this.timerOneShot = this.time.delayedCall(
             140*i, ()=>{
-              this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*20)
-              console.log("book count");
+              this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*20);
+              this.bookParticle.emitParticleAt(p.x + 30,p.y - 40);
             }, this
           );
           
@@ -275,6 +278,22 @@ class PlayScene extends Phaser.Scene {
       frameRate: 6,
       repeat: -1
     })
+
+  }
+
+  initBookParticle(){
+    this.bookParticle.createEmitter({
+      frame: 1,
+      angle: { min: 250, max: 290 },
+      speed: { min: 300, max: 400 },
+      quantity: 1,//{ min: 2, max: 10 },
+      lifespan: 400,
+      alpha: { start: 1, end: 0.5 },
+      scale: 2,//{ min: 0.05, max: 0.4 },
+      //rotate: { start: 0, end: 360, ease: 'Back.easeOut' },
+      gravityY: 800,
+      on: false
+    });
 
   }
 
