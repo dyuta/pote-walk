@@ -22,7 +22,7 @@ class ResultScene extends Phaser.Scene {
     this.model.mediaManager.setBGM('clearbgm',0.06);
 
     //debug text
-    this.debugText = this.add.text(10, 10, 'for debug', { fill: '#00ffff' });
+    //this.debugText = this.add.text(10, 10, 'for debug', { fill: '#00ffff' });
 
     this.groundInitwidth = 100;
     this.jumpVelocity = -1250;
@@ -151,8 +151,8 @@ class ResultScene extends Phaser.Scene {
 
   update(time, delta) {
     const {height, width} = this.game.config;
-    this.PassedTime += delta;
-    this.debugText.setText('PassedTime: ' + this.PassedTime);
+    //this.PassedTime += delta;
+    //this.debugText.setText('PassedTime: ' + this.PassedTime);
     /*if(this.pote.x > width * 1/10 + 80){
       this.gameClearScreen.setAlpha(1);
     }*/

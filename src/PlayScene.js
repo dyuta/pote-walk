@@ -303,7 +303,15 @@ class PlayScene extends Phaser.Scene {
       this.pote.setVelocityY(this.consts.jumpVelocity);
       this.model.mediaManager.playSound('jumpSound',this.consts.volumeSound*0.8);
 
-    }, this)
+    }, this);
+
+    this.input.keyboard.on('keydown-SPACE', () => {
+      if (!this.pote.body.onFloor()){ return; }
+      this.pote.setVelocityY(this.consts.jumpVelocity);
+      this.model.mediaManager.playSound('jumpSound',this.consts.volumeSound*0.8);
+
+    }, this);
+    
   }
 
   placeObstacle(){
