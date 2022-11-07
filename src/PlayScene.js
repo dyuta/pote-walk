@@ -138,7 +138,7 @@ class PlayScene extends Phaser.Scene {
           this.timerOneShot = this.time.delayedCall(
             140*i, ()=>{
               this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*20);
-              this.bookParticle.emitParticleAt(p.x + 30,p.y - 40);
+              this.bookParticle.emitParticleAt(p.x + 30,p.y - 100);
             }, this
           );
           
@@ -284,7 +284,7 @@ class PlayScene extends Phaser.Scene {
   initBookParticle(){
     this.bookParticle.createEmitter({
       frame: 1,
-      angle: { min: 250, max: 290 },
+      angle: { min: 240, max: 250 },
       speed: { min: 300, max: 400 },
       quantity: 1,//{ min: 2, max: 10 },
       lifespan: 400,
