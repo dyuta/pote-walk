@@ -108,9 +108,6 @@ class PlayScene extends Phaser.Scene {
 
     // bookstore overlap
     this.physics.add.overlap(this.pote, this.bookStores, (p, bookstore) => {
-      // for Debug
-      //this.goClearScene();
-
       // execute once on collision
       if(!bookstore.hitFlg){
         console.log("enter store");
@@ -133,11 +130,11 @@ class PlayScene extends Phaser.Scene {
         this.coinCnt = 0;
         this.model.result.book = this.bookCnt;
 
-        this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*10);
+        //this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*20);
         for (let i =0; i < this.bookBoughtNow; i++) {
           this.timerOneShot = this.time.delayedCall(
-            300, ()=>{
-              //this.model.mediaManager.playSound('bookSound')
+            140*i, ()=>{
+              this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*20)
               console.log("book count");
             }, this
           );
@@ -164,7 +161,7 @@ class PlayScene extends Phaser.Scene {
         }
         
         // set hurt status
-        this.model.mediaManager.playSound('damageSound');
+        this.model.mediaManager.playSound('damageSound',this.consts.volumeSound*0.8);
 
         if(!this.pote.hitPose){
           this.pote.hitPose = true;
@@ -197,7 +194,7 @@ class PlayScene extends Phaser.Scene {
       //
       this.model.mediaManager.stopBGM();
       this.timerOneShot = this.time.delayedCall(
-        300, ()=>{this.goClearScene()}, this
+        360, ()=>{this.goClearScene()}, this
       );
     }, null, this);
 
@@ -285,7 +282,7 @@ class PlayScene extends Phaser.Scene {
     this.input.on("pointerdown", () => {
       if (!this.pote.body.onFloor()){ return; }
       this.pote.setVelocityY(this.consts.jumpVelocity);
-      this.model.mediaManager.playSound('jumpSound');
+      this.model.mediaManager.playSound('jumpSound',this.consts.volumeSound*0.8);
 
     }, this)
   }
