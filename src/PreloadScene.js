@@ -102,6 +102,11 @@ class PreloadScene extends Phaser.Scene {
       frameWidth: 96,
       frameHeight: 72
     })
+
+    this.load.spritesheet('UFO-X', 'assets/UFO_alienX.png', {
+      frameWidth: 96,
+      frameHeight: 72
+    })
     
     this.load.spritesheet('pote', 'assets/pote03_run2.png', {
       frameWidth: 88,

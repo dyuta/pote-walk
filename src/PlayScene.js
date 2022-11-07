@@ -279,6 +279,13 @@ class PlayScene extends Phaser.Scene {
       frameRate: 6,
       repeat: -1
     })
+
+    this.anims.create({
+      key: 'UFO-X-fly',
+      frames: this.anims.generateFrameNumbers('UFO-X', {start: 0, end: 1}),
+      frameRate: 5,
+      repeat: -1
+    })
     
     this.anims.create({
       key: 'bicyclelow-ride',
@@ -343,9 +350,12 @@ class PlayScene extends Phaser.Scene {
     if(obstacleNum > 6) {
       console.log('bird');
       const enemyHeight = [40, 120];
+      const enemyType = ['enemy-bird-fly','UFO-X-fly'];
+      
       obstacle = this.obstacles
       .create(width + obstacleDistance, groundHeight - enemyHeight[Math.floor(Math.random() * 2)],'enemy-bird');
-      obstacle.play('enemy-bird-fly', 1);
+      //obstacle.play('enemy-bird-fly', 1);
+      obstacle.play(enemyType[Math.floor(Math.random() * 2)], 1);      
       obstacle.body.height = obstacle.body.height / 1.5;
     }else if(obstacleNum == 1){
       console.log('org1');
