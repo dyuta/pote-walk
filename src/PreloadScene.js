@@ -123,7 +123,8 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('obstacle-2', 'assets/Plant_2_small_small.png')
     this.load.image('obstacle-3', 'assets/Plant_3_small_tall.png')
     this.load.image('obstacle-4', 'assets/Plant_4_middle_small.png')
-    this.load.image('obstacle-5', 'assets/Plant_5_middle_tall2.png')
+    this.load.image('obstacle-5', 'assets/Plant_3_small_tall.png')
+    //this.load.image('obstacle-5', 'assets/Plant_5_middle_tall2.png')
     this.load.image('obstacle-6', 'assets/Plant_6_wide_tall.png')
 
     /*
