@@ -102,6 +102,7 @@ class PlayScene extends Phaser.Scene {
     this.pote.hitPose = false;
 
     this.bookParticle = this.add.particles('coinBookIcon');
+    this.coinParticle = this.add.particles('coinBookIcon');
     
     this.obstacles = this.physics.add.group();
     this.coins = this.physics.add.group();
@@ -110,6 +111,7 @@ class PlayScene extends Phaser.Scene {
     
     this.initAnims();
     this.initBookParticle();
+    this.initCoinParticle();
     this.initColliders();
     
     this.initStartTrigger();
@@ -177,7 +179,8 @@ class PlayScene extends Phaser.Scene {
           this.model.result.miss ++;
           //console.log("miss "+this.model.result.miss);
           if(this.coinCnt >0){
-            this.coinCnt --; 
+            this.coinCnt --;
+            this.coinParticle.emitParticleAt(p.x + 10,p.y - 70);
           }
           
           // set hurt status
@@ -325,7 +328,21 @@ class PlayScene extends Phaser.Scene {
       gravityY: 800,
       on: false
     });
+  }
 
+  initCoinParticle(){
+    this.coinParticle.createEmitter({
+      frame: 0,
+      angle: { min: 240, max: 250 },
+      speed: { min: 100, max: 150 },
+      quantity: 1,//{ min: 2, max: 10 },
+      lifespan: 400,
+      alpha: { start: 1, end: 0 },
+      scale: 2,//{ min: 0.05, max: 0.4 },
+      //rotate: { start: 0, end: 360, ease: 'Back.easeOut' },
+      gravityY: 800,
+      on: false
+    });
   }
 
   handleInputs() {
