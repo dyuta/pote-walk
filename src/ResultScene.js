@@ -73,7 +73,7 @@ class ResultScene extends Phaser.Scene {
     this.gameResultText = this.add.text(0, 80, this.GameResultStr, this.consts.fontoConf.resultDetail)
       .setOrigin(0,0.5);
     this.gameResultText.setStroke('#ffffff', 5);
-    this.restart = this.add.image(20, 176, 'restart').setInteractive()
+    this.restart = this.add.image(0, 176, 'restart').setInteractive()
       .setOrigin(0,0.5);
     this.tweetLink = this.initTweetLink(140, 156);
     this.creditLink = this.initInfoLinks(140,190);
@@ -144,7 +144,7 @@ class ResultScene extends Phaser.Scene {
   initInfoLinks(xx,yy){
     const tapLinkStyle = this.consts.fontoConf.counter;
     let linkString = "credits";
-    const linkURL ="/credits.html";
+    const linkURL ="./credits.html";
     const callbackExternal=function(){
       this.openExternalLink(linkURL);
     };
