@@ -74,6 +74,9 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('endingBook17', 'assets/endingBook17.png');
     this.load.image('endingBook18', 'assets/endingBook18.png');
 
+    this.load.image('noi_album', 'assets/soup_small_col2.png');
+    this.load.image('pictframe_brown', 'assets/pictframe_brown.png');
+
     this.load.spritesheet('coinBookIcon', 'assets/Coin_Book_icon.png', {
       frameWidth: 32, frameHeight: 32
     });
@@ -161,7 +164,7 @@ class PreloadScene extends Phaser.Scene {
         x: width / 2,
         y: height / 4 + 30,
         text: 'Loading...',
-        style: this.consts.fontoConf.counter
+        style: this.consts.fontoConf.loader
       });
     loadingText.setOrigin(0.5, 0.5);
 
@@ -169,7 +172,7 @@ class PreloadScene extends Phaser.Scene {
         x: width / 2,
         y: height / 4 + 50,
         text: 'files',
-        style: this.consts.fontoConf.counter
+        style: this.consts.fontoConf.loader
       });
     loadingfileText.setOrigin(0.5, 0.5);
         
@@ -196,15 +199,15 @@ class PreloadScene extends Phaser.Scene {
     this.model = new Model(this.consts);
     this.model.mediaManager = new MediaManager({scene:this});
 
-    //this.scene.start('PlayScene',{model: this.model});
+    this.scene.start('PlayScene',{model: this.model});
 
     // for result Scene debug
-    
+    /*
     this.model.result.book =11;
     this.model.result.coin =12;
     this.model.result.coinGen =14;
     this.scene.start('ResultScene',{model: this.model});
-    
+    */
   }
 }
 

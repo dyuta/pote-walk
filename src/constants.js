@@ -5,6 +5,8 @@ class Constants{
         this.appURL = 'https://dyuta.github.io/pote-walk/';
         this.numberOfStores=6;
 
+        this.noiUrl = 'https://www.tunecore.co.jp/artists/noiyuhi?lang=ja';
+
         this.gameModes =[
             "Normal",
             "Sanpo",
@@ -68,6 +70,9 @@ class Constants{
         //'Zen Maru Gothic','Noto Sans JP','Sawarabi Gothic'
         this.fontoConf.counter = {
 			fontFamily: '"Roboto"', fontSize: '28px', fill: "#878176"
+        };
+        this.fontoConf.loader = {
+			fontFamily: '"Roboto"', fontSize: '18px', fill: "#878176"
         };
 
         this.fontoConf.storeinfo01 = {

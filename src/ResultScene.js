@@ -82,6 +82,12 @@ class ResultScene extends Phaser.Scene {
       this.tweetLink, this.creditLink
     ])
 
+    this.pictframeScreen = this.add.container(width * 1/5 + 80, groundHeight - 280);
+    this.pictframe = this.add.image(0, 0,"pictframe_brown").setInteractive().setOrigin(0,0).setScale(0.7);
+    this.wallAlbum = this.add.image(3.5, 3.5,"noi_album").setInteractive().setOrigin(0,0).setScale(0.7);
+    this.pictframeScreen.add([this.pictframe, this.wallAlbum]);
+    this.AddTapLinkToImage(this.wallAlbum, this.consts.noiUrl);
+
     this.bookStoreScreen = this.add.container(60, groundHeight + 80).setAlpha(0);
     this.bookStoreScreen.add( 
     this.InitBookstoreImages()
@@ -135,6 +141,14 @@ class ResultScene extends Phaser.Scene {
 
   }
 
+  AddTapLinkToImage(image,url){
+    let callback = function(){
+        this.openExternalLink(url);
+    };
+    image.on('pointerup',callback, this);
+    return image;
+  }
+
   InitBookstoreImages(){
     let storeImages = [];
     const span = 140;
@@ -150,10 +164,13 @@ class ResultScene extends Phaser.Scene {
 
     let callback = {};
     for (let i =0; i < this.consts.numberOfStores; i++) {
+      /*
       callback = function(){
         this.openExternalLink(this.consts.bookstoreList[i].url);
       };
       storeImages[i].on('pointerup',callback, this);
+      */
+      this.AddTapLinkToImage(storeImages[i],this.consts.bookstoreList[i].url);
     }
     
 

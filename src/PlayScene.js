@@ -454,7 +454,7 @@ class PlayScene extends Phaser.Scene {
 
     console.log('potehome');
     this.poteHome = this.poteHomeGrp
-      .create(width + Distance, groundHeight + 20,'potehome')
+      .create(width + Distance, groundHeight + 28,'potehome')
       .setOrigin(0, 1).setImmovable();
     
       this.poteHome.hitFlg=false;
