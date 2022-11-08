@@ -16,9 +16,11 @@ class PreloadScene extends Phaser.Scene {
 
     this.showLoadProgressBar();
 
+    /*
     this.load.audio('jump', 'assets/jump.m4a');
     this.load.audio('hit', 'assets/hit.m4a');
     this.load.audio('reach', 'assets/reach.m4a');
+    */
 
     this.load.audio('mainbgm', 'assets/PW_01_Play_2022-11-06.mp3');
     this.load.audio('bookSound', 'assets/PW_02_Book_2022-11-05.mp3');
@@ -26,6 +28,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('damageSound', 'assets/PW_04_Damage_2022-11-05.mp3');
     this.load.audio('coinSound', 'assets/PW_05_Coin_2022-11-05.mp3');
     this.load.audio('clearbgm', 'assets/PM_07_ED_2022-05-08.mp3');
+    this.load.audio('goalSound', 'assets/PW_06_Goal_2022-11-08.mp3');
 
     this.load.image('ground', 'assets/ground.png');
     //this.load.image('dino-idle', 'assets/dino-idle.png');

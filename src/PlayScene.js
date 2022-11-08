@@ -211,12 +211,18 @@ class PlayScene extends Phaser.Scene {
     }, null, this)
 
     // home overlap
-    this.physics.add.overlap(this.pote, this.poteHomeGrp,() =>{
+    this.physics.add.overlap(this.pote, this.poteHomeGrp,(p, home) =>{
       //
-      this.model.mediaManager.stopBGM();
-      this.timerOneShot = this.time.delayedCall(
-        360, ()=>{this.goClearScene()}, this
-      );
+      if(!home.hitFlg){
+        home.hitFlg = true;
+        this.isGamerunning = false;
+        this.model.mediaManager.stopBGM();
+        this.model.mediaManager.playSound('goalSound',this.consts.volumeSound*0.8);
+  
+        this.timerOneShot = this.time.delayedCall(
+          2800, ()=>{this.goClearScene()}, this
+        );
+      }
     }, null, this);
 
 
