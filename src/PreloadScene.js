@@ -196,15 +196,14 @@ class PreloadScene extends Phaser.Scene {
     this.model = new Model(this.consts);
     this.model.mediaManager = new MediaManager({scene:this});
 
-    this.scene.start('PlayScene',{model: this.model});
+    //this.scene.start('PlayScene',{model: this.model});
 
     // for result Scene debug
-    /*
-    this.model.result.book =8;
-    this.model.result.coin =10;
-    this.model.result.coinGen =11;
+    
+    this.model.result.book =11;
+    this.model.result.coin =12;
+    this.model.result.coinGen =14;
     this.scene.start('ResultScene',{model: this.model});
-    */
     
   }
 }

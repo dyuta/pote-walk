@@ -81,6 +81,11 @@ class ResultScene extends Phaser.Scene {
       this.restart,this.restartSafe,
       this.tweetLink, this.creditLink
     ])
+
+    this.bookStoreScreen = this.add.container(60, groundHeight + 80).setAlpha(0);
+    this.bookStoreScreen.add( 
+    this.InitBookstoreImages()
+    );
     
     this.initColliders();
     this.initAnims(); 
@@ -97,11 +102,10 @@ class ResultScene extends Phaser.Scene {
       if(rslt.hitflag == true){return;}
       console.log('show result');
       rslt.hitflag = true;
-      // show books
+      // show Objects
       this.bookTower.setAlpha(1);
-
-      // show results
       this.gameClearScreen.setAlpha(1);
+      this.bookStoreScreen.setAlpha(1);
     }
     , null, this);
   }
@@ -131,6 +135,30 @@ class ResultScene extends Phaser.Scene {
 
   }
 
+  InitBookstoreImages(){
+    let storeImages = [];
+    const span = 140;
+    const scale = 0.64;
+    let bookstore01 = this.add.image(span*0, 0, 'bookstore01').setInteractive().setOrigin(0,0).setScale(scale);
+    let bookstore02 = this.add.image(span*1, 0, 'bookstore02').setInteractive().setOrigin(0,0).setScale(scale);
+    let bookstore03 = this.add.image(span*2, 0, 'bookstore03').setInteractive().setOrigin(0,0).setScale(scale);
+    let bookstore04 = this.add.image(span*3, 0, 'bookstore04').setInteractive().setOrigin(0,0).setScale(scale);
+    let bookstore05 = this.add.image(span*4, 0, 'bookstore05').setInteractive().setOrigin(0,0).setScale(scale);
+    let bookstore06 = this.add.image(span*5, 0, 'bookstore06').setInteractive().setOrigin(0,0).setScale(scale);
+
+    storeImages = [bookstore01,bookstore02,bookstore03,bookstore04,bookstore05,bookstore06];
+
+    let callback = {};
+    for (let i =0; i < this.consts.numberOfStores; i++) {
+      callback = function(){
+        this.openExternalLink(this.consts.bookstoreList[i].url);
+      };
+      storeImages[i].on('pointerup',callback, this);
+    }
+    
+
+    return storeImages
+  }
   handleInputs() {
     this.restart.on('pointerdown', () => {
       this.restartGame();
@@ -146,6 +174,7 @@ class ResultScene extends Phaser.Scene {
 
     }, this)
   }
+  
   initInfoLinks(xx,yy){
     const tapLinkStyle = this.consts.fontoConf.TapLink;
     let linkString = "credits";
@@ -160,6 +189,7 @@ class ResultScene extends Phaser.Scene {
       );
   return infoLink;
   }
+
   initTweetLink(xx,yy){
     //const tapLinkStyle = {fontFamily:'Mulish',fontSize:'36px',align:'center',fontStyle:'normal'};
     const tapLinkStyle = this.consts.fontoConf.TapLink;
@@ -209,7 +239,16 @@ class ResultScene extends Phaser.Scene {
   openExternalLink(url)
     {
         //let url = url
-        let s = window.open(url, '_blank');
+        //let s = window.open(url, '_blank','noopener','noreferrer');
+        //let s = window.open(url, '_blank','noreferrer');
+        //let s = window.open(url, '_blank','noopener');
+        //let s = window.open(url, '_blank');
+        let s = window.open();
+        s.opener = null;
+        s.referrer = null;
+        s.location = url;
+        
+
         if (s && s.focus)
         {
             s.focus();
