@@ -78,10 +78,15 @@ class Constants{
         // const Resultcolor = "#9F6F3F";
         const Resultcolor = "#EFA92A";
         this.fontoConf.resultTitle = {
-			fontFamily: '"Concert One"', fontSize: '40px', fill: Resultcolor
+			fontFamily: '"Concert One"', fontSize: '64px', fill: Resultcolor
         };
         this.fontoConf.resultDetail = {
-			fontFamily: '"Concert One"', fontSize: '32px', fill: Resultcolor
+			fontFamily: '"Concert One"', fontSize: '48px', fill: Resultcolor
+        };
+
+        //
+        this.fontoConf.TapLink = {
+			fontFamily: '"Roboto"', fontSize: '40px', fill: "#878176"
         };
 
     }
