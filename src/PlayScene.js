@@ -167,30 +167,33 @@ class PlayScene extends Phaser.Scene {
     }, null, this);
 
     // obstacle overlap
-    this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
-      // execute once on collision
-      if(!obstacle.hitFlg){
-        console.log("hit");
-        obstacle.hitFlg = true;
-        this.model.result.miss ++;
-        //console.log("miss "+this.model.result.miss);
-        if(this.coinCnt >0){
-          this.coinCnt --; 
-        }
-        
-        // set hurt status
-        this.model.mediaManager.playSound('damageSound',this.consts.volumeSound*0.8);
-
-        if(!this.pote.hitPose){
-          this.pote.hitPose = true;
-          console.log("hit-pose");
+    // added when game mode is other than Sampo
+    if(this.model.gameMode !== this.consts.gameModes[1]){
+      this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
+        // execute once on collision
+        if(!obstacle.hitFlg){
+          console.log("hit");
+          obstacle.hitFlg = true;
+          this.model.result.miss ++;
+          //console.log("miss "+this.model.result.miss);
+          if(this.coinCnt >0){
+            this.coinCnt --; 
+          }
           
-          this.timerOneShot = this.time.delayedCall(
-            300, ()=>{this.pote.hitPose = false}, this
-          );
+          // set hurt status
+          this.model.mediaManager.playSound('damageSound',this.consts.volumeSound*0.8);
+  
+          if(!this.pote.hitPose){
+            this.pote.hitPose = true;
+            console.log("hit-pose");
+            
+            this.timerOneShot = this.time.delayedCall(
+              300, ()=>{this.pote.hitPose = false}, this
+            );
+          }
         }
-      }
-    }, null, this)
+      }, null, this)
+    }
     
     // coin overlap
     this.physics.add.overlap(this.pote, this.coins, (p, coin) => {
