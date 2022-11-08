@@ -55,7 +55,7 @@ class ResultScene extends Phaser.Scene {
     this.pote.hitPose = false;
 
     // restart button
-    this.gameClearScreen = this.add.container(width * 1/2 - 0, 130).setAlpha(0)
+    this.gameClearScreen = this.add.container(width * 1/2 - 0, 100).setAlpha(0)
     //this.gameClearText = this.add.image(0, 0, 'game-over');
     
     if(this.model.result.miss == 0 &&
@@ -70,17 +70,19 @@ class ResultScene extends Phaser.Scene {
     this.gameClearText = this.add.text(0, 0, this.GameClearStr, this.consts.fontoConf.resultTitle)
       .setOrigin(0,0.5);
     this.gameClearText.setStroke('#ffffff', 8);
-    this.gameResultText = this.add.text(0, 74, this.GameResultStr, this.consts.fontoConf.resultDetail)
+    this.gameResultText = this.add.text(0, 80, this.GameResultStr, this.consts.fontoConf.resultDetail)
       .setOrigin(0,0.5);
     this.gameResultText.setStroke('#ffffff', 5);
-    this.restart = this.add.image(20, 160, 'restart').setInteractive()
+    this.restart = this.add.image(20, 176, 'restart').setInteractive()
       .setOrigin(0,0.5);
+    this.tweetLink = this.initTweetLink(140, 156);
+    this.creditLink = this.initInfoLinks(140,190);
     this.gameClearScreen.add([
-      this.gameClearText, this.gameResultText,  this.restart
+      this.gameClearText, this.gameResultText,  this.restart, this.tweetLink, this.creditLink
     ])
     
     this.initColliders();
-    this.initAnims();    
+    this.initAnims(); 
     this.initStartTrigger();
     this.handleInputs();
   }
@@ -139,11 +141,84 @@ class ResultScene extends Phaser.Scene {
 
     }, this)
   }
+  initInfoLinks(xx,yy){
+    const tapLinkStyle = this.consts.fontoConf.counter;
+    let linkString = "credits";
+    const linkURL ="/credits.html";
+    const callbackExternal=function(){
+      this.openExternalLink(linkURL);
+    };
+
+  let infoLink = this.createTapLink.apply(this,
+      [{xx:xx, yy:yy},
+        linkString, tapLinkStyle, callbackExternal]
+      );
+  return infoLink;
+  }
+  initTweetLink(xx,yy){
+    //const tapLinkStyle = {fontFamily:'Mulish',fontSize:'36px',align:'center',fontStyle:'normal'};
+    const tapLinkStyle = this.consts.fontoConf.counter;
+    // twitter
+    let snsShareString = this.createSNSShareString();
+    snsShareString +='\n' + this.consts.appURL; 
+    const tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(snsShareString);
+    const callbackTweet=function(){
+        this.openExternalLink(tweetUrl);
+    };
+
+    let tweetLink = this.createTapLink.apply(this,
+        [{xx:xx, yy:yy},
+         'tweet!', tapLinkStyle, callbackTweet]
+        );
+    return tweetLink;
+  }
+
+  createSNSShareString(){
+    let snsShareString = "Potewalk ";
+    // mode
+    snsShareString = this.model.gameMode + "\n";
+
+    // book,  miss, coin(got/generated)
+    snsShareString += 
+    `book: ${this.model.result.book}\ncoin: ${this.model.result.coin} / ${this.model.result.coinGen}\nmiss: ${this.model.result.miss}`;
+
+    // clear status
+    if(this.model.result.miss == 0 &&
+      this.model.result.coin == this.model.result.coinGen){
+      snsShareString +="\nperfect!"
+    }
+    return snsShareString;
+  }
+  createTapLink(position,str,style,callback){
+    /* call with context this */
+    const tapLink = this.add.text(
+        position.xx, position.yy, str, style
+    ).setInteractive();
+    tapLink.setOrigin(0.5,0.5);
+    
+    tapLink.on('pointerup',callback, this);
+
+    return tapLink;
+  }
+
+  openExternalLink(url)
+    {
+        //let url = url
+        let s = window.open(url, '_blank');
+        if (s && s.focus)
+        {
+            s.focus();
+        }
+        else if (!s)
+        {
+            window.location.href = url;
+        }
+    }
 
   restartGame(){
     this.model.mediaManager.stopBGM();
     // set default value
-    this.model = new Model();
+    this.model = new Model(this.consts);
     // ToDo move mediaManager from model
     this.model.mediaManager = new MediaManager({scene:this});
     this.scene.start('PlayScene',{model: this.model});

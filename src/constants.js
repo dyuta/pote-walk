@@ -5,14 +5,20 @@ class Constants{
         this.appURL = 'https://dyuta.github.io/pote-walk/';
         this.numberOfStores=6;
 
+        this.gameModes =[
+            "Normal",
+            "Sanpo",
+            "Nope"
+        ];
+        
         this.bookstoreList = [
-            {name:"双子のライオン堂",line:"東京メトロ",station:"赤坂"},
-            {name:"BREWBOOKS",line:"JR",station:"西荻窪"},
-            {name:"書肆 海と夕焼",line:"JR",station:"谷保"},
-            {name:"山陽堂書店",line:"東京メトロ",station:"表参道"},
             {name:"NENOi",line:"東京メトロ",station:"早稲田"},
-            {name:"マルジナリア書店",line:"京王 JR",station:"分倍河原"}
-        ]
+            {name:"マルジナリア書店",line:"京王 JR",station:"分倍河原"},
+            {name:"書肆 海と夕焼",line:"JR",station:"谷保"},
+            {name:"BREWBOOKS",line:"JR",station:"西荻窪"},
+            {name:"山陽堂書店",line:"東京メトロ",station:"表参道"},
+            {name:"双子のライオン堂",line:"東京メトロ",station:"赤坂"},
+        ];
 
         this.volumeBGM=0.1;
         this.volumeSound=0.2;

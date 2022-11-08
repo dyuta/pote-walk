@@ -36,20 +36,20 @@ class PreloadScene extends Phaser.Scene {
 
     this.load.image('pote-idle', 'assets/pote04_idle2.png');
     this.load.image('pote-hurt', 'assets/pote05_hurt2.png');
-
-    this.load.image('bookstore01', 'assets/shop_2_Futago.png');
-    this.load.image('bookstore02', 'assets/shop_5_BrewBooks.png');
+    
+    this.load.image('bookstore01', 'assets/shop_1_Nenoi.png');
+    this.load.image('bookstore02', 'assets/shop_3_Marginalia.png');
     this.load.image('bookstore03', 'assets/shop_4_ShoshiYuYaketoUmi.png');
-    this.load.image('bookstore04', 'assets/shop_6_Sanyodo.png');
-    this.load.image('bookstore05', 'assets/shop_1_Nenoi.png');
-    this.load.image('bookstore06', 'assets/shop_3_Marginalia.png');
+    this.load.image('bookstore04', 'assets/shop_5_BrewBooks.png');
+    this.load.image('bookstore05', 'assets/shop_6_Sanyodo.png');
+    this.load.image('bookstore06', 'assets/shop_2_Futago.png');
 
-    this.load.image('bookstoreicon01', 'assets/bookstore_icon/01_futago_lion.png');
-    this.load.image('bookstoreicon02', 'assets/bookstore_icon/02_brewbooks.png');
+    this.load.image('bookstoreicon01', 'assets/bookstore_icon/05_nenoi.png');
+    this.load.image('bookstoreicon02', 'assets/bookstore_icon/06_marginaria.png');
     this.load.image('bookstoreicon03', 'assets/bookstore_icon/03_shoshiyuyaketoumi.png');
-    this.load.image('bookstoreicon04', 'assets/bookstore_icon/04_sanyodo.png');
-    this.load.image('bookstoreicon05', 'assets/bookstore_icon/05_nenoi.png');
-    this.load.image('bookstoreicon06', 'assets/bookstore_icon/06_marginaria.png');
+    this.load.image('bookstoreicon04', 'assets/bookstore_icon/02_brewbooks.png');
+    this.load.image('bookstoreicon05', 'assets/bookstore_icon/04_sanyodo.png');
+    this.load.image('bookstoreicon06', 'assets/bookstore_icon/01_futago_lion.png');
 
     this.load.image('potehome', 'assets/home_tmp.png');
     this.load.image('homeInside', 'assets/HomeInside2.png');
@@ -193,12 +193,14 @@ class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    this.model = new Model();
+    this.model = new Model(this.consts);
     this.model.mediaManager = new MediaManager({scene:this});
+
     this.scene.start('PlayScene',{model: this.model});
 
     // for result Scene debug
-    /*this.model.result.book =8;
+    /*
+    this.model.result.book =8;
     this.model.result.coin =10;
     this.model.result.coinGen =11;
     this.scene.start('ResultScene',{model: this.model});
