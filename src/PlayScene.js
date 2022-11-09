@@ -83,16 +83,16 @@ class PlayScene extends Phaser.Scene {
 
     this.environment = this.add.group();
     this.environment.addMultiple([
-        this.add.image(width * 0.5, 170, 'cloud'),
-        this.add.image(width * 0.70, 80, 'cloud'),
-        this.add.image((width * 0.9), 100, 'cloud')
+        this.add.image(width * 0.25, 170, 'cloud'),
+        this.add.image(width * 0.62, 80, 'cloud'),
+        this.add.image((width * 0.9), 120, 'cloud')
       ]);
     
     this.environment.setAlpha(0);
     this.envLayer.add(this.environment.getChildren());
 
     // nope
-    this.stayingCloud = this.add.image(width * 0.8, 140, 'cloud').setAlpha(0);
+    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setAlpha(0);
     this.envLayer.add(this.stayingCloud);
 
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
