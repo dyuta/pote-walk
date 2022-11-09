@@ -47,6 +47,7 @@ class PlayScene extends Phaser.Scene {
     //this.bgLayer = this.add.layer();
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
+    this.backBuildings = this.add.tileSprite(0, groundHeight-20, width, 112, 'backBuildings').setOrigin(0, 1).setScale(1.3).setAlpha(0);
     this.ground = this.add.tileSprite(0, groundHeight+22, this.groundInitwidth, 48, 'ground').setOrigin(0, 1);
     
     this.envLayer = this.add.layer();
@@ -258,14 +259,17 @@ class PlayScene extends Phaser.Scene {
 
           if (this.ground.width < width ) {
             this.ground.width += 17 *2;
+            //this.backBuildings.width += 17 *2;
           } else {
             this.ground.width = width;
+            //this.backBuildings.width = width;
             this.isGamerunning = true;
             this.pote.setVelocityX(0);
             this.environment.setAlpha(1);
             // nope
             //this.stayingCloud.setAlpha(1);
             this.destinationTxt.setAlpha(1);
+            this.backBuildings.setAlpha(0.9);
             this.counterIcons.setAlpha(1);
             this.coinCounterText.setAlpha(1);
             this.bookCounterText.setAlpha(1);
@@ -532,6 +536,7 @@ class PlayScene extends Phaser.Scene {
 
     // scroll
     this.ground.tilePositionX += this.gameSpeed*this.consts.worldScroll;
+    this.backBuildings.tilePositionX += this.gameSpeed*this.consts.worldScroll*0.4;
     Phaser.Actions.IncX(this.environment.getChildren(), - 0.5);
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
     Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
