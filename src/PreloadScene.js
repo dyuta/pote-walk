@@ -218,7 +218,7 @@ class PreloadScene extends Phaser.Scene {
 
     // for result Scene debug
     /*
-    this.model.result.book =11;
+    this.model.result.book =14;
     this.model.result.coin =12;
     this.model.result.coinGen =14;
     this.scene.start('ResultScene',{model: this.model});

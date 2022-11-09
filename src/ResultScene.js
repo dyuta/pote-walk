@@ -16,6 +16,7 @@ class ResultScene extends Phaser.Scene {
   create() {
     this.consts = new Constants();
     this.isGamerunning = false;
+    this.isResultPerfect = false;
     this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
     this.PassedTime=0;
     
@@ -26,6 +27,7 @@ class ResultScene extends Phaser.Scene {
 
     this.groundInitwidth = 100;
     this.jumpVelocity = -1250;
+    this.tintInc = 0;
     const {height, width} = this.game.config;
     const groundHeight = height*0.5 + 110;
 
@@ -53,17 +55,29 @@ class ResultScene extends Phaser.Scene {
     // Clear Results
     this.gameClearScreen = this.add.container(width * 3/5+50, 100).setAlpha(0);
     
-    let gameClearStates = "";
-    if(this.model.result.miss == 0 &&this.model.result.coin == this.model.result.coinGen){
-      gameClearStates ="Perfect!";
-    } else {
-      gameClearStates ="Clear!";
-    }
+    let gameClearStates = "test";
     this.GameResultStr = 
     `book: ${this.model.result.book}\ncoin: ${this.model.result.coin} / ${this.model.result.coinGen}\nmiss: ${this.model.result.miss}`;
     this.gameClearText = this.add.text(0, 0, gameClearStates, this.consts.fontoConf.resultTitle)
-      .setOrigin(0,0.5);
-    this.gameClearText.setStroke('#ffffff', 8);
+    .setOrigin(0,0.5);
+    
+    // perfect
+    if(this.model.result.miss == 0 &&this.model.result.coin == this.model.result.coinGen){
+      this.isResultPerfect = true;
+    }
+
+    if(this.isResultPerfect){
+      gameClearStates ="Perfect!";
+      this.gameClearText.setText(gameClearStates);
+      this.gameClearText.setStroke('#00f', 10);
+      this.gameClearText.setColor('#ffffff');
+      this.gameClearText.setShadow(2, 2, "#333333", 2, true, true);
+    } else {
+      gameClearStates ="Clear!";
+      this.gameClearText.setText(gameClearStates);
+      this.gameClearText.setStroke('#ffffff', 8);
+    }
+
     this.gameResultText = this.add.text(0, 120, this.GameResultStr, this.consts.fontoConf.resultDetail)
       .setOrigin(0,0.5);
     this.gameResultText.setStroke('#ffffff', 4);
@@ -299,6 +313,17 @@ class ResultScene extends Phaser.Scene {
 
   update(time, delta) {
     if (!this.isGamerunning) { return; }
+
+    //perfect str rainbow
+    const top = this.model.hsv[this.tintInc].color;
+    const bottom = this.model.hsv[359 - this.tintInc].color;
+    if (this.isResultPerfect){
+      this.gameClearText.setTint(top, bottom, top, bottom);
+      this.tintInc++;
+      if (this.tintInc >= 360){
+        this.tintInc = 0;
+      }
+    }
     //const {height, width} = this.game.config;
     //this.PassedTime += delta;
     //this.debugText.setText('PassedTime: ' + this.PassedTime);
