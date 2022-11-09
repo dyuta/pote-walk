@@ -220,7 +220,7 @@ class PlayScene extends Phaser.Scene {
         home.hitFlg = true;
         this.isGamerunning = false;
         this.model.mediaManager.stopBGM();
-        this.model.mediaManager.playSound('goalSound',this.consts.volumeSound*0.8);
+        this.model.mediaManager.playSound('goalSound',this.consts.volumeSound*0.2);
   
         this.timerOneShot = this.time.delayedCall(
           2800, ()=>{this.goClearScene()}, this

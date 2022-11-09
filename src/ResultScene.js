@@ -19,7 +19,7 @@ class ResultScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
     this.PassedTime=0;
     
-    this.model.mediaManager.setBGM('clearbgm',0.06);
+    this.model.mediaManager.playSound('clearbgm',this.consts.volumeSound*0.1);
 
     //debug text
     //this.debugText = this.add.text(10, 10, 'for debug', { fill: '#00ffff' });
