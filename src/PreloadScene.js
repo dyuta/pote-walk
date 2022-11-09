@@ -116,7 +116,7 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 72
     })
     
-    this.load.spritesheet('pote', 'assets/pote03_run2.png', {
+    this.load.spritesheet('pote', 'assets/pote03_run.png', {
       frameWidth: 88,
       frameHeight: 94
     })
@@ -126,6 +126,10 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 92
     })
 
+    this.load.spritesheet('potedance', 'assets/pote07_dance.png', {
+      frameWidth: 88,
+      frameHeight: 92
+    })
 
     this.load.spritesheet('coin', 'assets/coin01_gold01_spriteSheet.png', {
       frameWidth: 32,
@@ -210,15 +214,16 @@ class PreloadScene extends Phaser.Scene {
     this.model = new Model(this.consts);
     this.model.mediaManager = new MediaManager({scene:this});
 
-    this.scene.start('PlayScene',{model: this.model});
+    //this.scene.start('PlayScene',{model: this.model});
 
     // for result Scene debug
-    /*
+    
     this.model.result.book =11;
     this.model.result.coin =12;
     this.model.result.coinGen =14;
     this.scene.start('ResultScene',{model: this.model});
-    */
+    
+    
   }
 }
 

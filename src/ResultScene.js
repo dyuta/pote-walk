@@ -108,6 +108,7 @@ class ResultScene extends Phaser.Scene {
       if(rslt.hitflag == true){return;}
       console.log('show result');
       rslt.hitflag = true;
+      this.isGamerunning = true;
       // show Objects
       this.bookTower.setAlpha(1);
       this.gameClearScreen.setAlpha(1);
@@ -123,7 +124,7 @@ class ResultScene extends Phaser.Scene {
     this.physics.add.overlap(this.startTrigger, this.pote, () =>{
       console.log('overlap');
       this.pote.x +=1.4;
-      this.pote.play('pote-run',1);     
+      this.pote.play('pote-run',1);
 
     }
     , null, this);
@@ -136,6 +137,13 @@ class ResultScene extends Phaser.Scene {
       key: 'pote-run',
       frames: this.anims.generateFrameNumbers('pote', {start: 1, end: 2}),
       frameRate: 10,
+      repeat: -1
+    })
+
+    this.anims.create({
+      key: 'pote-dance',
+      frames: this.anims.generateFrameNumbers('potedance', {start: 0, end: 3}),
+      frameRate: 2.81,
       repeat: -1
     })
 
@@ -290,7 +298,8 @@ class ResultScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    const {height, width} = this.game.config;
+    if (!this.isGamerunning) { return; }
+    //const {height, width} = this.game.config;
     //this.PassedTime += delta;
     //this.debugText.setText('PassedTime: ' + this.PassedTime);
     /*if(this.pote.x > width * 1/10 + 80){
@@ -309,7 +318,7 @@ class ResultScene extends Phaser.Scene {
       this.pote.setTexture('pote');
 
     } else {
-      this.pote.play('pote-run',true);
+      this.pote.play('pote-dance',true);
     }
 
   }

@@ -296,7 +296,7 @@ class PlayScene extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers('potehappy', {start: 0, end: 1}),
       frameRate: 6,
       repeat: -1
-    })    
+    })
 
     this.anims.create({
       key: 'enemy-bird-fly',
