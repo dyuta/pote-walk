@@ -30,7 +30,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('clearbgm', 'assets/PM_07_ED_2022-05-08.mp3');
     this.load.audio('goalSound', 'assets/PW_06_Goal_2022-11-08.mp3');
 
-    this.load.image('ground', 'assets/ground.png');
+    this.load.image('ground', 'assets/ground2.png');
     //this.load.image('dino-idle', 'assets/dino-idle.png');
     //this.load.image('dino-hurt', 'assets/dino-hurt.png');
     this.load.image('restart', 'assets/restart.png');
