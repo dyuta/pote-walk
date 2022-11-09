@@ -278,6 +278,7 @@ class ResultScene extends Phaser.Scene {
 
   restartGame(mode = this.consts.gameModes[0]){
     this.model.mediaManager.stopBGM();
+    this.model.mediaManager.stopPlaingSound();
     // set default value
     this.model = new Model(this.consts);
     if(mode == this.consts.gameModes[1]){
