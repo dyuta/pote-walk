@@ -56,7 +56,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('bookstoreicon05', 'assets/bookstore_icon/04_sanyodo.png');
     this.load.image('bookstoreicon06', 'assets/bookstore_icon/01_futago_lion.png');
 
-    this.load.image('potehome', 'assets/home_tmp.png');
+    this.load.image('potehome', 'assets/home_2.png');
     this.load.image('homeInside', 'assets/HomeInside2.png');
     this.load.image('endingBook', 'assets/endingBook.png');
     this.load.image('endingBook0', 'assets/endingBook0.png');
