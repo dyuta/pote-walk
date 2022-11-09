@@ -6,6 +6,7 @@ class Constants{
         this.numberOfStores=6;
 
         this.noiUrl = 'https://www.tunecore.co.jp/artists/noiyuhi?lang=ja';
+        this.naoeUrl = 'https://twitter.com/naoeaki';
 
         this.gameModes =[
             "Normal",

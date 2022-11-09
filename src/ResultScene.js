@@ -32,6 +32,8 @@ class ResultScene extends Phaser.Scene {
     const groundHeight = height*0.5 + 110;
 
     this.bgHome = this.add.image(280-220,20,"homeInside").setOrigin(0,0).setScale(1.4);
+    this.wallLayer = this.add.layer();
+
     const bookNum = Math.min(18,this.model.result.book);
     this.bookTower = this.add.image(448,groundHeight,`endingBook${bookNum}`).setOrigin(0,1).setScale(1.6).setAlpha(0);
     
@@ -96,11 +98,15 @@ class ResultScene extends Phaser.Scene {
       this.tweetLink, this.creditLink
     ])
 
-    this.pictframeScreen = this.add.container(width * 1/5 + 80, groundHeight - 280);
-    this.pictframe = this.add.image(0, 0,"pictframe_brown").setInteractive().setOrigin(0,0).setScale(0.7);
-    this.wallAlbum = this.add.image(3.5, 3.5,"noi_album").setInteractive().setOrigin(0,0).setScale(0.7);
-    this.pictframeScreen.add([this.pictframe, this.wallAlbum]);
+    this.pictframeScreen = this.add.container(width * 1/5 + 60, groundHeight - 300);
+    this.pictframe = this.add.image(0, 4,"pictframe_brown").setInteractive().setOrigin(0,0).setScale(0.7);
+    this.wallAlbum = this.add.image(3.5, 3.5+4,"noi_album").setInteractive().setOrigin(0,0).setScale(0.7);
+    this.wallPotetoGannen = this.add.image(100, 0,"pote-ganen").setInteractive().setOrigin(0,0).setScale(0.5);
+    this.pictframeScreen.add([this.pictframe, this.wallAlbum, this.wallPotetoGannen]);
+    this.wallLayer.add(this.pictframeScreen);
+
     this.AddTapLinkToImage(this.wallAlbum, this.consts.noiUrl);
+    this.AddTapLinkToImage(this.wallPotetoGannen, this.consts.naoeUrl);
 
     this.bookStoreScreen = this.add.container(60, groundHeight + 80).setAlpha(0);
     this.bookStoreScreen.add( 
