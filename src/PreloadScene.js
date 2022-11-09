@@ -119,6 +119,12 @@ class PreloadScene extends Phaser.Scene {
       frameWidth: 88,
       frameHeight: 94
     })
+    
+    this.load.spritesheet('potehappy', 'assets/pote06_happy.png', {
+      frameWidth: 88,
+      frameHeight: 92
+    })
+
 
     this.load.spritesheet('coin', 'assets/coin01_gold01_spriteSheet.png', {
       frameWidth: 32,

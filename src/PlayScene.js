@@ -219,8 +219,11 @@ class PlayScene extends Phaser.Scene {
       if(!home.hitFlg){
         home.hitFlg = true;
         this.isGamerunning = false;
+
         this.model.mediaManager.stopBGM();
         this.model.mediaManager.playSound('goalSound',this.consts.volumeSound*0.2);
+        
+        this.pote.play('pote-happy',1);
   
         this.timerOneShot = this.time.delayedCall(
           2800, ()=>{this.goClearScene()}, this
@@ -281,9 +284,17 @@ class PlayScene extends Phaser.Scene {
     this.anims.create({
       key: 'pote-run',
       frames: this.anims.generateFrameNumbers('pote', {start: 1, end: 2}),
+      //frameRate: 9,
       frameRate: 10,
       repeat: -1
     })
+
+    this.anims.create({
+      key: 'pote-happy',
+      frames: this.anims.generateFrameNumbers('potehappy', {start: 0, end: 1}),
+      frameRate: 6,
+      repeat: -1
+    })    
 
     this.anims.create({
       key: 'enemy-bird-fly',
@@ -594,6 +605,7 @@ class PlayScene extends Phaser.Scene {
 
     } else {
       this.pote.play('pote-run',true);
+      //this.pote.play('pote-happy',true);
     }
 
   }
