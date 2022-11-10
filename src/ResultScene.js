@@ -240,7 +240,7 @@ class ResultScene extends Phaser.Scene {
     const tapLinkStyle = this.consts.fontoConf.TapLink;
     // twitter
     let snsShareString = this.createSNSShareString();
-    snsShareString +='\n' + this.consts.appURL; 
+    
     const tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(snsShareString);
     const callbackTweet=function(){
         this.openExternalLink(tweetUrl);
@@ -254,9 +254,9 @@ class ResultScene extends Phaser.Scene {
   }
 
   createSNSShareString(){
-    let snsShareString = "Potewalk ";
+    let snsShareString = "Potewalk\n";
     // mode
-    snsShareString = this.model.gameMode + "\n";
+    snsShareString +="mode: "+ this.model.gameMode + "\n";
 
     // book,  miss, coin(got/generated)
     snsShareString += 
@@ -267,6 +267,8 @@ class ResultScene extends Phaser.Scene {
       this.model.result.coin == this.model.result.coinGen){
       snsShareString +="\nperfect!"
     }
+    snsShareString +='\n' + this.consts.appURL;
+    console.log(snsShareString);
     return snsShareString;
   }
   createTapLink(position,str,style,callback){
