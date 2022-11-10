@@ -31,13 +31,14 @@ class Constants{
 
         this.volumeBGM=0.1;
         this.volumeSound=0.2;
-        
+        /*
         this.START_GAME="START_GAME";
         this.GO_CREDIT="GO_CREDIT";
         this.GO_TITLE="GO_TITLE";
         this.VOLUME_OFF="VOLUME_OFF";
         this.VOLUME_ON="VOLUME_ON";
         this.GO_POTATO="GO_POTATO";
+        */
 
         this.colors = {
             background:"E7E6E3",
@@ -76,17 +77,25 @@ class Constants{
 			fontFamily: '"Roboto"', fontSize: '18px', fill: "#878176"
         };
 
+        this.fontoConf.openingDialogue = {
+			fontFamily: '"Zen Maru Gothic"', fontSize: '38px', fill: "#5E5A53"
+            ,fontWeight:"bold"
+        };
+
         this.fontoConf.storeinfo01 = {
 			fontFamily: '"Zen Maru Gothic"', fontSize: '32px', fill: "#878176"
             //,fontWeight:"bold"
         };
+
+        /*
         this.fontoConf.storeinfo02 = {
 			fontFamily: '"Noto Sans JP"', fontSize: '28px', fill: "#878176"
         };
         this.fontoConf.storeinfo03 = {
 			fontFamily: '"Sawarabi Gothic"', fontSize: '28px', fill: "#878176"
         };
-        
+        */
+
         // const Resultcolor = "#9F6F3F";
         const Resultcolor = "#EFA92A";
         this.fontoConf.resultTitle = {
@@ -100,6 +109,10 @@ class Constants{
         this.fontoConf.TapLink = {
 			fontFamily: '"Roboto"', fontSize: '40px', fill: "#878176"
         };
+
+        // nope
+        this.nope = {};
+
 
     }
 }

@@ -22,6 +22,9 @@ class PlayScene extends Phaser.Scene {
     //this.debugText2 = this.add.text(10, 430, 'for debug', this.consts.fontoConf.counter);
 
     // Store Name
+    this.openingDialogue =this.add.text(
+      100, 170, "そうだ、本屋に行こう！",this.consts.fontoConf.openingDialogue
+    ).setOrigin(0,0);
     this.destinationTxt = this.add.text(
       20, 10, `行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`,
       this.consts.fontoConf.storeinfo01
@@ -244,6 +247,7 @@ class PlayScene extends Phaser.Scene {
       if (this.startTrigger.y === 10) {
         this.startTrigger.body.reset(0, groundHeight);
         this.model.mediaManager.setBGM('mainbgm');
+        this.openingDialogue.setAlpha(0);
         return;
       }
       
@@ -263,14 +267,16 @@ class PlayScene extends Phaser.Scene {
             this.ground.width = width;
             this.isGamerunning = true;
             this.pote.setVelocityX(0);
+            
             this.environment.setAlpha(1);
-            // nope
-            //this.stayingCloud.setAlpha(1);
             this.destinationTxt.setAlpha(1);
             this.backBuildings.setAlpha(0.8);
             this.counterIcons.setAlpha(1);
             this.coinCounterText.setAlpha(1);
             this.bookCounterText.setAlpha(1);
+            // nope
+            //this.stayingCloud.setAlpha(1);
+
             this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
             startEvent.remove();
           }
