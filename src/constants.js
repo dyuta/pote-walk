@@ -6,6 +6,7 @@ class Constants{
         this.numberOfStores=6;
 
         this.noiUrl = 'https://www.tunecore.co.jp/artists/noiyuhi?lang=ja';
+        this.kotobaUrl = 'https://liondo.jp/?page_id=3029';
         this.naoeUrl = 'https://twitter.com/naoeaki';
 
         this.gameModes =[

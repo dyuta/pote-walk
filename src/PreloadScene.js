@@ -80,6 +80,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('endingBook18', 'assets/endingBook18.png');
 
     this.load.image('noi_album', 'assets/soup_small_col2.png');
+    this.load.image('kotobadakenochizu', 'assets/kotobadakenochizu_comp.png');
     this.load.image('pictframe_brown', 'assets/pictframe_brown.png');
     this.load.image('pote-ganen', 'assets/potatoGannen_notitle.png');
 

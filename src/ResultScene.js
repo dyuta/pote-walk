@@ -102,11 +102,13 @@ class ResultScene extends Phaser.Scene {
     this.pictframe = this.add.image(0, 4,"pictframe_brown").setInteractive().setOrigin(0,0).setScale(0.7);
     this.wallAlbum = this.add.image(3.5, 3.5+4,"noi_album").setInteractive().setOrigin(0,0).setScale(0.7);
     this.wallPotetoGannen = this.add.image(100, 0,"pote-ganen").setInteractive().setOrigin(0,0).setScale(0.5);
-    this.pictframeScreen.add([this.pictframe, this.wallAlbum, this.wallPotetoGannen]);
+    this.kotobadakenochizu = this.add.image(0, 90,"kotobadakenochizu").setInteractive().setOrigin(0,0).setScale(0.7);
+    this.pictframeScreen.add([this.pictframe, this.wallAlbum, this.wallPotetoGannen,this.kotobadakenochizu]);
     this.wallLayer.add(this.pictframeScreen);
 
     this.AddTapLinkToImage(this.wallAlbum, this.consts.noiUrl);
     this.AddTapLinkToImage(this.wallPotetoGannen, this.consts.naoeUrl);
+    this.AddTapLinkToImage(this.kotobadakenochizu, this.consts.kotobaUrl);
 
     this.bookStoreScreen = this.add.container(60, groundHeight + 80).setAlpha(0);
     this.bookStoreScreen.add( 
