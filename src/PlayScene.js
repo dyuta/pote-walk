@@ -52,7 +52,11 @@ class PlayScene extends Phaser.Scene {
     this.backBuildings = this.add.tileSprite(0, groundHeight-20, width, 112, 'backBuildings').setOrigin(0, 1).setScale(1.2).setAlpha(0);
     this.ground = this.add.tileSprite(0, groundHeight+22, this.groundInitwidth, 48, 'ground').setOrigin(0, 1);
     
+
     this.envLayer = this.add.layer();
+    this.environment = this.add.group();
+    this.initEnvObjects(height, width);
+
     this.bookStoreLayer = this.add.layer();
     this.objLayer = this.add.layer();
     this.coinLayer = this.add.layer();
@@ -83,20 +87,6 @@ class PlayScene extends Phaser.Scene {
       this.add.image(80 +storeicon_span *5, groundHeight + 80, 'bookstoreicon06')
     ]);
     this.bookStoreIcons.setAlpha(0);
-
-    this.environment = this.add.group();
-    this.environment.addMultiple([
-        this.add.image(width * 0.25, 170, 'cloud'),
-        this.add.image(width * 0.62, 80, 'cloud'),
-        this.add.image((width * 0.9), 120, 'cloud')
-      ]);
-    
-    this.environment.setAlpha(0);
-    this.envLayer.add(this.environment.getChildren());
-
-    // nope
-    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setAlpha(0);
-    this.envLayer.add(this.stayingCloud);
 
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
@@ -136,6 +126,21 @@ class PlayScene extends Phaser.Scene {
     this.bookCnt=0;
     //this.coinCntTimer=0;    
     this.storePlacedCnt = 0;
+  }
+  
+  initEnvObjects(height, width){
+    this.environment.addMultiple([
+      this.add.image(width * 0.25, 170, 'cloud'),
+      this.add.image(width * 0.62, 80, 'cloud'),
+      this.add.image((width * 0.9), 120, 'cloud')
+    ]);
+  
+    this.environment.setAlpha(0);
+    this.envLayer.add(this.environment.getChildren());
+
+    // nope
+    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setAlpha(0);
+    this.envLayer.add(this.stayingCloud);
   }
 
   initColliders(){
