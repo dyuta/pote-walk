@@ -28,22 +28,6 @@ class PlayScene extends Phaser.Scene {
       this.consts.fontoConf.storeinfo01
     ).setAlpha(0);
 
-    /*
-    this.gameSpeed = this.consts.gameSpeedNormal;
-    this.groundInitwidth = 100;
-
-    this.obsRespawnTime = 0;
-    this.coinRespawnTime = 0;
-    this.storeRespawnTime = 0;
-    
-    this.counterStr = "coins:0    books:0";
-    this.coinCnt=0;
-    //this.coinSpent=0;
-    this.bookCnt=0;
-    //this.coinCntTimer=0;    
-    this.storePlacedCnt = 0;
-    */
-
     // add hidden objects
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
@@ -58,14 +42,20 @@ class PlayScene extends Phaser.Scene {
     this.initEnvObjects(height, width,this.environment,this.envLayer);
 
     this.bookStoreLayer = this.add.layer();
+    this.bookStores = this.physics.add.group();
+
     this.objLayer = this.add.layer();
+    this.obstacles = this.physics.add.group();
+
     this.coinLayer = this.add.layer();
+    this.coins = this.physics.add.group();
+
     this.poteHomeLayer = this.add.layer();
+    this.poteHomeGrp = this.physics.add.group();
 
     this.counterItems = this.add.group();
     const counterPositionX = width - 300;
     this.initCounters(counterPositionX,11,28,this.counterItems);
-
 
     const storeicon_span = 120;
     this.bookStoreIcons = this.add.group();
@@ -79,21 +69,12 @@ class PlayScene extends Phaser.Scene {
       this.add.image(80 +storeicon_span *5, groundHeight + 80, 'bookstoreicon06')
     ]);
     this.bookStoreIcons.setAlpha(0);
-
     
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
       .setGravityY(3000);
     this.pote.hitPose = false;
-
-    this.bookParticle = this.add.particles('coinBookIcon');
-    this.coinParticle = this.add.particles('coinBookIcon');
-    
-    this.obstacles = this.physics.add.group();
-    this.coins = this.physics.add.group();
-    this.bookStores = this.physics.add.group();
-    this.poteHomeGrp = this.physics.add.group();
     
     this.initAnims();
     this.initBookParticle();
@@ -365,6 +346,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   initBookParticle(){
+    this.bookParticle = this.add.particles('coinBookIcon');
     this.bookParticle.createEmitter({
       frame: 1,
       angle: { min: 240, max: 250 },
@@ -380,6 +362,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   initCoinParticle(){
+    this.coinParticle = this.add.particles('coinBookIcon');
     this.coinParticle.createEmitter({
       frame: 0,
       angle: { min: 240, max: 250 },
