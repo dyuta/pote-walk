@@ -14,12 +14,10 @@ class PlayScene extends Phaser.Scene {
 
   create() {
     this.consts = new Constants();
+    const {height, width} = this.game.config;
+    const groundHeight = height*0.5;
     
-    this.isGamerunning = false;
-    
-    //debug text
-    //this.debugText = this.add.text(10, 400, 'for debug', this.consts.fontoConf.counter);
-    //this.debugText2 = this.add.text(10, 430, 'for debug', this.consts.fontoConf.counter);
+    this.initProperties();
 
     // Store Name
     this.openingDialogue =this.add.text(
@@ -30,26 +28,27 @@ class PlayScene extends Phaser.Scene {
       this.consts.fontoConf.storeinfo01
     ).setAlpha(0);
 
+    /*
     this.gameSpeed = this.consts.gameSpeedNormal;
+    this.groundInitwidth = 100;
+
     this.obsRespawnTime = 0;
     this.coinRespawnTime = 0;
     this.storeRespawnTime = 0;
-    this.groundInitwidth = 100;
     
-    const {height, width} = this.game.config;
-    const groundHeight = height*0.5;
-
     this.counterStr = "coins:0    books:0";
     this.coinCnt=0;
     //this.coinSpent=0;
     this.bookCnt=0;
-    //this.coinCntTimer=0;
-    
+    //this.coinCntTimer=0;    
     this.storePlacedCnt = 0;
+    */
 
-    //this.bgLayer = this.add.layer();
+    // add hidden objects
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
+
+    // add visible background objects
     this.backBuildings = this.add.tileSprite(0, groundHeight-20, width, 112, 'backBuildings').setOrigin(0, 1).setScale(1.2).setAlpha(0);
     this.ground = this.add.tileSprite(0, groundHeight+22, this.groundInitwidth, 48, 'ground').setOrigin(0, 1);
     
@@ -121,6 +120,22 @@ class PlayScene extends Phaser.Scene {
     this.initStartTrigger();
     this.handleInputs();
 
+  }
+  initProperties(){
+    this.isGamerunning = false;
+    this.gameSpeed = this.consts.gameSpeedNormal;
+    this.groundInitwidth = 100;
+
+    this.obsRespawnTime = 0;
+    this.coinRespawnTime = 0;
+    this.storeRespawnTime = 0;
+    
+    this.counterStr = "coins:0    books:0";
+    this.coinCnt=0;
+    //this.coinSpent=0;
+    this.bookCnt=0;
+    //this.coinCntTimer=0;    
+    this.storePlacedCnt = 0;
   }
 
   initColliders(){
@@ -286,6 +301,10 @@ class PlayScene extends Phaser.Scene {
       })
     }
     , null, this);
+  }
+
+  callbackStartEvent(){
+
   }
 
   initAnims() {
