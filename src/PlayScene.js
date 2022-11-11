@@ -62,20 +62,10 @@ class PlayScene extends Phaser.Scene {
     this.coinLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
 
-    this.counterIcons = this.add.group();
+    this.counterItems = this.add.group();
     const counterPositionX = width - 300;
-    this.counterIcons.addMultiple([
-      this.add.sprite(counterPositionX, 28, 'coinBookIcon',0).setScale(2),
-      this.add.sprite(counterPositionX+140, 28, 'coinBookIcon',1).setScale(2)
-    ]);
-    this.counterIcons.setAlpha(0);
+    this.initCounters(counterPositionX,11,28,this.counterItems);
 
-    //this.counterText = this.add.text(width - 300, 10, this.counterStr, this.consts.fontoConf.counter)
-    //  .setAlpha(0);
-    this.coinCounterText = this.add.text(counterPositionX+20, 11, "0", this.consts.fontoConf.counter)
-      .setAlpha(0);
-    this.bookCounterText = this.add.text(counterPositionX+160, 11, "0", this.consts.fontoConf.counter)
-      .setAlpha(0);
 
     const storeicon_span = 120;
     this.bookStoreIcons = this.add.group();
@@ -143,9 +133,20 @@ class PlayScene extends Phaser.Scene {
     ]);
   
     group.setAlpha(0);
-    layer.add(group.getChildren());
+    layer.add(group.getChildren());    
+  }
 
-    
+  initCounters(counterPositionX,textY,iconY,group){
+    this.coinCounterText = this.add.text(counterPositionX+20, textY, "0", this.consts.fontoConf.counter);
+    this.bookCounterText = this.add.text(counterPositionX+160, textY, "0", this.consts.fontoConf.counter);
+    group.addMultiple([
+      this.add.sprite(counterPositionX, iconY, 'coinBookIcon',0).setScale(2),
+      this.add.sprite(counterPositionX+140, iconY, 'coinBookIcon',1).setScale(2),
+      this.coinCounterText,
+      this.bookCounterText
+    ]);
+    group.setAlpha(0);
+
   }
 
   initColliders(){
@@ -296,7 +297,7 @@ class PlayScene extends Phaser.Scene {
             this.environment.setAlpha(1);
             this.destinationTxt.setAlpha(1);
             this.backBuildings.setAlpha(0.8);
-            this.counterIcons.setAlpha(1);
+            this.counterItems.setAlpha(1);
             this.coinCounterText.setAlpha(1);
             this.bookCounterText.setAlpha(1);
             // nope
