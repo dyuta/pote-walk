@@ -19,10 +19,10 @@ class PlayScene extends Phaser.Scene {
     
     this.initProperties();
 
-    // Store Name
     this.openingDialogue =this.add.text(
       100, 170, "そうだ、本屋に行こう！",this.consts.fontoConf.openingDialogue
     ).setOrigin(0,0);
+
     this.destinationTxt = this.add.text(
       20, 10, `行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`,
       this.consts.fontoConf.storeinfo01
@@ -55,12 +55,13 @@ class PlayScene extends Phaser.Scene {
 
     this.envLayer = this.add.layer();
     this.environment = this.add.group();
-    this.initEnvObjects(height, width);
+    this.initEnvObjects(height, width,this.environment,this.envLayer);
 
     this.bookStoreLayer = this.add.layer();
     this.objLayer = this.add.layer();
     this.coinLayer = this.add.layer();
     this.poteHomeLayer = this.add.layer();
+
     this.counterIcons = this.add.group();
     const counterPositionX = width - 300;
     this.counterIcons.addMultiple([
@@ -78,6 +79,7 @@ class PlayScene extends Phaser.Scene {
 
     const storeicon_span = 120;
     this.bookStoreIcons = this.add.group();
+
     this.bookStoreIcons.addMultiple([
       this.add.image(80                   , groundHeight + 80, 'bookstoreicon01'),
       this.add.image(80 +storeicon_span *1, groundHeight + 80, 'bookstoreicon02'),
@@ -88,6 +90,7 @@ class PlayScene extends Phaser.Scene {
     ]);
     this.bookStoreIcons.setAlpha(0);
 
+    
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
@@ -127,20 +130,22 @@ class PlayScene extends Phaser.Scene {
     //this.coinCntTimer=0;    
     this.storePlacedCnt = 0;
   }
-  
-  initEnvObjects(height, width){
-    this.environment.addMultiple([
+
+  initEnvObjects(height, width,group,layer){
+    // nope
+    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setAlpha(0).setScale(1);
+    layer.add(this.stayingCloud);
+
+    group.addMultiple([
       this.add.image(width * 0.25, 170, 'cloud'),
       this.add.image(width * 0.62, 80, 'cloud'),
       this.add.image((width * 0.9), 120, 'cloud')
     ]);
   
-    this.environment.setAlpha(0);
-    this.envLayer.add(this.environment.getChildren());
+    group.setAlpha(0);
+    layer.add(group.getChildren());
 
-    // nope
-    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setAlpha(0);
-    this.envLayer.add(this.stayingCloud);
+    
   }
 
   initColliders(){
