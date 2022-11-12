@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 import Constants from './constants';
+import Model from './model';
 import MediaManager from './util/mediaManager';
 
 class PlayScene extends Phaser.Scene {
 
-  constructor() {
-    super('PlayScene');
+  constructor(sceneName ='PlayScene') {
+    super(sceneName);
   }
   init(data){
     this.model = data.model;
@@ -530,6 +531,28 @@ class PlayScene extends Phaser.Scene {
 
   goModeNP(){
     console.log("NOPE");
+    this.restartGame(this.consts.gameModes[2]);
+    //this.restartGame(this.consts.gameModes[0]);
+  }
+
+  restartGame(mode = this.consts.gameModes[0]){
+    let sceneNameStr="PlayScene";
+    this.model.mediaManager.stopBGM();
+    this.model.mediaManager.stopPlaingSound();
+    // set default value
+    this.model = new Model(this.consts);
+    // ToDo move mediaManager from model
+    this.model.mediaManager = new MediaManager({scene:this});
+
+    if(mode == this.consts.gameModes[1]){
+      this.model.gameMode = this.consts.gameModes[1];
+    } else if(mode == this.consts.gameModes[2]){
+      console.log("NOPEsetting");
+      sceneNameStr="PreNpScene";
+      this.model.gameMode = this.consts.gameModes[2];
+    }
+
+    this.scene.start(sceneNameStr,{model: this.model});
   }
 
   update(time, delta) {

@@ -7,8 +7,8 @@ import MediaManager from './util/mediaManager';
 
 class PreloadScene extends Phaser.Scene {
 
-  constructor() {
-    super('PreloadScene');
+  constructor(sceneName = "PreloadScene") {
+    super(sceneName);
   }
 
   preload() {

@@ -5,8 +5,8 @@ import MediaManager from './util/mediaManager';
 
 class ResultScene extends Phaser.Scene {
 
-  constructor() {
-    super('ResultScene');
+  constructor(sceneName ='ResultScene') {
+    super(sceneName);
   }
   init(data){
     this.model = data.model;

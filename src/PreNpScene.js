@@ -14,6 +14,7 @@ export default class PreNpScene extends PreloadScene {
 
   preload() {
     this.consts = new Constants();
+    console.log("preLoadNPResources");
 
     // ToDo Show POTE NOPE
 
