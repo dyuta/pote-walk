@@ -22,8 +22,8 @@ export default class PlayNPScene extends PlayScene {
     this.initProperties();
 
     this.openingDialogue =this.add.text(
-      100, 170, "POTE NOPE",this.consts.fontoConf.titleNP
-    ).setOrigin(0,0);
+      width/2, height/4, "POTE",this.consts.fontoConf.titleNP
+    ).setOrigin(0.5,0);
 
     this.destinationTxt = this.add.text(
       20, 10, `${this.consts.npscenetitleList[this.model.result.visited].name}`,
@@ -36,7 +36,8 @@ export default class PlayNPScene extends PlayScene {
 
     // add visible background objects
     this.backBuildings = this.add.tileSprite(0, groundHeight-20, width, 112, 'backBuildings').setOrigin(0, 1).setScale(1.2).setAlpha(0);
-    this.ground = this.add.tileSprite(0, groundHeight+22, this.groundInitwidth, 48, 'ground').setOrigin(0, 1);
+    this.ground = this.add.tileSprite(0, groundHeight+22, this.groundInitwidth, 48, 'ground').setOrigin(0, 1)
+    .setVisible(false);
     
 
     this.envLayer = this.add.layer();
@@ -75,7 +76,8 @@ export default class PlayNPScene extends PlayScene {
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
-      .setGravityY(3000);
+      .setGravityY(3000)
+      .setVisible(false);
     this.pote.hitPose = false;
     
     this.initAnims();
@@ -83,8 +85,9 @@ export default class PlayNPScene extends PlayScene {
     this.initCoinParticle();
     this.initColliders();
     
-    this.initStartTrigger();
-    this.handleInputs();
+    this.initStartEffect();
+    //this.initStartTrigger();
+    //this.handleInputs();
 
   }
 
@@ -250,6 +253,43 @@ export default class PlayNPScene extends PlayScene {
 
   }
 
+  initStartEffect(){
+    //this.openingDialogue
+    const tween = this.tweens.add({
+      targets: this.openingDialogue,
+      duration: 2800,
+      props: {
+        alpha: 0,
+        ease:Phaser.Math.Easing.Cubic.InOut
+      }
+    });
+
+    const timerOneShot = this.time.delayedCall(
+      3200, ()=>{
+        this.openingDialogue.setText("NOPE");
+        const tween = this.tweens.add({
+          targets: this.openingDialogue,
+          duration: 2800,
+          props: {
+            alpha: 1,
+            ease:Phaser.Math.Easing.Cubic.In
+          }
+        });
+        const timerOneShot =this.time.delayedCall(
+          2800,()=>{
+          //
+          //visible
+          this.pote.setVisible(true);
+          this.ground.setVisible(true);
+          this.handleInputs();
+          this.initStartTrigger();
+          }, this
+        );
+      }, this
+    );
+
+  }
+
   initStartTrigger(){
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
@@ -383,6 +423,7 @@ export default class PlayNPScene extends PlayScene {
   }
 
   handleInputs() {
+    super.handleInputs();
     this.input.on("pointerdown", () => {
       if (!this.pote.body.onFloor()){ return; }
       this.pote.setVelocityY(this.consts.jumpVelocity);
