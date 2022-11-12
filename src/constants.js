@@ -111,8 +111,14 @@ class Constants{
 			fontFamily: '"Roboto"', fontSize: '40px', fill: "#878176"
         };
 
-        // nope
-        this.nope = {};
+        // np
+        this.fontoConf.titleNP = {
+			fontFamily: '"Kumbh Sans"', fontSize: '82px', fill: "#ffffff"
+        };
+        
+        this.fontoConf.bodyNP = {
+			fontFamily: '"Albert Sans"', fontSize: '40px', fill: "#ffffff"
+        };
 
 
     }
