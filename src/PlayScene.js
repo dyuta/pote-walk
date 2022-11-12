@@ -542,11 +542,7 @@ class PlayScene extends Phaser.Scene {
     this.storeRespawnTime += delta * this.gameSpeed * 0.08;
     this.homeTime += delta * this.gameSpeed * 0.08;
 
-    /*const obsRespawnInterval = this.consts.obsRespawnInterval;
-    const storeRespawnInterval = this.consts.storeRespawnInterval;
-    const coinRespawnInterval = this.consts.coinRespawnInterval;
-    */
-    // place obstacle every 1.5seconds
+    // place obstacle every xxseconds
     if (this.obsRespawnTime >= this.consts.obsRespawnInterval){
       this.placeObstacle();
       this.obsRespawnTime = 0;
