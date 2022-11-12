@@ -17,7 +17,7 @@ export default class PreNpScene extends PreloadScene {
 
     // ToDo Show POTE NOPE
 
-    this.showLoadProgressBar();
+    //this.showLoadProgressBar();
 
     this.load.image('groundNP', 'assets/NP/ground_NP.png');
     this.load.image('backMountainNP', 'assets/NP/mountain_back.png');
@@ -51,22 +51,13 @@ export default class PreNpScene extends PreloadScene {
     this.load.spritesheet('kunekuneNP', 'assets/NP/Enemy_kunekune.png',{frameWidth: 48, frameHeight: 104});
     this.load.spritesheet('UFONP', 'assets/NP/UFO_NP.png',{frameWidth: 96, frameHeight: 72});
 
-
-    /*
-    this.load.image('obstacle-1', 'assets/cactuses_small_1.png')
-    this.load.image('obstacle-2', 'assets/cactuses_small_2.png')
-    this.load.image('obstacle-3', 'assets/cactuses_small_3.png')
-    this.load.image('obstacle-4', 'assets/cactuses_big_1.png')
-    this.load.image('obstacle-5', 'assets/cactuses_big_2.png')
-    this.load.image('obstacle-6', 'assets/cactuses_big_3.png')
-    */
-
   }
 
   create() {
     this.model = new Model(this.consts);
     this.model.mediaManager = new MediaManager({scene:this});
     this.model.gameMode = this.consts.gameModes[2];
+    console.log("mode: "+this.model.gameMode);
 
     this.scene.start('PlayScene',{model: this.model});
     

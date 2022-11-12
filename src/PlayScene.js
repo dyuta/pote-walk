@@ -93,6 +93,7 @@ class PlayScene extends Phaser.Scene {
     this.obsRespawnTime = 0;
     this.coinRespawnTime = 0;
     this.storeRespawnTime = 0;
+    this.npCloudIncAlphaIncTime = 0;
     
     this.counterStr = "coins:0    books:0";
     this.coinCnt=0;
@@ -541,6 +542,14 @@ class PlayScene extends Phaser.Scene {
     this.coinRespawnTime += delta * this.gameSpeed * 0.08;
     this.storeRespawnTime += delta * this.gameSpeed * 0.08;
     this.homeTime += delta * this.gameSpeed * 0.08;
+    this.npCloudIncAlphaIncTime+= delta * this.gameSpeed * 0.08;
+
+    // update stayingCloud visible
+    if (this.npCloudIncAlphaIncTime >= this.consts.npCloudIncAlphaInterval
+      && this.stayingCloud.alpha < 1.0){
+      this.stayingCloud.setAlpha(Math.min(this.stayingCloud.alpha + this.consts.npCloudIncVal,1));
+      this.npCloudIncAlphaIncTime = 0;
+    }
 
     // place obstacle every xxseconds
     if (this.obsRespawnTime >= this.consts.obsRespawnInterval){

@@ -57,6 +57,9 @@ class Constants{
         this.storeRespawnInterval = 5500;
         this.coinCntInterval =128;
 
+        this.npCloudIncAlphaInterval =1100;
+        this.npCloudIncVal =0.1;
+
         this.distances={
             obstacleFrom:400,
             obstacleTo:700,
