@@ -523,30 +523,7 @@ class PlayScene extends Phaser.Scene {
 
   update(time, delta) {
     if (!this.isGamerunning) { return; }
-    // for debug
-    //this.debugText.setText('sec: ' + Math.floor(time/1000));
-    //this.debugText2.setText('spd: ' + this.gameSpeed);
 
-    const obsRespawnInterval = this.consts.obsRespawnInterval;
-    const storeRespawnInterval = this.consts.storeRespawnInterval;
-    const coinRespawnInterval = this.consts.coinRespawnInterval;
-
-    // coin and books count
-    /*
-    if(this.coinSpent == 0 ){
-      this.coinCntTimer = 0;
-    } else {
-      this.coinCntTimer +=delta;
-      if(this.coinCntTimer > this.consts.coinCntInterval){
-        console.log("coinSpent calc" +this.coinSpent);
-        
-        this.coinSpent-=1;
-        this.coinCnt-=1;
-        this.bookCnt+=1;
-        this.coinCntTimer = 0;
-      }
-    }
-    */
 
     this.coinCounterText.setText(`: ${this.coinCnt}`);
     this.bookCounterText.setText(`: ${this.bookCnt}`);
@@ -565,21 +542,25 @@ class PlayScene extends Phaser.Scene {
     this.storeRespawnTime += delta * this.gameSpeed * 0.08;
     this.homeTime += delta * this.gameSpeed * 0.08;
 
+    /*const obsRespawnInterval = this.consts.obsRespawnInterval;
+    const storeRespawnInterval = this.consts.storeRespawnInterval;
+    const coinRespawnInterval = this.consts.coinRespawnInterval;
+    */
     // place obstacle every 1.5seconds
-    if (this.obsRespawnTime >= obsRespawnInterval){
+    if (this.obsRespawnTime >= this.consts.obsRespawnInterval){
       this.placeObstacle();
       this.obsRespawnTime = 0;
     }
 
     // place coin every XXseconds
     if (this.storePlacedCnt < this.consts.numberOfStores 
-      && this.coinRespawnTime >= coinRespawnInterval){
+      && this.coinRespawnTime >= this.consts.coinRespawnInterval){
       this.placeCoin();
       this.coinRespawnTime = 0;
     }
 
     // place bookstore or home
-    if (this.storeRespawnTime >= storeRespawnInterval){
+    if (this.storeRespawnTime >= this.consts.storeRespawnInterval){
       if(this.storePlacedCnt < this.consts.numberOfStores){
 
         this.placeBookstore(this.storePlacedCnt+1);
