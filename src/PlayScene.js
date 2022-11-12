@@ -416,7 +416,7 @@ class PlayScene extends Phaser.Scene {
       obstacle.play(enemyType[Math.floor(Math.random() * 2)], 1);      
       obstacle.body.height = obstacle.body.height / 1.5;
     }else if(obstacleNum == 1){
-      console.log('org1');
+      console.log('obs1 bicycle');
       obstacle = this.obstacles
       .create(width + obstacleDistance, groundHeight,'obstacleOrg-${obstacleNum}');
       obstacle.play('bicyclelow-ride', 1);
@@ -570,23 +570,9 @@ class PlayScene extends Phaser.Scene {
     }
 
     // remove obstacles
-    this.obstacles.getChildren().forEach(obstacle => {
-      if (obstacle.getBounds().right < 0) {
-        this.obstacles.killAndHide(obstacle);
-      }
-    })
-    // remove coins
-    this.coins.getChildren().forEach(coin => {
-      if (coin.getBounds().right < 0) {
-        this.coins.killAndHide(coin);
-      }
-    })
-    // remove bookstore
-    this.bookStores.getChildren().forEach(bookStore => {
-      if (bookStore.getBounds().right < 0) {
-        this.bookStores.killAndHide(bookStore);
-      }
-    })
+    this.removeObjPassedDisplay(this.obstacles);
+    this.removeObjPassedDisplay(this.coins);
+    this.removeObjPassedDisplay(this.bookStores);
 
     // recycle clouds
     this.environment.getChildren().forEach(env => {
@@ -608,6 +594,17 @@ class PlayScene extends Phaser.Scene {
     }
 
   }
+  removeObjPassedDisplay(group){// remove bookstore
+    group.getChildren().forEach(childObj => {
+      if (childObj.getBounds().right < 0) {
+        console.log("removed:"+childObj.texture.key);
+        //group.killAndHide(childObj);
+        group.remove(childObj,true,true);
+      }
+    })
+  
+  }
 }
+
 
 export default PlayScene;
