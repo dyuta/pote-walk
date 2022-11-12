@@ -87,7 +87,7 @@ export default class PlayNPScene extends PlayScene {
     this.handleInputs();
 
   }
-  
+
   initProperties(){
     this.isGamerunning = false;
     this.cameras.main.setBackgroundColor(this.consts.colors.background);
@@ -154,10 +154,10 @@ export default class PlayNPScene extends PlayScene {
         this.model.result.visited ++;
 
         //update destination
-        if(this.model.result.visited < this.consts.numberOfStores){
-          this.destinationTxt.setText(`行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`);
+        if(this.model.result.visited <= this.consts.numberOfStores){
+          this.destinationTxt.setText(`${this.consts.npscenetitleList[this.model.result.visited].name}`);
         } else {
-          this.destinationTxt.setText(`行先: 自宅`);
+          this.destinationTxt.setText(`NO`);
         }
 
         //buying books
@@ -258,7 +258,7 @@ export default class PlayNPScene extends PlayScene {
 
       if (this.startTrigger.y === 10) {
         this.startTrigger.body.reset(0, groundHeight);
-        this.model.mediaManager.setBGM('mainbgm');
+        //this.model.mediaManager.setBGM('mainbgm');
         this.openingDialogue.setAlpha(0);
         return;
       }
@@ -287,7 +287,7 @@ export default class PlayNPScene extends PlayScene {
             this.coinCounterText.setAlpha(1);
             this.bookCounterText.setAlpha(1);
             // nope
-            //this.stayingCloud.setAlpha(1);
+            this.stayingCloud.setAlpha(1);
 
             //this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
             startEvent.remove();
@@ -578,14 +578,9 @@ export default class PlayNPScene extends PlayScene {
     this.coinRespawnTime += delta * this.gameSpeed * 0.08;
     this.storeRespawnTime += delta * this.gameSpeed * 0.08;
     this.homeTime += delta * this.gameSpeed * 0.08;
-    this.npCloudIncAlphaIncTime+= delta * this.gameSpeed * 0.08;
+    //this.npCloudIncAlphaIncTime+= delta * this.gameSpeed * 0.08;
 
-    // update stayingCloud visible
-    if (this.npCloudIncAlphaIncTime >= this.consts.npCloudIncAlphaInterval
-      && this.stayingCloud.alpha < 1.0){
-      this.stayingCloud.setAlpha(Math.min(this.stayingCloud.alpha + this.consts.npCloudIncVal,1));
-      this.npCloudIncAlphaIncTime = 0;
-    }
+    
 
     // place obstacle every xxseconds
     if (this.obsRespawnTime >= this.consts.obsRespawnInterval){
@@ -639,14 +634,5 @@ export default class PlayNPScene extends PlayScene {
     }
 
   }
-  removeObjPassedDisplay(group){// remove bookstore
-    group.getChildren().forEach(childObj => {
-      if (childObj.getBounds().right < 0) {
-        console.log("removed:"+childObj.texture.key);
-        //group.killAndHide(childObj);
-        group.remove(childObj,true,true);
-      }
-    })
   
-  }
 }
