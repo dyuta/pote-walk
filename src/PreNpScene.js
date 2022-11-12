@@ -8,8 +8,8 @@ import MediaManager from './util/mediaManager';
 
 export default class PreNpScene extends PreloadScene {
 
-  constructor() {
-    super('PreNpScene');
+  constructor(sceneName ='PreNpScene') {
+    super(sceneName );
   }
 
   preload() {
