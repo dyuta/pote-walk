@@ -106,7 +106,7 @@ class PlayScene extends Phaser.Scene {
 
   initEnvObjects(height, width,group,layer){
     // nope
-    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setInteractive().setAlpha(0).setScale(1);
+    this.stayingCloud = this.add.image(width * 0.8, 190, 'cloudNope').setInteractive().setAlpha(0).setScale(1);
     layer.add(this.stayingCloud);
 
     group.addMultiple([

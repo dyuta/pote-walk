@@ -23,7 +23,10 @@ export default class PlayNPScene extends PlayScene {
 
     this.openingDialogue =this.add.text(
       width/2, height/4, "POTE",this.consts.fontoConf.titleNP
-    ).setOrigin(0.5,0);
+    ).setOrigin(0.5,0).setAlpha(1);
+    this.openingDialogueNP =this.add.text(
+      width/2, height/4, "NOPE",this.consts.fontoConf.titleNP
+    ).setOrigin(0.5,0).setAlpha(0);
 
     this.destinationTxt = this.add.text(
       20, 10, `${this.consts.npscenetitleList[this.model.result.visited].name}`,
@@ -112,7 +115,7 @@ export default class PlayNPScene extends PlayScene {
 
   initEnvObjects(height, width,group,layer){
     // nope
-    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setInteractive().setAlpha(0).setScale(1);
+    this.stayingCloud = this.add.image(width * 0.8, 190, 'cloudNope').setInteractive().setAlpha(0).setScale(1);
     layer.add(this.stayingCloud);
 
     group.addMultiple([
@@ -257,7 +260,7 @@ export default class PlayNPScene extends PlayScene {
     //this.openingDialogue
     const tween = this.tweens.add({
       targets: this.openingDialogue,
-      duration: 2800,
+      duration: 4000,
       props: {
         alpha: 0,
         ease:Phaser.Math.Easing.Cubic.InOut
@@ -265,18 +268,18 @@ export default class PlayNPScene extends PlayScene {
     });
 
     const timerOneShot = this.time.delayedCall(
-      3200, ()=>{
-        this.openingDialogue.setText("NOPE");
+      2000, ()=>{
+        //this.openingDialogueNP.setText("NOPE").setAlpha(0);
         const tween = this.tweens.add({
-          targets: this.openingDialogue,
-          duration: 2800,
+          targets: this.openingDialogueNP,
+          duration: 3300,
           props: {
             alpha: 1,
-            ease:Phaser.Math.Easing.Cubic.In
+            ease:Phaser.Math.Easing.Cubic.InOut
           }
         });
         const timerOneShot =this.time.delayedCall(
-          2800,()=>{
+          3000,()=>{
           //
           //visible
           this.pote.setVisible(true);
@@ -299,7 +302,7 @@ export default class PlayNPScene extends PlayScene {
       if (this.startTrigger.y === 10) {
         this.startTrigger.body.reset(0, groundHeight);
         //this.model.mediaManager.setBGM('mainbgm');
-        this.openingDialogue.setAlpha(0);
+        this.openingDialogueNP.setVisible(false);
         return;
       }
       
