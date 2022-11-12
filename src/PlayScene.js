@@ -105,7 +105,7 @@ class PlayScene extends Phaser.Scene {
 
   initEnvObjects(height, width,group,layer){
     // nope
-    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setAlpha(0).setScale(1);
+    this.stayingCloud = this.add.image(width * 0.8, 100, 'cloudNope').setInteractive().setAlpha(0).setScale(1);
     layer.add(this.stayingCloud);
 
     group.addMultiple([
@@ -392,6 +392,12 @@ class PlayScene extends Phaser.Scene {
       this.model.mediaManager.playSound('jumpSound',this.consts.volumeSound*0.8);
 
     }, this);
+
+    this.stayingCloud.on("pointerdown", () => {
+      if (this.model.gameMode==this.consts.gameModes[2]){ return;}
+      this.goModeNP();
+
+    }, this)
     
   }
 
@@ -520,6 +526,10 @@ class PlayScene extends Phaser.Scene {
 
   goClearScene(){
     this.scene.start('ResultScene',{model: this.model});
+  }
+
+  goModeNP(){
+    console.log("NOPE");
   }
 
   update(time, delta) {
