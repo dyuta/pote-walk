@@ -22,12 +22,12 @@ export default class PlayNPScene extends PlayScene {
     this.initProperties();
 
     this.openingDialogue =this.add.text(
-      100, 170, "そうだ、本屋に行こう！",this.consts.fontoConf.openingDialogue
+      100, 170, "POTE NOPE",this.consts.fontoConf.titleNP
     ).setOrigin(0,0);
 
     this.destinationTxt = this.add.text(
-      20, 10, `行先: ${this.consts.bookstoreList[this.model.result.visited].station}駅  ${this.consts.bookstoreList[this.model.result.visited].name}`,
-      this.consts.fontoConf.storeinfo01
+      20, 10, `${this.consts.npscenetitleList[this.model.result.visited].name}`,
+      this.consts.fontoConf.bodyNP
     ).setAlpha(0);
 
     // add hidden objects
@@ -87,8 +87,10 @@ export default class PlayNPScene extends PlayScene {
     this.handleInputs();
 
   }
+  
   initProperties(){
     this.isGamerunning = false;
+    this.cameras.main.setBackgroundColor(this.consts.colors.background);
     this.gameSpeed = this.consts.gameSpeedNormal;
     this.groundInitwidth = 100;
 
@@ -287,7 +289,7 @@ export default class PlayNPScene extends PlayScene {
             // nope
             //this.stayingCloud.setAlpha(1);
 
-            this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
+            //this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
             startEvent.remove();
           }
 

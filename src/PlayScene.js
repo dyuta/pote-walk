@@ -396,7 +396,7 @@ class PlayScene extends Phaser.Scene {
 
     this.stayingCloud.on("pointerdown", () => {
       if (this.model.gameMode==this.consts.gameModes[2]){ return;}
-      this.goModeNP();
+      this.goNPScene();
 
     }, this)
     
@@ -529,7 +529,7 @@ class PlayScene extends Phaser.Scene {
     this.scene.start('ResultScene',{model: this.model});
   }
 
-  goModeNP(){
+  goNPScene(){
     console.log("NOPE");
     this.restartGame(this.consts.gameModes[2]);
     //this.restartGame(this.consts.gameModes[0]);
@@ -548,7 +548,7 @@ class PlayScene extends Phaser.Scene {
       this.model.gameMode = this.consts.gameModes[1];
     } else if(mode == this.consts.gameModes[2]){
       console.log("NOPEsetting");
-      sceneNameStr="PreNpScene";
+      sceneNameStr="PlayNPScene";
       this.model.gameMode = this.consts.gameModes[2];
     }
 

@@ -43,7 +43,8 @@ class Constants{
         */
 
         this.colors = {
-            background:"E7E6E3",
+            //background:"E7E6E3",
+            background:"81858E",
             backgroundAsh:"FCFCFC"
         };
 
@@ -121,8 +122,18 @@ class Constants{
         };
         
         this.fontoConf.bodyNP = {
-			fontFamily: '"Albert Sans"', fontSize: '40px', fill: "#ffffff"
+			fontFamily: '"Albert Sans"', fontSize: '48px', fill: "#ffffff"
         };
+
+        this.npscenetitleList= [
+            {name:"Ghost"},
+            {name:"Clover"},
+            {name:"Gordy"},
+            {name:"Lucky"},
+            {name:"Lucky"},
+            {name:"Jean Jacket"},
+            {name:"Jean Jacket"}
+        ];
 
 
     }

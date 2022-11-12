@@ -1,9 +1,7 @@
 
-//import Phaser from 'phaser';
 import PreloadScene from './PreloadScene';
 import Model from './model';
 import Constants from './constants';
-//import WebFontFile from './files/WebFontFile'
 import MediaManager from './util/mediaManager';
 
 export default class PreNpScene extends PreloadScene {
@@ -15,8 +13,6 @@ export default class PreNpScene extends PreloadScene {
   preload() {
     this.consts = new Constants();
     console.log("preLoadNPResources");
-
-    // ToDo Show POTE NOPE
 
     //this.showLoadProgressBar();
 
@@ -30,15 +26,6 @@ export default class PreNpScene extends PreloadScene {
     this.load.image('buildingNP04', 'assets/NP/building4_jupepark.png');
     this.load.image('buildingNP05', 'assets/NP/building5_bloodyhome.png');
     this.load.image('buildingNP06', 'assets/NP/building6_smallhouse.png');
-
-    /*
-    this.load.image('bookstoreicon01', 'assets/bookstore_icon/05_nenoi.png');
-    this.load.image('bookstoreicon02', 'assets/bookstore_icon/06_marginaria.png');
-    this.load.image('bookstoreicon03', 'assets/bookstore_icon/03_shoshiyuyaketoumi.png');
-    this.load.image('bookstoreicon04', 'assets/bookstore_icon/02_brewbooks.png');
-    this.load.image('bookstoreicon05', 'assets/bookstore_icon/04_sanyodo.png');
-    this.load.image('bookstoreicon06', 'assets/bookstore_icon/01_futago_lion.png');
-    */
 
     this.load.image('goalNP', 'assets/NP/building7_Goal_Cowboy.png');
     this.load.image('outYonderNP', 'assets/NP/OutYonder.png');
@@ -60,7 +47,7 @@ export default class PreNpScene extends PreloadScene {
     this.model.gameMode = this.consts.gameModes[2];
     console.log("mode: "+this.model.gameMode);
 
-    this.scene.start('PlayScene',{model: this.model});
+    this.scene.start('PlayNPScene',{model: this.model});
     
   }
 }
