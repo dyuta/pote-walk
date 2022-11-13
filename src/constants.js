@@ -45,7 +45,8 @@ class Constants{
         this.colors = {
             //background:"E7E6E3",
             background:"81858E",
-            backgroundAsh:"FCFCFC"
+            backgroundAsh:"FCFCFC",
+            backgroundNPPlay:"C4C5C9"
         };
 
         this.jumpVelocity = -1250;

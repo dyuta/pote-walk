@@ -23,7 +23,7 @@ export default class PlayNPScene extends PlayScene {
 
     this.openingDialogue =this.add.text(
       width/2, height/4, "POTE",this.consts.fontoConf.titleNP
-    ).setOrigin(0.5,0).setAlpha(1);
+    ).setOrigin(0.5,0).setAlpha(0);
     this.openingDialogueNP =this.add.text(
       width/2, height/4, "NOPE",this.consts.fontoConf.titleNP
     ).setOrigin(0.5,0).setAlpha(0);
@@ -38,8 +38,8 @@ export default class PlayNPScene extends PlayScene {
     this.poteGround = this.physics.add.image(0, groundHeight+26).setSize(250,20).setOrigin(0, 1).setImmovable();
 
     // add visible background objects
-    this.backBuildings = this.add.tileSprite(0, groundHeight-20, width, 112, 'backBuildings').setOrigin(0, 1).setScale(1.2).setAlpha(0);
-    this.ground = this.add.tileSprite(0, groundHeight+22, this.groundInitwidth, 48, 'ground').setOrigin(0, 1)
+    this.backMountains = this.add.tileSprite(0, groundHeight-50, width, 112, 'backMountainNP').setOrigin(0, 1).setScale(1.2).setAlpha(0);
+    this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth-10, 26, 'groundNP').setOrigin(0, 1)
     .setVisible(false);
     
 
@@ -105,17 +105,18 @@ export default class PlayNPScene extends PlayScene {
     this.storeRespawnTime = 0;
     this.npCloudIncAlphaIncTime = 0;
     
-    this.counterStr = "coins:0    books:0";
+    this.counterStr = "coins:0";
     this.coinCnt=0;
     //this.coinSpent=0;
-    this.bookCnt=0;
+    //this.bookCnt=0;
     //this.coinCntTimer=0;    
     this.storePlacedCnt = 0;
   }
 
   initEnvObjects(height, width,group,layer){
     // nope
-    this.stayingCloud = this.add.image(width * 0.8, 190, 'cloudNope').setInteractive().setAlpha(0).setScale(1);
+    this.stayingCloud = this.add.image(width * 0.8, 190, 'cloudNope').setAlpha(0).setScale(1);
+    //.setInteractive();
     layer.add(this.stayingCloud);
 
     group.addMultiple([
@@ -130,12 +131,12 @@ export default class PlayNPScene extends PlayScene {
 
   initCounters(counterPositionX,textY,iconY,group){
     this.coinCounterText = this.add.text(counterPositionX+20, textY, "0", this.consts.fontoConf.counter);
-    this.bookCounterText = this.add.text(counterPositionX+160, textY, "0", this.consts.fontoConf.counter);
+    //this.bookCounterText = this.add.text(counterPositionX+160, textY, "0", this.consts.fontoConf.counter);
     group.addMultiple([
       this.add.sprite(counterPositionX, iconY, 'coinBookIcon',0).setScale(2),
-      this.add.sprite(counterPositionX+140, iconY, 'coinBookIcon',1).setScale(2),
-      this.coinCounterText,
-      this.bookCounterText
+      //this.add.sprite(counterPositionX+140, iconY, 'coinBookIcon',1).setScale(2),
+      this.coinCounterText
+      //,this.bookCounterText
     ]);
     group.setAlpha(0);
 
@@ -167,12 +168,13 @@ export default class PlayNPScene extends PlayScene {
         }
 
         //buying books
-        this.bookCnt += this.coinCnt;
-        this.bookBoughtNow = this.coinCnt;
-        this.coinCnt = 0;
-        this.model.result.book = this.bookCnt;
+        //this.bookCnt += this.coinCnt;
+        //this.bookBoughtNow = this.coinCnt;
+        //this.coinCnt = 0;
+        //this.model.result.book = this.bookCnt;
 
         //this.model.mediaManager.playSound('bookSound',this.consts.volumeSound*20);
+        /*
         for (let i =0; i < this.bookBoughtNow; i++) {
           this.timerOneShot = this.time.delayedCall(
             140*i, ()=>{
@@ -182,6 +184,7 @@ export default class PlayNPScene extends PlayScene {
           );
           
         }
+        */
 
         if(this.model.result.visited == 3){
           this.gameSpeed = this.consts.gameSpeedFast;
@@ -253,26 +256,27 @@ export default class PlayNPScene extends PlayScene {
       }
     }, null, this);
 
-
   }
 
   initStartEffect(){
     //this.openingDialogue
     const tween = this.tweens.add({
       targets: this.openingDialogue,
-      duration: 4000,
+      duration: 1400,
+      hold: 300,
+      yoyo:true,
       props: {
-        alpha: 0,
+        alpha: 1,
         ease:Phaser.Math.Easing.Cubic.InOut
       }
     });
 
     const timerOneShot = this.time.delayedCall(
-      2000, ()=>{
+      3200, ()=>{
         //this.openingDialogueNP.setText("NOPE").setAlpha(0);
         const tween = this.tweens.add({
           targets: this.openingDialogueNP,
-          duration: 3300,
+          duration: 4000,
           props: {
             alpha: 1,
             ease:Phaser.Math.Easing.Cubic.InOut
@@ -301,7 +305,7 @@ export default class PlayNPScene extends PlayScene {
 
       if (this.startTrigger.y === 10) {
         this.startTrigger.body.reset(0, groundHeight);
-        //this.model.mediaManager.setBGM('mainbgm');
+        this.model.mediaManager.setBGM('mainbgm');
         this.openingDialogueNP.setVisible(false);
         return;
       }
@@ -325,14 +329,14 @@ export default class PlayNPScene extends PlayScene {
             
             this.environment.setAlpha(1);
             this.destinationTxt.setAlpha(1);
-            this.backBuildings.setAlpha(0.8);
+            this.backMountains.setAlpha(0.7);
             this.counterItems.setAlpha(1);
             this.coinCounterText.setAlpha(1);
-            this.bookCounterText.setAlpha(1);
+            //this.bookCounterText.setAlpha(1);
             // nope
             this.stayingCloud.setAlpha(1);
 
-            //this.cameras.main.setBackgroundColor(this.consts.colors.backgroundAsh);
+            this.cameras.main.setBackgroundColor(this.consts.colors.backgroundNPPlay);
             startEvent.remove();
           }
 
@@ -441,11 +445,13 @@ export default class PlayNPScene extends PlayScene {
 
     }, this);
 
+    /*
     this.stayingCloud.on("pointerdown", () => {
       if (this.model.gameMode==this.consts.gameModes[2]){ return;}
       this.goModeNP();
 
     }, this)
+    */
     
   }
 
@@ -607,11 +613,11 @@ export default class PlayNPScene extends PlayScene {
 
 
     this.coinCounterText.setText(`: ${this.coinCnt}`);
-    this.bookCounterText.setText(`: ${this.bookCnt}`);
+    //this.bookCounterText.setText(`: ${this.bookCnt}`);
 
     // scroll
     this.ground.tilePositionX += this.gameSpeed*this.consts.worldScroll;
-    this.backBuildings.tilePositionX += this.gameSpeed*this.consts.worldScroll*0.4;
+    this.backMountains.tilePositionX += this.gameSpeed*this.consts.worldScroll*0.4;
     Phaser.Actions.IncX(this.environment.getChildren(), - 0.5);
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
     Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);

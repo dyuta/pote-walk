@@ -180,7 +180,7 @@ class PreloadScene extends Phaser.Scene {
 
     this.load.image('groundNP', 'assets/NP/ground_NP.png');
     this.load.image('backMountainNP', 'assets/NP/mountain_back.png');
-    this.load.image('backMountainNP', 'assets/NP/cactus_back.png');
+    this.load.image('backCactusNP', 'assets/NP/cactus_back.png');
 
     this.load.image('buildingNP01', 'assets/NP/building1_OJhome.png');
     this.load.image('buildingNP02', 'assets/NP/building2_Supermarket.png');
