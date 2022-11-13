@@ -84,8 +84,8 @@ export default class PlayNPScene extends PlayScene {
     this.pote.hitPose = false;
     
     this.initAnims();
-    this.initBookParticle();
-    this.initCoinParticle();
+    //this.initBookParticle();
+    //this.initCoinParticle();
     this.initColliders();
     
     this.initStartEffect();
@@ -206,7 +206,7 @@ export default class PlayNPScene extends PlayScene {
           //console.log("miss "+this.model.result.miss);
           if(this.coinCnt >0){
             this.coinCnt --;
-            this.coinParticle.emitParticleAt(p.x + 10,p.y - 70);
+            //this.coinParticle.emitParticleAt(p.x + 10,p.y - 70);
           }
           
           // set hurt status
@@ -413,6 +413,7 @@ export default class PlayNPScene extends PlayScene {
 
   }
 
+  /*
   initBookParticle(){
     this.bookParticle = this.add.particles('coinBookIcon');
     this.bookParticle.createEmitter({
@@ -428,6 +429,7 @@ export default class PlayNPScene extends PlayScene {
       on: false
     });
   }
+  */
 
   initCoinParticle(){
     this.coinParticle = this.add.particles('coinBookIcon');
@@ -505,6 +507,7 @@ export default class PlayNPScene extends PlayScene {
 
     if(this.model.result.visited == 6){
       obstacle.setScale(1.3);
+      obstacle.body.height = obstacle.body.height / 2; 
       const tween = this.tweens.add({
         targets: obstacle,
         duration: 500,
@@ -513,7 +516,7 @@ export default class PlayNPScene extends PlayScene {
         yoyo:true,
         props: {
           //y: '+=300',
-          y: 190,
+          y: 200,
           ease:Phaser.Math.Easing.Sine.InOut
         }
       });
