@@ -29,6 +29,8 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('coinSound', 'assets/PW_05_Coin_2022-11-05.mp3');
     this.load.audio('clearbgm', 'assets/PM_07_ED_2022-05-08.mp3');
     this.load.audio('goalSound', 'assets/PW_06_Goal_2022-11-08.mp3');
+    
+    this.load.audio('windySound', 'assets/NP/windy.mp3');
 
     this.load.image('ground', 'assets/ground2.png');
     this.load.image('backBuildings', 'assets/Buildingsbackground.png');
@@ -203,8 +205,8 @@ class PreloadScene extends Phaser.Scene {
     
     
     this.load.spritesheet('kunekuneNP', 'assets/NP/Enemy_kunekune.png',{frameWidth: 48, frameHeight: 104});
-    this.load.image('alienKids', 'assets/NP/Enemy_smallAlien.png');
-    this.load.image('monkey', 'assets/NP/Enemy_Monky.png');
+    this.load.spritesheet('alienKids', 'assets/NP/Enemy_smallAlien.png',{frameWidth: 128, frameHeight: 104});
+    this.load.spritesheet('monkey', 'assets/NP/Enemy_Monky.png',{frameWidth: 128, frameHeight: 104});
     this.load.spritesheet('flagropeNP', 'assets/NP/Enemy_flagrope.png',{frameWidth: 48, frameHeight: 220});
     this.load.spritesheet('motorcycleNP', 'assets/NP/Motorcycle_low_spr_large.png',{frameWidth: 96, frameHeight: 108});
     this.load.spritesheet('UFONP', 'assets/NP/UFO_NP.png',{frameWidth: 96, frameHeight: 72});

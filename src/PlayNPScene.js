@@ -101,6 +101,7 @@ export default class PlayNPScene extends PlayScene {
     this.groundInitwidth = 100;
 
     this.obsRespawnTime = 0;
+    this.numberOfObstacleSet =0;
     this.coinRespawnTime = 0;
     this.storeRespawnTime = 0;
     this.npCloudIncAlphaIncTime = 0;
@@ -305,7 +306,7 @@ export default class PlayNPScene extends PlayScene {
 
       if (this.startTrigger.y === 10) {
         this.startTrigger.body.reset(0, groundHeight);
-        this.model.mediaManager.setBGM('mainbgm');
+        this.model.mediaManager.setBGM('windySound',0.3);
         this.openingDialogueNP.setVisible(false);
         return;
       }
@@ -364,21 +365,21 @@ export default class PlayNPScene extends PlayScene {
     this.anims.create({
       key: 'bike-ride',
       frames: this.anims.generateFrameNumbers('motorcycleNP', {start: 0, end: 1}),
-      frameRate: 6,
+      frameRate: 4,
       repeat: -1
     })
 
     this.anims.create({
       key: 'kune-kune',
       frames: this.anims.generateFrameNumbers('kunekuneNP', {start: 0, end: 1}),
-      frameRate: 6,
+      frameRate: 3,
       repeat: -1
     })
     
     this.anims.create({
       key: 'nope-rope',
       frames: this.anims.generateFrameNumbers('flagropeNP', {start: 0, end: 1}),
-      frameRate: 6,
+      frameRate: 4,
       repeat: -1
     })
 
@@ -392,7 +393,21 @@ export default class PlayNPScene extends PlayScene {
     this.anims.create({
       key: 'flyrods-fly',
       frames: this.anims.generateFrameNumbers('flyingrodsNP', {start: 0, end: 1}),
-      frameRate: 9,
+      frameRate: 8,
+      repeat: -1
+    })
+
+    this.anims.create({
+      key: 'monkey-angry',
+      frames: this.anims.generateFrameNumbers('monkey', {start: 0, end: 1}),
+      frameRate: 3,
+      repeat: -1
+    })
+
+    this.anims.create({
+      key: 'alienKids-look',
+      frames: this.anims.generateFrameNumbers('alienKids', {start: 0, end: 1}),
+      frameRate: 4,
       repeat: -1
     })
 
@@ -476,6 +491,34 @@ export default class PlayNPScene extends PlayScene {
       obstacle = this.placeObstacleCore(width + obstacleDistance, groundHeight, `cactusObsNP${obstacleNum}`);
       obstacle.body.offset.y = +5;
     }
+  }
+
+  placeSpecialObstacle(){
+    const {width, height} = this.game.config;
+    const groundHeight = height*0.5;
+    let obstacle = this.placeObstacleCore(
+      width + this.consts.npSpObstacleList[this.model.result.visited].distanceX,
+      groundHeight - this.consts.npSpObstacleList[this.model.result.visited].posYUp,
+      this.consts.npSpObstacleList[this.model.result.visited].name
+    );
+    obstacle.play(this.consts.npSpObstacleList[this.model.result.visited].anim,1);
+
+    if(this.model.result.visited == 6){
+      obstacle.setScale(1.2);
+      const tween = this.tweens.add({
+        targets: obstacle,
+        duration: 600,
+        hold:50,
+        loop:-1,
+        yoyo:true,
+        props: {
+          //y: '+=300',
+          y: 200,
+          ease:Phaser.Math.Easing.Sine.In
+        }
+      });
+    }
+
   }
 
   placeObstacleCore(posX,posY,texturekey){
@@ -627,8 +670,14 @@ export default class PlayNPScene extends PlayScene {
 
     // place obstacle every xxseconds
     if (this.obsRespawnTime >= this.consts.obsRespawnInterval){
-      this.placeObstacle();
+      //when mod5(number)=3
+      if(this.numberOfObstacleSet % 5 == 3){
+        this.placeSpecialObstacle();
+      } else{
+        this.placeObstacle();
+      }
       this.obsRespawnTime = 0;
+      this.numberOfObstacleSet++;
     }
 
     // place coin every XXseconds
