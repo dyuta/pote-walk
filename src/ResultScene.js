@@ -86,8 +86,8 @@ class ResultScene extends Phaser.Scene {
     // Restart Icons
     this.restart = this.add.image(10, 240, 'restart').setInteractive()
       .setOrigin(0,0.5).setScale(1.2);
-    this.restartSafe = this.add.image(10, 304, 'restart').setInteractive()
-      .setOrigin(0,0.5).setScale(1.2).setTint(0xF7FFB9);
+    this.restartSafe = this.add.image(10, 304, 'restartSafe').setInteractive()
+      .setOrigin(0,0.5).setScale(1.2)
       //0xF7FFB9 0xC6FFBF
     // Link URLs
     this.tweetLink = this.initTweetLink(136, 212).setOrigin(0,0);
