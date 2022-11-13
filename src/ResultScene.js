@@ -88,14 +88,16 @@ class ResultScene extends Phaser.Scene {
       .setOrigin(0,0.5).setScale(1.2);
     this.restartSafe = this.add.image(10, 304, 'restartSafe').setInteractive()
       .setOrigin(0,0.5).setScale(1.2)
-      //0xF7FFB9 0xC6FFBF
+    this.appVersionText = this.add.text(136, 360, "ver: " + this.consts.appVersion, this.consts.fontoConf.counter).setOrigin(0,0);
+    this.appVersionText.setColor("#FFE7BF");
     // Link URLs
     this.tweetLink = this.initTweetLink(136, 212).setOrigin(0,0);
     this.creditLink = this.initInfoLinks(136,274).setOrigin(0,0);
     this.gameClearScreen.add([
       this.gameClearText, this.gameResultText,
       this.restart,this.restartSafe,
-      this.tweetLink, this.creditLink
+      this.tweetLink, this.creditLink,
+      this.appVersionText
     ])
 
     this.pictframeScreen = this.add.container(width * 1/5 + 60, groundHeight - 300);
