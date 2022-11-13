@@ -142,7 +142,7 @@ class Constants{
             {name:"monkey",anim:"monkey-angry",distanceX:this.distances.obstacleFrom,posYUp:0},
             {name:"flagropeNP",anim:"nope-rope",distanceX:this.distances.obstacleFrom,posYUp:120},
             {name:"motorcycleNP",anim:"bike-ride",distanceX:this.distances.obstacleFrom,posYUp:0},
-            {name:"UFONP",anim:"UFO-NP-fly",distanceX:this.distances.obstacleFrom,posYUp:10}
+            {name:"UFONP",anim:"UFO-NP-fly",distanceX:this.distances.obstacleFrom,posYUp:20}
         ];
 
 

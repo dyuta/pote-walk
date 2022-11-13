@@ -504,17 +504,17 @@ export default class PlayNPScene extends PlayScene {
     obstacle.play(this.consts.npSpObstacleList[this.model.result.visited].anim,1);
 
     if(this.model.result.visited == 6){
-      obstacle.setScale(1.2);
+      obstacle.setScale(1.3);
       const tween = this.tweens.add({
         targets: obstacle,
-        duration: 600,
-        hold:50,
+        duration: 500,
+        hold:30,
         loop:-1,
         yoyo:true,
         props: {
           //y: '+=300',
-          y: 200,
-          ease:Phaser.Math.Easing.Sine.In
+          y: 190,
+          ease:Phaser.Math.Easing.Sine.InOut
         }
       });
     }
