@@ -352,46 +352,47 @@ export default class PlayNPScene extends PlayScene {
   }
 
   initAnims() {
+    // anims are gloval. no need to recreate in other scenes
+    // #Todo move to preload
     this.anims.create({
-      key: 'pote-run',
-      frames: this.anims.generateFrameNumbers('pote', {start: 1, end: 2}),
-      //frameRate: 9,
-      frameRate: 10,
-      repeat: -1
-    })
-
-    this.anims.create({
-      key: 'pote-happy',
-      frames: this.anims.generateFrameNumbers('potehappy', {start: 0, end: 1}),
+      key: 'mantis-cling',
+      frames: this.anims.generateFrameNumbers('mantisNP', {start: 0, end: 1}),
       frameRate: 6,
       repeat: -1
     })
 
     this.anims.create({
-      key: 'enemy-bird-fly',
-      frames: this.anims.generateFrameNumbers('enemy-bird', {start: 0, end: 1}),
+      key: 'bike-ride',
+      frames: this.anims.generateFrameNumbers('motorcycleNP', {start: 0, end: 1}),
       frameRate: 6,
       repeat: -1
     })
 
     this.anims.create({
-      key: 'UFO-X-fly',
-      frames: this.anims.generateFrameNumbers('UFO-X', {start: 0, end: 1}),
-      frameRate: 5,
+      key: 'kune-kune',
+      frames: this.anims.generateFrameNumbers('kunekuneNP', {start: 0, end: 1}),
+      frameRate: 6,
       repeat: -1
     })
     
     this.anims.create({
-      key: 'bicyclelow-ride',
-      frames: this.anims.generateFrameNumbers('obstacleOrg-1', {start: 0, end: 1}),
+      key: 'nope-rope',
+      frames: this.anims.generateFrameNumbers('flagropeNP', {start: 0, end: 1}),
       frameRate: 6,
       repeat: -1
     })
 
     this.anims.create({
-      key: 'coin-rotate',
-      frames: this.anims.generateFrameNumbers('coin', {start: 0, end: 5}),
-      frameRate: 6,
+      key: 'UFO-NP-fly',
+      frames: this.anims.generateFrameNumbers('UFONP', {start: 0, end: 1}),
+      frameRate: 4,
+      repeat: -1
+    })
+    
+    this.anims.create({
+      key: 'flyrods-fly',
+      frames: this.anims.generateFrameNumbers('flyingrodsNP', {start: 0, end: 1}),
+      frameRate: 9,
       repeat: -1
     })
 
@@ -458,7 +459,7 @@ export default class PlayNPScene extends PlayScene {
   placeObstacle(){
     const {width, height} = this.game.config;
     const groundHeight = height*0.5;
-    const obstacleNum = Math.floor(Math.random() * 7) + 1;
+    const obstacleNum = Math.floor(Math.random() * 5) + 1;
     //const obstacleNum = 7;
     const obstacleDistance =
       Phaser.Math.Between(this.consts.distances.obstacleFrom, this.consts.distances.obstacleTo);
@@ -466,34 +467,26 @@ export default class PlayNPScene extends PlayScene {
     let obstacle;
     console.log(obstacleNum);
 
-    if(obstacleNum > 6) {
-      console.log('bird');
+    if(obstacleNum > 4) {
       const enemyHeight = [40, 120];
-      const enemyType = ['enemy-bird-fly','UFO-X-fly'];
-      
-      obstacle = this.obstacles
-      .create(width + obstacleDistance, groundHeight - enemyHeight[Math.floor(Math.random() * 2)],'enemy-bird');
-      //obstacle.play('enemy-bird-fly', 1);
-      obstacle.play(enemyType[Math.floor(Math.random() * 2)], 1);      
-      obstacle.body.height = obstacle.body.height / 1.5;
-    }else if(obstacleNum == 1){
-      console.log('obs1 bicycle');
-      obstacle = this.obstacles
-      .create(width + obstacleDistance, groundHeight,'obstacleOrg-${obstacleNum}');
-      obstacle.play('bicyclelow-ride', 1);
-      //obstacle.body.height = obstacle.body.height / 1.5;      
+      obstacle = this.placeObstacleCore(width + obstacleDistance, groundHeight - enemyHeight[Math.floor(Math.random() * 2)],'flyingrodsNP');
+      obstacle.play('flyrods-fly', 1);
+      obstacle.body.height = obstacle.body.height / 1.5;     
     } else {
-      obstacle = this.obstacles
-      .create(width + obstacleDistance, groundHeight, `obstacle-${obstacleNum}`);
+      obstacle = this.placeObstacleCore(width + obstacleDistance, groundHeight, `cactusObsNP${obstacleNum}`);
       obstacle.body.offset.y = +5;
     }
+  }
 
-    obstacle
-    .setOrigin(0, 1)
-    .setImmovable();
+  placeObstacleCore(posX,posY,texturekey){
+    //Todo move objgroup and layer to parameter
+    //for more general usage
+    const obstacle = this.obstacles.create(posX, posY, texturekey);
+    obstacle.setOrigin(0, 1).setImmovable();
     obstacle.hitFlg=false;
     
     this.objLayer.add(obstacle);
+    return obstacle;
   }
 
   placeCoin(){

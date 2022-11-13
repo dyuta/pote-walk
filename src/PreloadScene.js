@@ -195,10 +195,18 @@ class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('mantisNP', 'assets/NP/mantis.png',{frameWidth: 240, frameHeight: 240});
     
     // Obstacle Original NP
+    this.load.image('cactusObsNP1', 'assets/NP/Cactus_1_small_small.png');
+    this.load.image('cactusObsNP2', 'assets/NP/Cactus_2_small_tall.png');
+    this.load.image('cactusObsNP3', 'assets/NP/Cactus_3_small_tall.png');
+    this.load.image('cactusObsNP4', 'assets/NP/Cactus_4_wide_tall.png');
+    this.load.spritesheet('flyingrodsNP', 'assets/NP/flyingrods_NP.png',{frameWidth: 96, frameHeight: 72});
+    
+    
+    this.load.spritesheet('kunekuneNP', 'assets/NP/Enemy_kunekune.png',{frameWidth: 48, frameHeight: 104});
     this.load.image('alienKids', 'assets/NP/Enemy_smallAlien.png');
     this.load.image('monkey', 'assets/NP/Enemy_Monky.png');
+    this.load.spritesheet('flagropeNP', 'assets/NP/Enemy_flagrope.png',{frameWidth: 48, frameHeight: 220});
     this.load.spritesheet('motorcycleNP', 'assets/NP/Motorcycle_low_spr_large.png',{frameWidth: 96, frameHeight: 108});
-    this.load.spritesheet('kunekuneNP', 'assets/NP/Enemy_kunekune.png',{frameWidth: 48, frameHeight: 104});
     this.load.spritesheet('UFONP', 'assets/NP/UFO_NP.png',{frameWidth: 96, frameHeight: 72});
 
   }
