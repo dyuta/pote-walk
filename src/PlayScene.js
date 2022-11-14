@@ -535,7 +535,7 @@ class PlayScene extends Phaser.Scene {
     //this.restartGame(this.consts.gameModes[0]);
   }
 
-  restartGame(mode = this.consts.gameModes[0]){
+  restartGame(mode = this.consts.gameModes[0], skipTitleNP = false){
     let sceneNameStr="PlayScene";
     this.model.mediaManager.stopBGM();
     this.model.mediaManager.stopPlaingSound();
@@ -550,6 +550,7 @@ class PlayScene extends Phaser.Scene {
       console.log("NOPEsetting");
       sceneNameStr="PlayNPScene";
       this.model.gameMode = this.consts.gameModes[2];
+      this.model.skipTitleNP = skipTitleNP;
     }
 
     this.scene.start(sceneNameStr,{model: this.model});

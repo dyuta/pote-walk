@@ -18,6 +18,7 @@ export default class PlayNPScene extends PlayScene {
     this.consts = new Constants();
     const {height, width} = this.game.config;
     const groundHeight = height*0.5;
+    console.log(this.model.skipTitleNP);
     
     this.initProperties();
 
@@ -150,9 +151,12 @@ export default class PlayNPScene extends PlayScene {
     const gameOverScreen = container;
     
     const gameOverText = this.add.text(0, 0, 'GAME OVER', this.consts.fontoConf.titleNP).setOrigin(0.5,0);
-    const askingWalkorNopeText = this.add.text(0, 120, 'Back to a walk?', this.consts.fontoConf.bodyNP).setOrigin(0.5,0);
-    this.retryNopeText = this.add.text(-30, 180, 'Nope!', this.consts.fontoConf.bodyNP).setInteractive().setOrigin(1,0);
-    this.retryWalkText = this.add.text(30, 180, 'Yup!', this.consts.fontoConf.bodyNP).setInteractive().setOrigin(0,0);
+    const askingWalkorNopeText = this.add.text(0, 120, 'Give up?', this.consts.fontoConf.resultDetail)
+    .setOrigin(0.5,0).setColor("#ffffff");//.setFontSize("64px");
+    this.retryNopeText = this.add.text(-20, 190, 'Nope!', this.consts.fontoConf.resultDetail)
+    .setInteractive().setOrigin(1,0).setColor("#ffffff");
+    this.retryWalkText = this.add.text(30, 190, 'Yup!', this.consts.fontoConf.resultDetail)
+    .setInteractive().setOrigin(0,0).setColor("#ffffff");
     gameOverScreen.add([gameOverText,askingWalkorNopeText,this.retryNopeText,this.retryWalkText])
   }
 
@@ -164,7 +168,6 @@ export default class PlayNPScene extends PlayScene {
     this.physics.add.overlap(this.pote, this.buildings, (p, building) => {
       // execute once on collision
       if(!building.hitFlg){
-        console.log("enter store");
         building.hitFlg = true;
 
         // set icon visible
@@ -213,7 +216,6 @@ export default class PlayNPScene extends PlayScene {
       this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
         // execute once on collision
         if(!obstacle.hitFlg){
-          console.log("hit");
           obstacle.hitFlg = true;
           this.model.result.miss ++;
           //console.log("miss "+this.model.result.miss);
@@ -244,7 +246,6 @@ export default class PlayNPScene extends PlayScene {
     this.physics.add.overlap(this.pote, this.coins, (p, coin) => {
       // execute once on collision
       if(!coin.hitFlg){
-        console.log("getcoin");
         coin.hitFlg = true;
         this.model.mediaManager.playSound('coinSound');
         
@@ -276,6 +277,13 @@ export default class PlayNPScene extends PlayScene {
   }
 
   initStartEffect(){
+    if(this.model.skipTitleNP){
+      this.pote.setVisible(true);
+      this.ground.setVisible(true);
+      this.handleInputs();
+      this.initStartTrigger();
+      return;
+    }
     //this.openingDialogue
     const tween = this.tweens.add({
       targets: this.openingDialogue,
@@ -342,7 +350,6 @@ export default class PlayNPScene extends PlayScene {
           } else {
             this.ground.width = width;
             this.isGamerunning = true;
-            //console.log("startEvent");
             this.pote.setVelocityX(0);
             
             this.environment.setAlpha(1);
@@ -478,7 +485,7 @@ export default class PlayNPScene extends PlayScene {
 
     this.retryNopeText.on('pointerdown', () => {
       this.prepareRestart();
-      this.restartGame(this.consts.gameModes[2]);
+      this.restartGame(this.consts.gameModes[2],this.consts.skipTitleNPTrue);
     }, this);
 
     this.retryWalkText.on('pointerdown', () => {
@@ -497,7 +504,6 @@ export default class PlayNPScene extends PlayScene {
   }
 
   showGameOver(){
-    console.log("showGameOver");
     this.isGamerunning = false;
     this.pote.setTexture("pote-hurt");
     this.physics.pause();

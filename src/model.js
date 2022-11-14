@@ -2,6 +2,7 @@ class Model{
     constructor(consts){
         this.hsv = Phaser.Display.Color.HSVColorWheel();
         this.gameMode = consts.gameModes[0];
+        this.skipTitleNP = false;
         this.storeVisit = {
             store1:false,
             store2:false,

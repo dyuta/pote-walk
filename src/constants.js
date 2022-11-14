@@ -126,6 +126,8 @@ class Constants{
 			fontFamily: '"Albert Sans"', fontSize: '48px', fill: "#ffffff"
         };
 
+        this.skipTitleNPTrue = true;
+
         this.npscenetitleList= [
             {name:"NOPE"},
             {name:"GHOST"},
