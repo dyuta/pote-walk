@@ -53,6 +53,8 @@ class Constants{
 
         this.gameSpeedNormal = 9;
         this.gameSpeedFast = 9;// samespeed
+        this.gameSpeedNP = 10;
+        this.gameSpeedNPFast = 12;
 
         this.obsRespawnInterval = 1100;
         this.coinRespawnInterval = 2200;

@@ -101,7 +101,7 @@ export default class PlayNPScene extends PlayScene {
   initProperties(){
     this.isGamerunning = false;
     this.cameras.main.setBackgroundColor(this.consts.colors.background);
-    this.gameSpeed = this.consts.gameSpeedNormal;
+    this.gameSpeed = this.consts.gameSpeedNP;
     this.groundInitwidth = 100;
 
     this.obsRespawnTime = 0;
@@ -152,7 +152,7 @@ export default class PlayNPScene extends PlayScene {
     
     const gameOverText = this.add.text(0, 0, 'GAME OVER', this.consts.fontoConf.titleNP).setOrigin(0.5,0);
     const askingWalkorNopeText = this.add.text(0, 120, 'Give up?', this.consts.fontoConf.resultDetail)
-    .setOrigin(0.5,0).setColor("#ffffff");//.setFontSize("64px");
+    .setOrigin(0.5,0).setColor("#ffffff").setFontSize("64px");//.setFontSize("64px");
     this.retryNopeText = this.add.text(-20, 190, 'Nope!', this.consts.fontoConf.resultDetail)
     .setInteractive().setOrigin(1,0).setColor("#ffffff");
     this.retryWalkText = this.add.text(30, 190, 'Yup!', this.consts.fontoConf.resultDetail)
@@ -204,7 +204,7 @@ export default class PlayNPScene extends PlayScene {
         */
 
         if(this.model.result.visited == 3){
-          this.gameSpeed = this.consts.gameSpeedFast;
+          this.gameSpeed = this.consts.gameSpeedNPFast;
         }
         
       }
