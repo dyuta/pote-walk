@@ -22,10 +22,10 @@ export default class PlayNPScene extends PlayScene {
     this.initProperties();
 
     this.openingDialogue =this.add.text(
-      width/2, height/4, "POTE",this.consts.fontoConf.titleNP
+      width/2, height*0.22, "POTE",this.consts.fontoConf.titleNP
     ).setOrigin(0.5,0).setAlpha(0);
     this.openingDialogueNP =this.add.text(
-      width/2, height/4, "NOPE",this.consts.fontoConf.titleNP
+      width/2, height*0.22, "NOPE",this.consts.fontoConf.titleNP
     ).setOrigin(0.5,0).setAlpha(0);
 
     this.destinationTxt = this.add.text(
@@ -47,8 +47,8 @@ export default class PlayNPScene extends PlayScene {
     this.environment = this.add.group();
     this.initEnvObjects(height, width,this.environment,this.envLayer);
 
-    this.bookStoreLayer = this.add.layer();
-    this.bookStores = this.physics.add.group();
+    this.buildingLayer = this.add.layer();
+    this.buildings = this.physics.add.group();
 
     this.objLayer = this.add.layer();
     this.obstacles = this.physics.add.group();
@@ -82,7 +82,10 @@ export default class PlayNPScene extends PlayScene {
       .setGravityY(3000)
       .setVisible(false);
     this.pote.hitPose = false;
-    
+
+    this.gameOverScreen = this.add.container(width* 1/2 , height* 0.10).setAlpha(0);
+    this.initGameOverScreen(this.gameOverScreen);
+
     this.initAnims();
     //this.initBookParticle();
     //this.initCoinParticle();
@@ -143,22 +146,32 @@ export default class PlayNPScene extends PlayScene {
 
   }
 
+  initGameOverScreen(container){
+    const gameOverScreen = container;
+    
+    const gameOverText = this.add.text(0, 0, 'GAME OVER', this.consts.fontoConf.titleNP).setOrigin(0.5,0);
+    const askingWalkorNopeText = this.add.text(0, 120, 'Back to a walk?', this.consts.fontoConf.bodyNP).setOrigin(0.5,0);
+    this.retryNopeText = this.add.text(-30, 180, 'Nope!', this.consts.fontoConf.bodyNP).setInteractive().setOrigin(1,0);
+    this.retryWalkText = this.add.text(30, 180, 'Yup!', this.consts.fontoConf.bodyNP).setInteractive().setOrigin(0,0);
+    gameOverScreen.add([gameOverText,askingWalkorNopeText,this.retryNopeText,this.retryWalkText])
+  }
+
   initColliders(){
     // ground
     this.physics.add.collider(this.pote, this.poteGround);
 
     // bookstore overlap
-    this.physics.add.overlap(this.pote, this.bookStores, (p, bookstore) => {
+    this.physics.add.overlap(this.pote, this.buildings, (p, building) => {
       // execute once on collision
-      if(!bookstore.hitFlg){
+      if(!building.hitFlg){
         console.log("enter store");
-        bookstore.hitFlg = true;
+        building.hitFlg = true;
 
         // set icon visible
         this.bookStoreIcons.getChildren()[this.model.result.visited].setAlpha(1);
 
         // set store visit status
-        this.model.storeVisit[`store${bookstore.bookStoreNum}`] = true;
+        this.model.storeVisit[`store${building.buildingNum}`] = true;
         this.model.result.visited ++;
 
         //update destination
@@ -220,6 +233,9 @@ export default class PlayNPScene extends PlayScene {
               300, ()=>{this.pote.hitPose = false}, this
             );
           }
+
+          // GAME OVER
+          this.showGameOver();
         }
       }, null, this)
     }
@@ -326,6 +342,7 @@ export default class PlayNPScene extends PlayScene {
           } else {
             this.ground.width = width;
             this.isGamerunning = true;
+            //console.log("startEvent");
             this.pote.setVelocityX(0);
             
             this.environment.setAlpha(1);
@@ -346,10 +363,6 @@ export default class PlayNPScene extends PlayScene {
       })
     }
     , null, this);
-  }
-
-  callbackStartEvent(){
-
   }
 
   initAnims() {
@@ -463,6 +476,16 @@ export default class PlayNPScene extends PlayScene {
 
     }, this);
 
+    this.retryNopeText.on('pointerdown', () => {
+      this.prepareRestart();
+      this.restartGame(this.consts.gameModes[2]);
+    }, this);
+
+    this.retryWalkText.on('pointerdown', () => {
+      this.prepareRestart();
+      this.restartGame(this.consts.gameModes[0]);
+    }, this)
+
     /*
     this.stayingCloud.on("pointerdown", () => {
       if (this.model.gameMode==this.consts.gameModes[2]){ return;}
@@ -471,6 +494,21 @@ export default class PlayNPScene extends PlayScene {
     }, this)
     */
     
+  }
+
+  showGameOver(){
+    console.log("showGameOver");
+    this.isGamerunning = false;
+    this.pote.setTexture("pote-hurt");
+    this.physics.pause();
+    this.anims.pauseAll();
+    this.gameOverScreen.setAlpha(1);
+  }
+
+  prepareRestart(){
+    this.physics.resume();
+    this.isGamerunning = true;
+    this.anims.resumeAll();
   }
 
   placeObstacle(){
@@ -574,29 +612,29 @@ export default class PlayNPScene extends PlayScene {
     this.coinLayer.add(coin);
   }
 
-  placeBookstore(bookStoreNum){
+  placeBuilding(buildingNum){
     const {width, height} = this.game.config;
     const groundHeight = height*0.5;
 
     //const obstacleNum = 7;
-    const bookStoreDistance = 200;
+    const buildingDistance = 200;
 
-    let bookStore;
-    console.log(bookStoreNum);
+    let building;
+    console.log(buildingNum);
 
-    const bookstoreName = `bookstore0${bookStoreNum}`
+    const buildingName = `buildingNP0${buildingNum}`
 
-    console.log(bookstoreName);
-    bookStore = this.bookStores
-    .create(width + bookStoreDistance, groundHeight,bookstoreName);
+    console.log(buildingName);
+    building = this.buildings
+    .create(width + buildingDistance, groundHeight,buildingName);
     
-    bookStore
+    building
     .setOrigin(0, 1)
     .setImmovable();
-    bookStore.hitFlg=false;
-    bookStore.bookStoreNum=bookStoreNum;
+    building.hitFlg=false;
+    building.buildingNum=buildingNum;
     
-    this.bookStoreLayer.add(bookStore);
+    this.buildingLayer.add(building);
   }
 
   placePoteHome(){
@@ -607,9 +645,9 @@ export default class PlayNPScene extends PlayScene {
     const Distance = 200;
 
 
-    console.log('potehome');
+    console.log('goalNP');
     this.poteHome = this.poteHomeGrp
-      .create(width + Distance, groundHeight + 28,'potehome')
+      .create(width + Distance, groundHeight + 28,'goalNP')
       .setOrigin(0, 1).setImmovable();
     
       this.poteHome.hitFlg=false;
@@ -621,56 +659,34 @@ export default class PlayNPScene extends PlayScene {
     this.scene.start('ResultScene',{model: this.model});
   }
 
-  goModeNP(){
+  /*goModeNP(){
     console.log("NOPE");
     this.restartGame(this.consts.gameModes[2]);
     //this.restartGame(this.consts.gameModes[0]);
-  }
-
-  restartGame(mode = this.consts.gameModes[0]){
-    let sceneNameStr="PlayScene";
-    this.model.mediaManager.stopBGM();
-    this.model.mediaManager.stopPlaingSound();
-    // set default value
-    this.model = new Model(this.consts);
-    // ToDo move mediaManager from model
-    this.model.mediaManager = new MediaManager({scene:this});
-
-    if(mode == this.consts.gameModes[1]){
-      this.model.gameMode = this.consts.gameModes[1];
-    } else if(mode == this.consts.gameModes[2]){
-      console.log("NOPEsetting");
-      sceneNameStr="PreNpScene";
-      this.model.gameMode = this.consts.gameModes[2];
-    }
-
-    this.scene.start(sceneNameStr,{model: this.model});
-  }
+  }*/
 
   update(time, delta) {
-    if (!this.isGamerunning) { return; }
-
-
+    if (!this.isGamerunning) {return;}
     this.coinCounterText.setText(`: ${this.coinCnt}`);
     //this.bookCounterText.setText(`: ${this.bookCnt}`);
-
+    
     // scroll
     this.ground.tilePositionX += this.gameSpeed*this.consts.worldScroll;
     this.backMountains.tilePositionX += this.gameSpeed*this.consts.worldScroll*0.4;
     Phaser.Actions.IncX(this.environment.getChildren(), - 0.5);
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
     Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
-    Phaser.Actions.IncX(this.bookStores.getChildren(), -this.gameSpeed*this.consts.worldScroll);
+    Phaser.Actions.IncX(this.buildings.getChildren(), -this.gameSpeed*this.consts.worldScroll);
     Phaser.Actions.IncX(this.poteHomeGrp.getChildren(), -this.gameSpeed*this.consts.worldScroll);
-
+    
     this.obsRespawnTime += delta * this.gameSpeed * 0.08;
     this.coinRespawnTime += delta * this.gameSpeed * 0.08;
     this.storeRespawnTime += delta * this.gameSpeed * 0.08;
     this.homeTime += delta * this.gameSpeed * 0.08;
     //this.npCloudIncAlphaIncTime+= delta * this.gameSpeed * 0.08;
-
     
-
+    
+    
     // place obstacle every xxseconds
     if (this.obsRespawnTime >= this.consts.obsRespawnInterval){
       //when mod5(number)=3
@@ -682,52 +698,52 @@ export default class PlayNPScene extends PlayScene {
       this.obsRespawnTime = 0;
       this.numberOfObstacleSet++;
     }
-
+    
     // place coin every XXseconds
     if (this.storePlacedCnt < this.consts.numberOfStores 
       && this.coinRespawnTime >= this.consts.coinRespawnInterval){
-      this.placeCoin();
-      this.coinRespawnTime = 0;
+        this.placeCoin();
+        this.coinRespawnTime = 0;
     }
-
-    // place bookstore or home
+      
+      // place bookstore or home
     if (this.storeRespawnTime >= this.consts.storeRespawnInterval){
       if(this.storePlacedCnt < this.consts.numberOfStores){
-
-        this.placeBookstore(this.storePlacedCnt+1);
+        
+        this.placeBuilding(this.storePlacedCnt+1);
         this.storeRespawnTime = 0;
         this.storePlacedCnt ++;
       } else {
-        // place home
-        this.placePoteHome();
-        this.storeRespawnTime = 0;
+          // place home
+          this.placePoteHome();
+          this.storeRespawnTime = 0;
       }
     }
-
+      
     // remove obstacles
     this.removeObjPassedDisplay(this.obstacles);
     this.removeObjPassedDisplay(this.coins);
-    this.removeObjPassedDisplay(this.bookStores);
-
+    this.removeObjPassedDisplay(this.buildings);
+      
     // recycle clouds
     this.environment.getChildren().forEach(env => {
       if (env.getBounds().right < 0) {
         env.x = this.game.config.width + 30;
       }
     })
-
+      
     // player potato effect
     if (this.pote.hitPose){
       this.pote.setTexture("pote-hurt");
     } else if (!this.pote.body.onFloor()) {
       this.pote.anims.stop();
       this.pote.setTexture('pote');
-
+      
     } else {
       this.pote.play('pote-run',true);
       //this.pote.play('pote-happy',true);
     }
-
+      
   }
   
 }
