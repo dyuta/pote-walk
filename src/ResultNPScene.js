@@ -150,11 +150,14 @@ export default class ResultNPScene extends Phaser.Scene {
       this.startTrigger.disableBody(true, true);
       // show Objects
       //this.bookTower.setAlpha(1);
+
+      if(this.model.result.coin>0){
+        this.winkinwell.play("winkinwell-flash");
+        this.pote.play("pote-oprah");
+      }
       
-      this.winkinwell.play("winkinwell-flash");
-      this.pote.play("pote-oprah");
       this.timerOneShot = this.time.delayedCall(
-        200 + 50*this.model.result.coin,// wait for photoshoto animation
+        200 + 3*250*this.model.result.coin,// wait for photoshoto animation
         ()=>{this.gameClearScreen.setAlpha(1)}, this
       );
       //stop overlap on startTrigger
@@ -189,16 +192,16 @@ export default class ResultNPScene extends Phaser.Scene {
 
     this.anims.create({
       key: 'pote-oprah',
-      frames: this.anims.generateFrameNumbers('poteOprah', {start: 0, end: 3}),
+      frames: this.anims.generateFrameNumbers('poteOprah', {start: 0, end: 2}),
       frameRate: 4,
-      repeat: this.model.result.coin
+      repeat: Math.max(0,this.model.result.coin -1)
     })
 
     this.anims.create({
       key: 'winkinwell-flash',
       frames: this.anims.generateFrameNumbers('winkinwellNP', {start: 0, end: 2}),
       frameRate: 4,
-      repeat: this.model.result.coin
+      repeat: Math.max(0,this.model.result.coin -1)
     })
 
   }
@@ -210,8 +213,8 @@ export default class ResultNPScene extends Phaser.Scene {
       angle: { min: 250, max: 265 },
       speed: { min: 60, max: 70 },
       quantity: 1,//{ min: 2, max: 10 },
-      lifespan: 400,
-      alpha: { start: 1, end: 1 },
+      lifespan: 350,
+      alpha: { start: 1, end: 0.8 },
       scale: 2.2,//{ min: 0.05, max: 0.4 },
       //rotate: { start: 0, end: 360, ease: 'Back.easeOut' },
       gravityY: 800,
@@ -220,12 +223,20 @@ export default class ResultNPScene extends Phaser.Scene {
   }
 
   initOnAnimParticle(){
+    this.pote.on('animationupdate',(anim,frame,p)=>{
+      if(anim.key == "pote-oprah" && frame.textureFrame == 1){
+        this.coinParticle.emitParticleAt(p.x - 10,p.y - 70);
+      }
+      console.log("coinemitter frame"+anim.key+frame.textureFrame);
+    },this);
+    /*
     this.pote.on('animationrepeat',(anim,frame,p)=>{
       if(anim.key == "pote-oprah"){
         this.coinParticle.emitParticleAt(p.x - 10,p.y - 70);
       }
       console.log("coinemitter frame"+anim.key+frame.texturekey);
     },this);
+    */
   }
 
   AddTapLinkToImage(image,url){
