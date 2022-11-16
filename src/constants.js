@@ -58,6 +58,7 @@ class Constants{
 
         this.obsRespawnInterval = 1100;
         this.coinRespawnInterval = 2200;
+        this.coinRespawnIntervalNP = 4400;
         this.storeRespawnInterval = 5500;
         this.coinCntInterval =128;
 

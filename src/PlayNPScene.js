@@ -697,7 +697,7 @@ export default class PlayNPScene extends PlayScene {
     
     // place coin every XXseconds
     if (this.storePlacedCnt < this.consts.numberOfStores 
-      && this.coinRespawnTime >= this.consts.coinRespawnInterval){
+      && this.coinRespawnTime >= this.consts.coinRespawnIntervalNP){
         this.placeCoin();
         this.coinRespawnTime = 0;
     }
