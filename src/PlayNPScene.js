@@ -202,6 +202,10 @@ export default class PlayNPScene extends PlayScene {
           
         }
         */
+        //for debug
+        if(this.model.result.visited==2){
+          this.goClearScene();
+        }
 
         if(this.model.result.visited == 3){
           this.gameSpeed = this.consts.gameSpeedNPFast;
@@ -662,7 +666,8 @@ export default class PlayNPScene extends PlayScene {
   }
 
   goClearScene(){
-    this.scene.start('ResultScene',{model: this.model});
+    //this.scene.start('ResultScene',{model: this.model});
+    this.scene.start('ResultNPScene',{model: this.model});
   }
 
   /*goModeNP(){

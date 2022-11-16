@@ -32,7 +32,7 @@ export default class ResultNPScene extends Phaser.Scene {
     const {height, width} = this.game.config;
     const groundHeight = height*0.5 + 110;
 
-    this.outYonderNP = this.add.image(280-220,20,"outYonderNP").setOrigin(0,0).setScale(1.4);
+    this.outYonderNP = this.add.image(400,20,"outYonderNP").setOrigin(0,0).setScale(0.8);
     this.wallLayer = this.add.layer();
 
     //const bookNum = Math.min(18,this.model.result.book);
@@ -56,11 +56,12 @@ export default class ResultNPScene extends Phaser.Scene {
     this.pote.hitPose = false;
 
     // Clear Results
-    this.gameClearScreen = this.add.container(width * 3/5+50, 100).setAlpha(0);
+    const clearScreenYshift=250;
+    this.gameClearScreen = this.add.container(width * 3/5+50, 100+clearScreenYshift).setAlpha(0);
     
     let gameClearStates = "test";
     this.GameResultStr = 
-    `coin: ${this.model.result.coin} / ${this.model.result.coinGen}\nmiss: ${this.model.result.miss}`;
+    `coin: ${this.model.result.coin} / ${this.model.result.coinGen}`;
     this.gameClearText = this.add.text(0, 0, gameClearStates, this.consts.fontoConf.titleNP)
     .setOrigin(0,0.5).setFontSize("64px");
     
@@ -72,28 +73,29 @@ export default class ResultNPScene extends Phaser.Scene {
     if(this.isResultPerfect){
       gameClearStates ="Perfect!";
       this.gameClearText.setText(gameClearStates);
-      this.gameClearText.setStroke('#00f', 10);
+      this.gameClearText.setStroke('#00f', 8);
       this.gameClearText.setColor('#ffffff');
       this.gameClearText.setShadow(2, 2, "#333333", 2, true, true);
     } else {
       gameClearStates ="Clear!";
       this.gameClearText.setText(gameClearStates);
-      this.gameClearText.setStroke('#ffffff', 8);
+      //this.gameClearText.setStroke('#ffffff', 8);
     }
 
-    this.gameResultText = this.add.text(0, 120, this.GameResultStr, this.consts.fontoConf.bodyNP)
+    this.gameResultText = this.add.text(0, 70, this.GameResultStr, this.consts.fontoConf.bodyNP)
       .setOrigin(0,0.5);
-    this.gameResultText.setStroke('#ffffff', 4);
+    //this.gameResultText.setStroke('#ffffff', 2);
     // Restart Icons
-    this.restart = this.add.image(10, 240, 'restart').setInteractive()
+    const iconShftY=100;
+    this.restart = this.add.image(10, 240-iconShftY, 'restart').setInteractive()
       .setOrigin(0,0.5).setScale(1.2);
-    this.restartSafe = this.add.image(10, 304, 'restartSafe').setInteractive()
+    this.restartSafe = this.add.image(10, 304-iconShftY, 'restartSafe').setInteractive()
       .setOrigin(0,0.5).setScale(1.2)
-    this.appVersionText = this.add.text(136, 360, "ver: " + this.consts.appVersion, this.consts.fontoConf.counter).setOrigin(0,0);
+    this.appVersionText = this.add.text(136, 360-iconShftY, "ver: " + this.consts.appVersion, this.consts.fontoConf.counter).setOrigin(0,0);
     this.appVersionText.setColor("#FFE7BF");
     // Link URLs
-    this.tweetLink = this.initTweetLink(136, 212).setOrigin(0,0);
-    this.creditLink = this.initInfoLinks(136,274).setOrigin(0,0);
+    this.tweetLink = this.initTweetLink(136, 212-iconShftY).setOrigin(0,0);
+    this.creditLink = this.initInfoLinks(136,274-iconShftY).setOrigin(0,0);
     this.gameClearScreen.add([
       this.gameClearText, this.gameResultText,
       this.restart,this.restartSafe,
@@ -137,7 +139,7 @@ export default class ResultNPScene extends Phaser.Scene {
       rslt.hitflag = true;
       this.isGamerunning = true;
       // show Objects
-      this.bookTower.setAlpha(1);
+      //this.bookTower.setAlpha(1);
       this.gameClearScreen.setAlpha(1);
       this.bookStoreScreen.setAlpha(1);
     }

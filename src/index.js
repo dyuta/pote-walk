@@ -3,8 +3,8 @@ import Phaser from 'phaser';
 import PlayScene from './PlayScene';
 import PreloadScene from './PreloadScene';
 import ResultScene from './ResultScene';
-// import PreNpScene from './PreNpScene';
 import PlayNPScene from './PlayNPScene';
+import ResultNPScene from './ResultNPScene';
 
 const config = {
   type: Phaser.AUTO,
@@ -28,7 +28,7 @@ const config = {
     default: 'arcade'
     //,arcade: {debug: true}
   },
-  scene: [PreloadScene, PlayScene, ResultScene, PlayNPScene/*,PreNpScene*/]
+  scene: [PreloadScene, PlayScene, ResultScene, PlayNPScene, ResultNPScene/*,PreNpScene*/]
 };
 new Phaser.Game(config);
 
