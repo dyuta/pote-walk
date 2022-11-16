@@ -48,6 +48,8 @@ export default class ResultNPScene extends Phaser.Scene {
     this.poteGround = this.physics.add.image(width * 1/2, groundHeight+30).setSize(width,20).setOrigin(0, 1).setImmovable();
     // this.ground = this.add.tileSprite(0, groundHeight, this.groundInitwidth, 26, 'ground').setOrigin(0, 1);
     
+    this.winkinwell = this.add.sprite(width * 1/10,groundHeight, "winkinwellNP").setOrigin(0,1);
+
     this.pote = this.physics.add.sprite(width * 1/10, groundHeight, 'pote-idle')
       .setScale(1.2)
       .setOrigin(0, 1)
@@ -87,19 +89,20 @@ export default class ResultNPScene extends Phaser.Scene {
     //this.gameResultText.setStroke('#ffffff', 2);
     // Restart Icons
     const iconShftY=100;
-    this.restart = this.add.image(10, 240-iconShftY, 'restart').setInteractive()
+    this.restartWalk = this.add.image(10, 240-iconShftY, 'restartWalk').setInteractive()
       .setOrigin(0,0.5).setScale(1.2);
-    this.restartSafe = this.add.image(10, 304-iconShftY, 'restartSafe').setInteractive()
+    this.restartNope = this.add.image(10, 304-iconShftY, 'restartNP').setInteractive()
       .setOrigin(0,0.5).setScale(1.2)
     this.appVersionText = this.add.text(136, 360-iconShftY, "ver: " + this.consts.appVersion, this.consts.fontoConf.counter).setOrigin(0,0);
     this.appVersionText.setColor("#FFE7BF");
     // Link URLs
     this.tweetLink = this.initTweetLink(136, 212-iconShftY).setOrigin(0,0);
-    this.creditLink = this.initInfoLinks(136,274-iconShftY).setOrigin(0,0);
+    //this.creditLink = this.initInfoLinks(136,274-iconShftY).setOrigin(0,0);
     this.gameClearScreen.add([
       this.gameClearText, this.gameResultText,
-      this.restart,this.restartSafe,
-      this.tweetLink, this.creditLink,
+      this.restartWalk,this.restartNope,
+      this.tweetLink,
+      //this.creditLink,
       this.appVersionText
     ])
 
@@ -117,13 +120,17 @@ export default class ResultNPScene extends Phaser.Scene {
     this.AddTapLinkToImage(this.kotobadakenochizu, this.consts.kotobaUrl);
     */
 
+    /*
     this.bookStoreScreen = this.add.container(60, groundHeight + 80).setAlpha(0);
     this.bookStoreScreen.add( 
     this.InitBookstoreImages()
     );
+    */
     
     this.initColliders();
-    this.initAnims(); 
+    this.initAnims();
+    this.initCoinParticleNP();
+    this.initOnAnimParticle();
     this.initStartTrigger();
     this.handleInputs();
   }
@@ -138,10 +145,21 @@ export default class ResultNPScene extends Phaser.Scene {
       console.log('show result');
       rslt.hitflag = true;
       this.isGamerunning = true;
+
+      //stop overlap on startTrigger
+      this.startTrigger.disableBody(true, true);
       // show Objects
       //this.bookTower.setAlpha(1);
-      this.gameClearScreen.setAlpha(1);
-      this.bookStoreScreen.setAlpha(1);
+      
+      this.winkinwell.play("winkinwell-flash");
+      this.pote.play("pote-oprah");
+      this.timerOneShot = this.time.delayedCall(
+        200 + 50*this.model.result.coin,// wait for photoshoto animation
+        ()=>{this.gameClearScreen.setAlpha(1)}, this
+      );
+      //stop overlap on startTrigger
+      this.resultTrigger.disableBody(true, true);
+      //this.bookStoreScreen.setAlpha(1);
     }
     , null, this);
   }
@@ -170,12 +188,44 @@ export default class ResultNPScene extends Phaser.Scene {
     })
 
     this.anims.create({
-      key: 'pote-dance',
-      frames: this.anims.generateFrameNumbers('potedance', {start: 0, end: 3}),
-      frameRate: 2.81,
-      repeat: -1
+      key: 'pote-oprah',
+      frames: this.anims.generateFrameNumbers('poteOprah', {start: 0, end: 3}),
+      frameRate: 4,
+      repeat: this.model.result.coin
     })
 
+    this.anims.create({
+      key: 'winkinwell-flash',
+      frames: this.anims.generateFrameNumbers('winkinwellNP', {start: 0, end: 2}),
+      frameRate: 4,
+      repeat: this.model.result.coin
+    })
+
+  }
+
+  initCoinParticleNP(){
+    this.coinParticle = this.add.particles('coinBookIcon');
+    this.coinParticle.createEmitter({
+      frame: 0,
+      angle: { min: 250, max: 265 },
+      speed: { min: 60, max: 70 },
+      quantity: 1,//{ min: 2, max: 10 },
+      lifespan: 400,
+      alpha: { start: 1, end: 1 },
+      scale: 2.2,//{ min: 0.05, max: 0.4 },
+      //rotate: { start: 0, end: 360, ease: 'Back.easeOut' },
+      gravityY: 800,
+      on: false
+    });
+  }
+
+  initOnAnimParticle(){
+    this.pote.on('animationrepeat',(anim,frame,p)=>{
+      if(anim.key == "pote-oprah"){
+        this.coinParticle.emitParticleAt(p.x - 10,p.y - 70);
+      }
+      console.log("coinemitter frame"+anim.key+frame.texturekey);
+    },this);
   }
 
   AddTapLinkToImage(image,url){
@@ -186,6 +236,7 @@ export default class ResultNPScene extends Phaser.Scene {
     return image;
   }
 
+  /*
   InitBookstoreImages(){
     let storeImages = [];
     const span = 140;
@@ -201,25 +252,19 @@ export default class ResultNPScene extends Phaser.Scene {
 
     let callback = {};
     for (let i =0; i < this.consts.numberOfStores; i++) {
-      /*
-      callback = function(){
-        this.openExternalLink(this.consts.bookstoreList[i].url);
-      };
-      storeImages[i].on('pointerup',callback, this);
-      */
       this.AddTapLinkToImage(storeImages[i],this.consts.bookstoreList[i].url);
     }
-    
-
     return storeImages
   }
+  */
+
   handleInputs() {
-    this.restart.on('pointerdown', () => {
-      this.restartGame();
+    this.restartWalk.on('pointerdown', () => {
+      this.restartGame(this.consts.gameModes[0]);
     }, this)
 
-    this.restartSafe.on('pointerdown', () => {
-      this.restartGame(this.consts.gameModes[1]);
+    this.restartNope.on('pointerdown', () => {
+      this.restartGame(this.consts.gameModes[2]);
     }, this)
 
     this.input.on("pointerdown", () => {
@@ -248,7 +293,7 @@ export default class ResultNPScene extends Phaser.Scene {
     //const tapLinkStyle = {fontFamily:'Mulish',fontSize:'36px',align:'center',fontStyle:'normal'};
     const tapLinkStyle = this.consts.fontoConf.TapLink;
     // twitter
-    let snsShareString = this.createSNSShareString();
+    let snsShareString = this.createSNSShareStringNP();
     
     const tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(snsShareString);
     const callbackTweet=function(){
@@ -262,19 +307,18 @@ export default class ResultNPScene extends Phaser.Scene {
     return tweetLink;
   }
 
-  createSNSShareString(){
+  createSNSShareStringNP(){
     let snsShareString = "Potewalk\n";
     // mode
     snsShareString +="mode: "+ this.model.gameMode + "\n";
 
-    // book,  miss, coin(got/generated)
-    snsShareString += 
-    `book: ${this.model.result.book}\ncoin: ${this.model.result.coin} / ${this.model.result.coinGen}\nmiss: ${this.model.result.miss}`;
+    // coin(got/generated)
+    snsShareString += `coin: ${this.model.result.coin} / ${this.model.result.coinGen}`;
 
     // clear status
     if(this.model.result.miss == 0 &&
       this.model.result.coin == this.model.result.coinGen){
-      snsShareString +="\nperfect!"
+      snsShareString +="\nperfect! amazing!"
     }
     snsShareString +='\n' + this.consts.appURL;
     console.log(snsShareString);
@@ -292,18 +336,11 @@ export default class ResultNPScene extends Phaser.Scene {
     return tapLink;
   }
 
-  openExternalLink(url)
-    {
-        //let url = url
-        //let s = window.open(url, '_blank','noopener','noreferrer');
-        //let s = window.open(url, '_blank','noreferrer');
-        //let s = window.open(url, '_blank','noopener');
-        //let s = window.open(url, '_blank');
+  openExternalLink(url){
         let s = window.open();
         s.opener = null;
         s.referrer = null;
         s.location = url;
-        
 
         if (s && s.focus)
         {
@@ -313,19 +350,33 @@ export default class ResultNPScene extends Phaser.Scene {
         {
             window.location.href = url;
         }
-    }
+  }
 
-  restartGame(mode = this.consts.gameModes[0]){
+  goNPScene(){
+    console.log("NOPE");
+    this.restartGame(this.consts.gameModes[2]);
+    //this.restartGame(this.consts.gameModes[0]);
+  }
+
+  restartGame(mode = this.consts.gameModes[0], skipTitleNP = false){
+    let sceneNameStr="PlayScene";
     this.model.mediaManager.stopBGM();
     this.model.mediaManager.stopPlaingSound();
     // set default value
     this.model = new Model(this.consts);
-    if(mode == this.consts.gameModes[1]){
-      this.model.gameMode = this.consts.gameModes[1];
-    }
     // ToDo move mediaManager from model
     this.model.mediaManager = new MediaManager({scene:this});
-    this.scene.start('PlayScene',{model: this.model});
+
+    if(mode == this.consts.gameModes[1]){
+      this.model.gameMode = this.consts.gameModes[1];
+    } else if(mode == this.consts.gameModes[2]){
+      console.log("NOPEsetting");
+      sceneNameStr="PlayNPScene";
+      this.model.gameMode = this.consts.gameModes[2];
+      this.model.skipTitleNP = skipTitleNP;
+    }
+
+    this.scene.start(sceneNameStr,{model: this.model});
   }
 
   update(time, delta) {
@@ -353,6 +404,7 @@ export default class ResultNPScene extends Phaser.Scene {
     }*/
 
     // player potato effect
+    /*
     if (this.pote.hitPose){
       this.pote.setTexture("pote-hurt");
     } else if (!this.pote.body.onFloor()) {
@@ -360,8 +412,9 @@ export default class ResultNPScene extends Phaser.Scene {
       this.pote.setTexture('pote');
 
     } else {
-      this.pote.play('pote-dance',true);
+      this.pote.setTexture('pote');
     }
+    */
 
   }
 }

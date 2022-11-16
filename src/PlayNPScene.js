@@ -455,21 +455,6 @@ export default class PlayNPScene extends PlayScene {
   }
   */
 
-  initCoinParticle(){
-    this.coinParticle = this.add.particles('coinBookIcon');
-    this.coinParticle.createEmitter({
-      frame: 0,
-      angle: { min: 240, max: 250 },
-      speed: { min: 100, max: 150 },
-      quantity: 1,//{ min: 2, max: 10 },
-      lifespan: 400,
-      alpha: { start: 1, end: 0 },
-      scale: 2,//{ min: 0.05, max: 0.4 },
-      //rotate: { start: 0, end: 360, ease: 'Back.easeOut' },
-      gravityY: 800,
-      on: false
-    });
-  }
 
   handleInputs() {
     super.handleInputs();

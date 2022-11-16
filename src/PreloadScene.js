@@ -194,8 +194,16 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('goalNP', 'assets/NP/building7_Goal_Cowboy.png');
     this.load.image('outYonderNP', 'assets/NP/OutYonder.png');
 
+    this.load.image('restartNP', 'assets/NP/restartNP.png');
+    this.load.image('restartWalk', 'assets/NP/restartWalk.png');
+
     this.load.spritesheet('mantisNP', 'assets/NP/mantis.png',{frameWidth: 240, frameHeight: 240});
-    
+    this.load.spritesheet('winkinwellNP', 'assets/NP/winkinwell.png',{frameWidth: 240, frameHeight: 272});
+    this.load.spritesheet('poteOprah', 'assets/NP/pote08_oprahshot.png', {
+      frameWidth: 88,
+      frameHeight: 92
+    })
+
     // Obstacle Original NP
     this.load.image('cactusObsNP1', 'assets/NP/Cactus_1_small_small.png');
     this.load.image('cactusObsNP2', 'assets/NP/Cactus_2_small_tall.png');
