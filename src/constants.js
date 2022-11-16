@@ -130,6 +130,8 @@ class Constants{
 
         this.skipTitleNPTrue = true;
 
+        this.npOprahshotFrameRate = 4;
+
         this.npscenetitleList= [
             {name:"NOPE"},
             {name:"GHOST"},

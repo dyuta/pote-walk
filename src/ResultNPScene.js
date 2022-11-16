@@ -157,7 +157,7 @@ export default class ResultNPScene extends Phaser.Scene {
       }
       
       this.timerOneShot = this.time.delayedCall(
-        200 + 3*250*this.model.result.coin,// wait for photoshoto animation
+        200 + 3*(1000/this.consts.npOprahshotFrameRate)*this.model.result.coin,// wait for photoshoto animation
         ()=>{this.gameClearScreen.setAlpha(1)}, this
       );
       //stop overlap on startTrigger
@@ -193,14 +193,14 @@ export default class ResultNPScene extends Phaser.Scene {
     this.anims.create({
       key: 'pote-oprah',
       frames: this.anims.generateFrameNumbers('poteOprah', {start: 0, end: 2}),
-      frameRate: 4,
+      frameRate: this.consts.npOprahshotFrameRate,
       repeat: Math.max(0,this.model.result.coin -1)
     })
 
     this.anims.create({
       key: 'winkinwell-flash',
       frames: this.anims.generateFrameNumbers('winkinwellNP', {start: 0, end: 2}),
-      frameRate: 4,
+      frameRate: this.consts.npOprahshotFrameRate,
       repeat: Math.max(0,this.model.result.coin -1)
     })
 
