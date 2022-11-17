@@ -193,6 +193,7 @@ class PreloadScene extends Phaser.Scene {
 
     this.load.image('goalNP', 'assets/NP/building7_Goal_Cowboy.png');
     this.load.image('outYonderNP', 'assets/NP/OutYonder.png');
+    this.load.image('perfectBroNP', 'assets/NP/NP_PerfectBro.png');
 
     this.load.image('restartNP', 'assets/NP/restartNP.png');
     this.load.image('restartWalk', 'assets/NP/restartWalk.png');

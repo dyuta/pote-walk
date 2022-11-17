@@ -33,6 +33,7 @@ export default class ResultNPScene extends Phaser.Scene {
     const groundHeight = height*0.5 + 110;
 
     this.outYonderNP = this.add.image(400,20,"outYonderNP").setOrigin(0,0).setScale(0.8);
+    this.perfectBroNP= this.add.image(500,116,"perfectBroNP").setOrigin(0,0).setScale(0.8).setAlpha(0.4).setVisible(false);
     this.wallLayer = this.add.layer();
 
     //const bookNum = Math.min(18,this.model.result.book);
@@ -158,7 +159,10 @@ export default class ResultNPScene extends Phaser.Scene {
       
       this.timerOneShot = this.time.delayedCall(
         200 + 3*(1000/this.consts.npOprahshotFrameRate)*this.model.result.coin,// wait for photoshoto animation
-        ()=>{this.gameClearScreen.setAlpha(1)}, this
+        ()=>{
+          this.gameClearScreen.setAlpha(1)
+          this.perfectEffect();
+        }, this
       );
       //stop overlap on startTrigger
       this.resultTrigger.disableBody(true, true);
@@ -367,6 +371,12 @@ export default class ResultNPScene extends Phaser.Scene {
     console.log("NOPE");
     this.restartGame(this.consts.gameModes[2]);
     //this.restartGame(this.consts.gameModes[0]);
+  }
+
+  perfectEffect(){
+    //perfectBroNP
+    this.perfectBroNP.setVisible(true);
+
   }
 
   restartGame(mode = this.consts.gameModes[0], skipTitleNP = false){
