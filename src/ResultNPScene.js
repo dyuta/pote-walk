@@ -375,7 +375,9 @@ export default class ResultNPScene extends Phaser.Scene {
 
   perfectEffect(){
     //perfectBroNP
-    this.perfectBroNP.setVisible(true);
+    if(this.isResultPerfect){
+      this.perfectBroNP.setVisible(true);
+    }
 
   }
 
