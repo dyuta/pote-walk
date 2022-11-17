@@ -203,9 +203,11 @@ export default class PlayNPScene extends PlayScene {
         }
         */
         //for debug
+        /* jump to result scene
         if(this.model.result.visited==2){
           this.goClearScene();
         }
+        */
 
         if(this.model.result.visited == 3){
           this.gameSpeed = this.consts.gameSpeedNPFast;
