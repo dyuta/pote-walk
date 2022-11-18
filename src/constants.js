@@ -143,8 +143,8 @@ class Constants{
             {name:"Jean Jacket"}
         ];
         this.npSpObstacleList=[
-            {name:"kunekuneNP",anim:"kune-kune",distanceX:this.distances.obstacleFrom,posYUp:0},//靴にしたい
-            {name:"kunekuneNP",anim:"kune-kune",distanceX:this.distances.obstacleFrom,posYUp:0},//
+            {name:"kunekuneNP",anim:"kune-kune-red",distanceX:this.distances.obstacleFrom,posYUp:0},//靴にしたい
+            {name:"kunekuneYellowNP",anim:"kune-kune-yellow",distanceX:this.distances.obstacleFrom,posYUp:0},//
             {name:"alienKids",anim:"alienKids-look",distanceX:this.distances.obstacleFrom,posYUp:0},
             {name:"monkey",anim:"monkey-angry",distanceX:this.distances.obstacleFrom,posYUp:0},
             //{name:"UFONP",anim:"UFO-NP-fly",distanceX:this.distances.obstacleFrom,posYUp:5},

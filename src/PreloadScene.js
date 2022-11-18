@@ -213,7 +213,8 @@ class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('flyingrodsNP', 'assets/NP/flyingrods_NP.png',{frameWidth: 96, frameHeight: 72});
     
     
-    this.load.spritesheet('kunekuneNP', 'assets/NP/Enemy_kunekune.png',{frameWidth: 48, frameHeight: 104});
+    this.load.spritesheet('kunekuneNP', 'assets/NP/Enemy_kunekune.png',{frameWidth: 48, frameHeight: 112});
+    this.load.spritesheet('kunekuneYellowNP', 'assets/NP/Enemy_kunekune_ye.png',{frameWidth: 48, frameHeight: 112});
     this.load.spritesheet('alienKids', 'assets/NP/Enemy_smallAlien.png',{frameWidth: 128, frameHeight: 104});
     this.load.spritesheet('monkey', 'assets/NP/Enemy_Monky.png',{frameWidth: 128, frameHeight: 104});
     this.load.spritesheet('flagropeNP', 'assets/NP/Enemy_flagrope.png',{frameWidth: 48, frameHeight: 220});

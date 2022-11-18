@@ -397,12 +397,19 @@ export default class PlayNPScene extends PlayScene {
     })
 
     this.anims.create({
-      key: 'kune-kune',
+      key: 'kune-kune-red',
       frames: this.anims.generateFrameNumbers('kunekuneNP', {start: 0, end: 1}),
       frameRate: 3,
       repeat: -1
     })
-    
+
+    this.anims.create({
+      key: 'kune-kune-yellow',
+      frames: this.anims.generateFrameNumbers('kunekuneYellowNP', {start: 0, end: 1}),
+      frameRate: 3,
+      repeat: -1
+    })
+
     this.anims.create({
       key: 'nope-rope',
       frames: this.anims.generateFrameNumbers('flagropeNP', {start: 0, end: 1}),
