@@ -325,7 +325,7 @@ export default class ResultNPScene extends Phaser.Scene {
   createSNSShareStringNP(){
     let snsShareString = "Potewalk\n";
     // mode
-    snsShareString +="mode: "+ this.model.gameMode + "\n";
+    snsShareString +="mode: "+ this.model.gameMode + "(secret)\n";
 
     // coin(got/generated)
     snsShareString += `coin: ${this.model.result.coin} / ${this.model.result.coinGen}`;

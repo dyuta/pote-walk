@@ -63,7 +63,7 @@ class Constants{
         this.coinCntInterval =128;
 
         this.npCloudIncAlphaInterval =1100;
-        this.npCloudIncVal =0.1;
+        this.npCloudIncVal =0.3;
 
         this.distances={
             obstacleFrom:400,
