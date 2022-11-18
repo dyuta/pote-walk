@@ -361,7 +361,7 @@ export default class PlayNPScene extends PlayScene {
             
             this.environment.setAlpha(1);
             this.destinationTxt.setAlpha(1);
-            this.backMountains.setAlpha(0.7);
+            this.backMountains.setAlpha(0.6);
             this.counterItems.setAlpha(1);
             this.coinCounterText.setAlpha(1);
             //this.bookCounterText.setAlpha(1);
@@ -399,6 +399,7 @@ export default class PlayNPScene extends PlayScene {
     this.anims.create({
       key: 'kune-kune-red',
       frames: this.anims.generateFrameNumbers('kunekuneNP', {start: 0, end: 1}),
+      //repeatDelay:50,
       frameRate: 3,
       repeat: -1
     })
@@ -406,6 +407,7 @@ export default class PlayNPScene extends PlayScene {
     this.anims.create({
       key: 'kune-kune-yellow',
       frames: this.anims.generateFrameNumbers('kunekuneYellowNP', {start: 0, end: 1}),
+      //repeatDelay:50,
       frameRate: 3,
       repeat: -1
     })
@@ -659,7 +661,9 @@ export default class PlayNPScene extends PlayScene {
       .create(width + Distance, groundHeight + 28,'goalNP')
       .setOrigin(0, 1).setImmovable();
     
-      this.poteHome.hitFlg=false;
+    this.poteHome.hitFlg=false;
+    this.poteHome.body.width = this.poteHome.body.width / 2;
+    this.poteHome.body.offset.x = -24;
     
     this.poteHomeLayer.add(this.poteHome);
   }
