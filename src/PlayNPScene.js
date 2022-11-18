@@ -540,18 +540,22 @@ export default class PlayNPScene extends PlayScene {
     );
     obstacle.play(this.consts.npSpObstacleList[this.model.result.visited].anim,1);
 
-    if(this.model.result.visited == 6){
-      obstacle.setScale(1.3);
-      obstacle.body.height = obstacle.body.height / 2; 
+    if(this.model.result.visited == 6 ){
+      obstacle.setScale(1.2);
+      obstacle.body.height = obstacle.body.height / 4;
+      obstacle.body.width = obstacle.body.width / 2;
+      obstacle.body.offset.y = +10;
+      obstacle.body.offset.x = -10;
       const tween = this.tweens.add({
         targets: obstacle,
-        duration: 500,
-        hold:30,
+        delay:80,
+        duration: 600,
+        hold:80,
         loop:-1,
         yoyo:true,
         props: {
           //y: '+=300',
-          y: 200,
+          y: 160,
           ease:Phaser.Math.Easing.Sine.InOut
         }
       });

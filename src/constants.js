@@ -134,7 +134,7 @@ class Constants{
         this.npOprahshotFrameRate = 4;
 
         this.npscenetitleList= [
-            {name:"NOPE"},
+            {name:""},
             {name:"GHOST"},
             {name:"CLOVER"},
             {name:"GORDY"},
@@ -147,9 +147,10 @@ class Constants{
             {name:"kunekuneNP",anim:"kune-kune",distanceX:this.distances.obstacleFrom,posYUp:0},//
             {name:"alienKids",anim:"alienKids-look",distanceX:this.distances.obstacleFrom,posYUp:0},
             {name:"monkey",anim:"monkey-angry",distanceX:this.distances.obstacleFrom,posYUp:0},
+            //{name:"UFONP",anim:"UFO-NP-fly",distanceX:this.distances.obstacleFrom,posYUp:5},
             {name:"flagropeNP",anim:"nope-rope",distanceX:this.distances.obstacleFrom,posYUp:120},
             {name:"motorcycleNP",anim:"bike-ride",distanceX:this.distances.obstacleFrom,posYUp:0},
-            {name:"UFONP",anim:"UFO-NP-fly",distanceX:this.distances.obstacleFrom,posYUp:20}
+            {name:"UFONP",anim:"UFO-NP-fly",distanceX:this.distances.obstacleFrom,posYUp:5}
         ];
 
 
