@@ -190,6 +190,13 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('buildingNP04', 'assets/NP/building4_jupepark.png');
     this.load.image('buildingNP05', 'assets/NP/building5_bloodyhome.png');
     this.load.image('buildingNP06', 'assets/NP/building6_smallhouse.png');
+    
+    this.load.image('buildingNPicon01', 'assets/NP/icon_buildingNP_1.png');
+    this.load.image('buildingNPicon02', 'assets/NP/icon_buildingNP_2.png');
+    this.load.image('buildingNPicon03', 'assets/NP/icon_buildingNP_3.png');
+    this.load.image('buildingNPicon04', 'assets/NP/icon_buildingNP_4.png');
+    this.load.image('buildingNPicon05', 'assets/NP/icon_buildingNP_5.png');
+    this.load.image('buildingNPicon06', 'assets/NP/icon_buildingNP_6.png');
 
     this.load.image('goalNP', 'assets/NP/building7_Goal_Cowboy.png');
     this.load.image('outYonderNP', 'assets/NP/OutYonder.png');

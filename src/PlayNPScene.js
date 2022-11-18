@@ -64,18 +64,18 @@ export default class PlayNPScene extends PlayScene {
     const counterPositionX = width - 300;
     this.initCounters(counterPositionX,11,28,this.counterItems);
 
-    const storeicon_span = 120;
-    this.bookStoreIcons = this.add.group();
+    const locationicon_span = 120;
+    this.LocationIcons = this.add.group();
 
-    this.bookStoreIcons.addMultiple([
-      this.add.image(80                   , groundHeight + 80, 'bookstoreicon01'),
-      this.add.image(80 +storeicon_span *1, groundHeight + 80, 'bookstoreicon02'),
-      this.add.image(80 +storeicon_span *2, groundHeight + 80, 'bookstoreicon03'),
-      this.add.image(80 +storeicon_span *3, groundHeight + 80, 'bookstoreicon04'),
-      this.add.image(80 +storeicon_span *4, groundHeight + 80, 'bookstoreicon05'),
-      this.add.image(80 +storeicon_span *5, groundHeight + 80, 'bookstoreicon06')
+    this.LocationIcons.addMultiple([
+      this.add.image(80                      , groundHeight + 80, 'buildingNPicon01').setScale(1.2),
+      this.add.image(80 +locationicon_span *1, groundHeight + 80, 'buildingNPicon02').setScale(1.2),
+      this.add.image(80 +locationicon_span *2, groundHeight + 80, 'buildingNPicon03').setScale(1.2),
+      this.add.image(80 +locationicon_span *3, groundHeight + 80, 'buildingNPicon04').setScale(1.2),
+      this.add.image(80 +locationicon_span *4, groundHeight + 80, 'buildingNPicon05').setScale(1.2),
+      this.add.image(80 +locationicon_span *5, groundHeight + 80, 'buildingNPicon06').setScale(1.2)
     ]);
-    this.bookStoreIcons.setAlpha(0);
+    this.LocationIcons.setAlpha(0);
     
     this.pote = this.physics.add.sprite(0, groundHeight, 'pote-idle')
       .setOrigin(0, 1)
@@ -171,7 +171,7 @@ export default class PlayNPScene extends PlayScene {
         building.hitFlg = true;
 
         // set icon visible
-        this.bookStoreIcons.getChildren()[this.model.result.visited].setAlpha(1);
+        this.LocationIcons.getChildren()[this.model.result.visited].setAlpha(1);
 
         // set store visit status
         this.model.storeVisit[`store${building.buildingNum}`] = true;
@@ -663,7 +663,7 @@ export default class PlayNPScene extends PlayScene {
     
     this.poteHome.hitFlg=false;
     this.poteHome.body.width = this.poteHome.body.width / 2;
-    this.poteHome.body.offset.x = -24;
+    this.poteHome.body.offset.x = +32;
     
     this.poteHomeLayer.add(this.poteHome);
   }
