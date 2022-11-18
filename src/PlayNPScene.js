@@ -219,7 +219,7 @@ export default class PlayNPScene extends PlayScene {
     // obstacle overlap
     // added when game mode is other than Sampo
     if(this.model.gameMode !== this.consts.gameModes[1]){
-      this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
+      this.obstacleCollider = this.physics.add.overlap(this.pote, this.obstacles, (p, obstacle) => {
         // execute once on collision
         if(!obstacle.hitFlg){
           obstacle.hitFlg = true;
@@ -268,6 +268,7 @@ export default class PlayNPScene extends PlayScene {
       if(!home.hitFlg){
         home.hitFlg = true;
         this.isGamerunning = false;
+        this.obstacleCollider.destroy();
 
         this.model.mediaManager.stopBGM();
         this.model.mediaManager.playSound('goalSound',this.consts.volumeSound*0.2);
